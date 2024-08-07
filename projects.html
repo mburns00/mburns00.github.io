@@ -2,36 +2,43 @@
 <html lang="en">
 
 <head>
-    <title>Projects - Matthew Burns</title>
+    <title>Matthew Burns - Projects</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Explore the projects of Matthew Burns, including cybersecurity tools and network engineering solutions.">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Courier+New&display=swap" rel="stylesheet">
+    <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="css/styles.css">
+    <!-- Preload Header Background Image -->
+    <link rel="preload" href="images/header-bg.gif" as="image">
+    <!-- Theme Color for PWA -->
+    <meta name="theme-color" content="#000000">
 </head>
 
 <body>
+    <!-- Navigation Bar -->
     <nav>
         <div class="topNav">
             <div class="container">
+                <!-- Social Icons -->
                 <div class="icons">
-                    <i class="fab fa-facebook-f"></i>
-                    <i class="fab fa-twitter"></i>
-                    <i class="fab fa-dribbble"></i>
-                    <i class="fab fa-behance"></i>
+                    <a href="https://discordapp.com/users/MattBurns00" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                    <a href="https://github.com/mburns00" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
                 </div>
+                <!-- Contact Info -->
                 <div class="contact">
-                    <a href="#/">+880 012 3654 896</a>
-                    <a href="#/">Register / Login</a>
+                    <a href="mailto:MatthewKBurns00@gmail.com" aria-label="Email">MatthewKBurns00@gmail.com</a>
+                    <a href="https://github.com/mburns00" aria-label="GitHub">My GitHub</a>
                 </div>
             </div>
         </div>
         <div class="bottomNav">
             <div class="container">
-                <div class="logo">
-                    <img src="images/logo.webp" alt="logo">
-                </div>
+                <!-- Navigation Menu -->
                 <div class="menu">
                     <a href="index.html">Home</a>
                     <a href="about.html">About</a>
@@ -42,15 +49,17 @@
         </div>
     </nav>
 
+    <!-- Main Section -->
     <section class="main">
         <div class="overlay"></div>
         <div class="container">
-            <h3>Projects</h3>
-            <p>All of my projects are available on my GitHub repository. Feel free to explore them and reach out if you have any questions or feedback.</p>
-            <a href="https://github.com/mburns00" class="btn">View Projects</a>
+            <h1>My Projects</h1>
+            <p>Here you can find some of the projects I have worked on, ranging from cybersecurity tools to network engineering solutions.</p>
+            <a href="https://github.com/mburns00?tab=repositories" class="btn">View My Projects on GitHub</a>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="box">
@@ -59,18 +68,37 @@
                 <p>©2024 Matthew Burns. All rights reserved.</p>
             </div>
             <div class="box">
-                <h2>Follow Me</h2>
-                <p>Let's connect on social media</p>
+                <!-- Social Icons -->
                 <div class="icons">
-                    <i class="fab fa-facebook-f"></i>
-                    <i class="fab fa-twitter"></i>
-                    <i class="fab fa-dribbble"></i>
-                    <i class="fab fa-behance"></i>
+                    <a href="https://discordapp.com/users/MattBurns00" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                    <a href="https://github.com/mburns00" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
                 </div>
             </div>
         </div>
     </footer>
-    <script src="css/js/main.js"></script>
+    <!-- JavaScript Files -->
+    <script src="css/js/main.js" defer></script>
+    <script src="css/js/interactive.js" defer></script>
+    <script>
+        // Play main page sound on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainPageSound = new Audio('sound/mainpage.mp3');
+            mainPageSound.volume = 0.4;
+            mainPageSound.loop = true;
+            mainPageSound.play();
+        });
+
+        // Play click sound on any click event
+        document.addEventListener('DOMContentLoaded', function () {
+            const audio = new Audio('sound/click.mp3');
+            audio.volume = 0.8;
+
+            document.body.addEventListener('click', function () {
+                audio.currentTime = 0;
+                audio.play();
+            });
+        });
+    </script>
 </body>
 
 </html>
