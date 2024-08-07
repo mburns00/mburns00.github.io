@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Typing animation
                     const typingContainer = document.getElementById('typing-container');
-                    const text = "Welcome to My Portfolio!\nI'm Matthew Burns.\n\nA dedicated IT professional with a Bachelor's degree in Information Technology, majoring in Cybersecurity and Technology. I'm certified in CompTIA Security+ (601) and specialize in Network Analysis and SOC operations.\n\nI'm passionate about cybersecurity and committed to continuous learning and professional growth. Feel free to explore my projects and get to know more about my work. Thank you for visiting!\n\nThis website was developed solely by me.";
+                    const text = "Welcome to My Portfolio!\nI'm Matthew Burns.\n\nHello! I'm a dedicated IT professional with a Bachelor's degree in Information Technology, majoring in Cybersecurity and Technology. I'm certified in CompTIA Security+ (601) and specialize in Network Analysis and SOC operations.\n\nI'm passionate about cybersecurity and committed to continuous learning and professional growth. Feel free to explore my projects and get to know more about my work. Thank you for visiting!\n\nThis website was developed solely by me.";
                     let index = 0;
 
                     // Play typing sound and ensure it loops
