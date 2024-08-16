@@ -18,9 +18,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Handle intro overlay click
   introOverlay.addEventListener("click", () => {
-      const introAudio = new Audio("sound/intro-overlay.mp3");
-      introAudio.volume = 0.8;
-      introAudio.play();
+      //const introAudio = new Audio("sound/intro-overlay.mp3");
+      //introAudio.volume = 0.8;
+      //introAudio.play();
 
       introOverlay.style.display = "none";
       loadingScreen.style.display = "block";
