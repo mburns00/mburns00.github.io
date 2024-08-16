@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    //const introOverlay = document.querySelector('.intro-overlay');
+    const introOverlay = document.querySelector('.intro-overlay');
     const mainSection = document.querySelector('.main');
     const nav = document.querySelector('nav');
     const loadingGif = document.createElement('div');
