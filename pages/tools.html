@@ -20,136 +20,52 @@ permalink: /tools/
 {% assign tag_count = all_tags | size %}
 
 <style>
-  /* ─── Page-level enhancements ─── */
-  .proj-overview {
-    margin-bottom: 2.5rem;
-  }
-  .proj-overview-card {
-    background: linear-gradient(135deg, #ffffff 0%, #fafbff 100%);
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 2rem 2.25rem;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
-  }
-  .proj-overview-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(circle at 95% 5%, rgba(37, 99, 235, 0.07), transparent 40%),
-      radial-gradient(circle at 5% 95%, rgba(124, 58, 237, 0.05), transparent 40%);
-    pointer-events: none;
-  }
-  .proj-overview-grid {
+  .proj-summary {
     display: grid;
-    grid-template-columns: 1fr auto auto auto;
-    gap: 2rem;
-    align-items: center;
-    position: relative;
+    grid-template-columns: 1.5fr repeat(3, auto);
+    gap: 3rem;
+    align-items: end;
+    padding: 1rem 0 2rem 0;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 3rem;
   }
-  .proj-overview-grid > * + * {
-    border-left: 1px solid #e5e7eb;
-    padding-left: 2rem;
+  .proj-summary p {
+    color: #1f2937;
+    font-size: 0.98rem;
+    line-height: 1.65;
+    margin: 0;
+    max-width: 32ch;
   }
-  .proj-stat-cell .v {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 2.2rem;
+  .proj-summary p strong { color: #0f172a; font-weight: 600; }
+  .proj-stat .v {
+    font-size: 1.6rem;
     font-weight: 700;
-    line-height: 1;
     color: #0f172a;
-    margin-bottom: 0.25rem;
+    line-height: 1;
     letter-spacing: -0.025em;
+    margin-bottom: 0.3rem;
   }
-  .proj-stat-cell.tools .v   { color: #2563eb; }
-  .proj-stat-cell.scripts .v { color: #d97706; }
-  .proj-stat-cell.tags .v    { color: #7c3aed; }
-  .proj-stat-cell .k {
+  .proj-stat .k {
     font-size: 0.7rem;
     color: #6b7280;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    font-weight: 600;
-  }
-  .proj-blurb {
-    color: #374151;
-    font-size: 0.95rem;
-    line-height: 1.65;
-    margin: 0;
-    max-width: 28ch;
-  }
-  .proj-blurb strong { color: #0f172a; font-weight: 600; }
-
-  /* ─── Tag cloud (interactive filter) ─── */
-  .tag-cloud {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin: 1.5rem 0 2.25rem 0;
-    padding: 1rem 1.25rem;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-  }
-  .tag-cloud-label {
-    font-size: 0.68rem;
-    color: #6b7280;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-weight: 700;
-    margin-right: 0.5rem;
-    align-self: center;
-  }
-  .tag-cloud-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    color: #2563eb;
-    background: #eff6ff;
-    border: 1px solid #dbeafe;
-    padding: 0.22em 0.6em;
-    border-radius: 4px;
-    cursor: default;
-    transition: all 150ms ease;
-  }
-  .tag-cloud-tag:hover {
-    background: #2563eb;
-    color: #ffffff;
-    border-color: #2563eb;
-    transform: translateY(-1px);
+    font-weight: 500;
   }
 
   @media (max-width: 768px) {
-    .proj-overview-grid { grid-template-columns: 1fr 1fr; }
-    .proj-overview-grid > * + * { border-left: none; padding-left: 0; }
-    .proj-blurb { grid-column: 1 / -1; }
+    .proj-summary { grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; }
+    .proj-summary p { grid-column: 1 / -1; }
   }
 </style>
 
-<!-- ─── OVERVIEW PANEL ─── -->
-<div class="proj-overview reveal">
-  <p class="section-label">Overview</p>
-  <div class="proj-overview-card">
-    <div class="proj-overview-grid">
-      <p class="proj-blurb">
-        <strong>{{ total_projects }} open-source artifacts</strong> spanning research frameworks, fine-tuned models, pentesting tools, and interactive experiments.
-      </p>
-      <div class="proj-stat-cell tools">
-        <div class="v">{{ tool_count }}</div>
-        <div class="k">Tools</div>
-      </div>
-      <div class="proj-stat-cell scripts">
-        <div class="v">{{ script_count }}</div>
-        <div class="k">Scripts</div>
-      </div>
-      <div class="proj-stat-cell tags">
-        <div class="v">{{ tag_count }}</div>
-        <div class="k">Tech Tags</div>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- Summary line, no card -->
+<section class="proj-summary reveal">
+  <p><strong>{{ total_projects }} open-source artifacts</strong> — research frameworks, fine-tuned models, pentesting tools, interactive experiments.</p>
+  <div class="proj-stat"><div class="v">{{ tool_count }}</div><div class="k">Tools</div></div>
+  <div class="proj-stat"><div class="v">{{ script_count }}</div><div class="k">Scripts</div></div>
+  <div class="proj-stat"><div class="v">{{ tag_count }}</div><div class="k">Tech tags</div></div>
+</section>
 
 <!-- ─── FEATURED PROJECT (Beyond CTFs) ─── -->
 <div class="reveal">

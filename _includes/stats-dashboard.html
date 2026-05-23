@@ -1,4 +1,4 @@
-{% comment %} Stats panel — researcher-clean with gradient bars, glow accents, animated reveals. {% endcomment %}
+{% comment %} Stats — restrained. No glow, no gradients, no decoration. {% endcomment %}
 
 {% assign total = site.writeups | size %}
 {% assign rooted = site.writeups | where: "status", "rooted" | size %}
@@ -15,8 +15,6 @@
 
 {% assign goal = 30 %}
 {% assign progress = total | times: 100 | divided_by: goal %}
-{% assign remaining = goal | minus: total %}
-{% if remaining < 0 %}{% assign remaining = 0 %}{% endif %}
 
 {% assign diff_max = easy %}
 {% if very_easy > diff_max %}{% assign diff_max = very_easy %}{% endif %}
@@ -29,347 +27,91 @@
 {% if windows > os_max %}{% assign os_max = windows %}{% endif %}
 {% if os_max == 0 %}{% assign os_max = 1 %}{% endif %}
 
-{% assign rooted_pct = rooted | times: 100 | divided_by: total %}
-{% assign linux_pct = linux | times: 100 | divided_by: total %}
-
 <style>
-  /* ─── Container ─── */
-  .sp { margin: 2rem 0 3rem 0; }
-
-  /* ─── Hero progress card (full-width, prominent) ─── */
-  .sp-hero {
-    background: linear-gradient(135deg, #ffffff 0%, #fafbff 100%);
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 2rem 2.25rem;
-    margin-bottom: 1rem;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
-    transition: transform 250ms ease, box-shadow 250ms ease;
-  }
-  .sp-hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(circle at 90% 10%, rgba(37, 99, 235, 0.06), transparent 50%),
-      radial-gradient(circle at 10% 90%, rgba(124, 58, 237, 0.04), transparent 50%);
-    pointer-events: none;
-  }
-  .sp-hero:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-  }
-  .sp-hero-grid {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 2rem;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-  }
-  .sp-hero-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 3.5rem;
-    font-weight: 800;
-    line-height: 1;
-    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: -0.04em;
-    margin-bottom: 0.25rem;
-  }
-  .sp-hero-num .of {
-    font-size: 1.5rem;
-    color: #9ca3af;
-    -webkit-text-fill-color: #9ca3af;
-    font-weight: 500;
-    margin-left: 0.4rem;
-  }
-  .sp-hero-key {
-    font-size: 0.78rem;
-    color: #4b5563;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-weight: 700;
-    margin-bottom: 1rem;
-  }
-  .sp-hero-bar {
-    height: 10px;
-    background: #f3f4f6;
-    border-radius: 99px;
-    overflow: hidden;
-    position: relative;
-    margin-bottom: 0.6rem;
-    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
-  }
-  .sp-hero-fill {
-    height: 100%;
-    border-radius: 99px;
-    background: linear-gradient(90deg, #2563eb 0%, #6366f1 50%, #7c3aed 100%);
-    box-shadow: 0 0 12px rgba(37, 99, 235, 0.35);
-    width: 0;
-    animation: spGrow 1100ms cubic-bezier(0.34, 1.56, 0.64, 1) 200ms forwards;
-  }
-  .sp-hero-sub {
-    font-size: 0.82rem;
-    color: #6b7280;
-    font-family: 'JetBrains Mono', monospace;
-  }
-  .sp-hero-sub strong { color: #0f172a; font-weight: 600; }
-
-  .sp-hero-side {
-    display: grid;
-    grid-template-columns: auto auto;
-    gap: 1rem 2rem;
-    padding-left: 2rem;
-    border-left: 1px solid #e5e7eb;
-  }
-  .sp-side-stat .v {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1.7rem;
-    font-weight: 700;
-    color: #0f172a;
-    line-height: 1;
-    margin-bottom: 0.2rem;
-  }
-  .sp-side-stat.green .v { color: #16a34a; }
-  .sp-side-stat.amber .v { color: #d97706; }
-  .sp-side-stat .k {
-    font-size: 0.68rem;
-    color: #6b7280;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-weight: 600;
-  }
-
-  /* ─── Breakdown blocks ─── */
-  .sp-split {
+  .stats {
+    margin: 0 0 3rem 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 3rem;
+    padding: 2rem 0;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
   }
-  .sp-card {
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 1.5rem 1.75rem;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
-    transition: transform 250ms ease, box-shadow 250ms ease;
-    position: relative;
-    overflow: hidden;
-  }
-  .sp-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-  }
-  .sp-card-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 1.25rem;
-  }
-  .sp-card h4 {
+  .stats h4 {
     font-size: 0.72rem;
     color: #6b7280;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-weight: 700;
-    margin: 0;
+    letter-spacing: 0.12em;
+    margin: 0 0 1.25rem 0;
+    font-weight: 600;
   }
-  .sp-card-total {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.78rem;
+  .stats-goal-num {
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+  }
+  .stats-goal-num .of {
     color: #9ca3af;
     font-weight: 500;
   }
+  .stats-goal-sub {
+    color: #6b7280;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  .stats-goal-sub strong { color: #0f172a; font-weight: 600; }
 
-  /* ─── Bar row ─── */
-  .sp-row {
+  .stats-row {
     display: grid;
-    grid-template-columns: 90px 1fr 38px;
+    grid-template-columns: 80px 1fr 32px;
     gap: 0.85rem;
     align-items: center;
-    margin-bottom: 0.85rem;
+    margin-bottom: 0.5rem;
     font-size: 0.88rem;
   }
-  .sp-row:last-child { margin-bottom: 0; }
-  .sp-row .lbl {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    color: #1f2937;
-    font-weight: 500;
-  }
-  .sp-row .lbl .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    box-shadow: 0 0 8px currentColor;
-  }
-  .sp-track {
-    height: 10px;
+  .stats-row .lbl { color: #1f2937; }
+  .stats-row .bar {
+    height: 4px;
     background: #f3f4f6;
-    border-radius: 99px;
-    overflow: hidden;
-    position: relative;
-    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
+    border-radius: 0;
   }
-  .sp-seg {
+  .stats-row .fill {
     height: 100%;
-    border-radius: 99px;
-    width: 0;
-    animation: spGrow 1000ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    position: relative;
+    background: #0f172a;
   }
-  .sp-seg::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 99px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 60%);
-  }
-  .sp-count {
-    font-family: 'JetBrains Mono', monospace;
-    color: #0f172a;
-    font-weight: 700;
+  .stats-row .cnt {
     text-align: right;
-    font-size: 0.92rem;
-  }
-
-  /* ─── Gradient palettes per category ─── */
-  .seg-cyan   { background: linear-gradient(90deg, #06b6d4, #0891b2); box-shadow: 0 0 10px rgba(8, 145, 178, 0.35); }
-  .seg-green  { background: linear-gradient(90deg, #22c55e, #16a34a); box-shadow: 0 0 10px rgba(22, 163, 74, 0.35); }
-  .seg-amber  { background: linear-gradient(90deg, #f59e0b, #d97706); box-shadow: 0 0 10px rgba(217, 119, 6, 0.35); }
-  .seg-red    { background: linear-gradient(90deg, #ef4444, #dc2626); box-shadow: 0 0 10px rgba(220, 38, 38, 0.35); }
-  .seg-purple { background: linear-gradient(90deg, #a78bfa, #7c3aed); box-shadow: 0 0 10px rgba(124, 58, 237, 0.35); }
-  .seg-blue   { background: linear-gradient(90deg, #3b82f6, #2563eb); box-shadow: 0 0 10px rgba(37, 99, 235, 0.35); }
-
-  .dot-cyan   { color: #06b6d4; background: #06b6d4; }
-  .dot-green  { color: #16a34a; background: #16a34a; }
-  .dot-amber  { color: #d97706; background: #d97706; }
-  .dot-red    { color: #dc2626; background: #dc2626; }
-  .dot-purple { color: #7c3aed; background: #7c3aed; }
-  .dot-blue   { color: #2563eb; background: #2563eb; }
-
-  /* ─── Stagger entrance ─── */
-  .sp-row:nth-child(2) .sp-seg { animation-delay: 100ms; }
-  .sp-row:nth-child(3) .sp-seg { animation-delay: 180ms; }
-  .sp-row:nth-child(4) .sp-seg { animation-delay: 260ms; }
-  .sp-row:nth-child(5) .sp-seg { animation-delay: 340ms; }
-  .sp-row:nth-child(6) .sp-seg { animation-delay: 420ms; }
-
-  @keyframes spGrow {
-    from { width: 0; }
-    to   { width: var(--w, 100%); }
+    color: #0f172a;
+    font-weight: 600;
+    font-size: 0.85rem;
   }
 
   @media (max-width: 768px) {
-    .sp-hero-grid { grid-template-columns: 1fr; }
-    .sp-hero-side {
-      grid-template-columns: 1fr 1fr;
-      padding-left: 0;
-      padding-top: 1.25rem;
-      border-left: none;
-      border-top: 1px solid #e5e7eb;
-    }
-    .sp-split { grid-template-columns: 1fr; }
-    .sp-hero-num { font-size: 2.75rem; }
+    .stats { grid-template-columns: 1fr; gap: 2rem; }
   }
 </style>
 
-<section class="sp reveal">
-  <p class="section-label">Stats</p>
-
-  <!-- Hero progress card -->
-  <div class="sp-hero">
-    <div class="sp-hero-grid">
-      <div>
-        <div class="sp-hero-num">{{ total }}<span class="of">/ {{ goal }}</span></div>
-        <div class="sp-hero-key">2026 Box Goal</div>
-        <div class="sp-hero-bar"><div class="sp-hero-fill" style="--w: {{ progress }}%"></div></div>
-        <div class="sp-hero-sub"><strong>{{ progress }}%</strong> complete &middot; {{ remaining }} boxes remaining &middot; <strong>{{ rooted_pct }}%</strong> rooted</div>
-      </div>
-      <div class="sp-hero-side">
-        <div class="sp-side-stat green">
-          <div class="v">{{ rooted }}</div>
-          <div class="k">Rooted</div>
-        </div>
-        <div class="sp-side-stat amber">
-          <div class="v">{{ user_only }}</div>
-          <div class="k">User Only</div>
-        </div>
-      </div>
+<section class="stats reveal">
+  <div>
+    <h4>2026 box goal</h4>
+    <div class="stats-goal-num">{{ total }} <span class="of">/ {{ goal }}</span></div>
+    <div class="stats-goal-sub">
+      <strong>{{ rooted }}</strong> rooted &middot; <strong>{{ user_only }}</strong> user-only &middot; <strong>{{ progress }}%</strong> of yearly goal
     </div>
   </div>
 
-  <!-- Breakdown grid -->
-  <div class="sp-split">
-
-    <div class="sp-card">
-      <div class="sp-card-head">
-        <h4>By difficulty</h4>
-        <span class="sp-card-total">{{ total }} total</span>
-      </div>
-      {% if very_easy > 0 %}
-      <div class="sp-row">
-        <span class="lbl"><span class="dot dot-cyan"></span>Very Easy</span>
-        <div class="sp-track"><div class="sp-seg seg-cyan" style="--w: {{ very_easy | times: 100 | divided_by: diff_max }}%"></div></div>
-        <span class="sp-count">{{ very_easy }}</span>
-      </div>
-      {% endif %}
-      {% if easy > 0 %}
-      <div class="sp-row">
-        <span class="lbl"><span class="dot dot-green"></span>Easy</span>
-        <div class="sp-track"><div class="sp-seg seg-green" style="--w: {{ easy | times: 100 | divided_by: diff_max }}%"></div></div>
-        <span class="sp-count">{{ easy }}</span>
-      </div>
-      {% endif %}
-      {% if medium > 0 %}
-      <div class="sp-row">
-        <span class="lbl"><span class="dot dot-amber"></span>Medium</span>
-        <div class="sp-track"><div class="sp-seg seg-amber" style="--w: {{ medium | times: 100 | divided_by: diff_max }}%"></div></div>
-        <span class="sp-count">{{ medium }}</span>
-      </div>
-      {% endif %}
-      {% if hard > 0 %}
-      <div class="sp-row">
-        <span class="lbl"><span class="dot dot-red"></span>Hard</span>
-        <div class="sp-track"><div class="sp-seg seg-red" style="--w: {{ hard | times: 100 | divided_by: diff_max }}%"></div></div>
-        <span class="sp-count">{{ hard }}</span>
-      </div>
-      {% endif %}
-      {% if insane > 0 %}
-      <div class="sp-row">
-        <span class="lbl"><span class="dot dot-purple"></span>Insane</span>
-        <div class="sp-track"><div class="sp-seg seg-purple" style="--w: {{ insane | times: 100 | divided_by: diff_max }}%"></div></div>
-        <span class="sp-count">{{ insane }}</span>
-      </div>
-      {% endif %}
-    </div>
-
-    <div class="sp-card">
-      <div class="sp-card-head">
-        <h4>By operating system</h4>
-        <span class="sp-card-total">{{ linux_pct }}% Linux</span>
-      </div>
-      {% if linux > 0 %}
-      <div class="sp-row">
-        <span class="lbl"><span class="dot dot-blue"></span>Linux</span>
-        <div class="sp-track"><div class="sp-seg seg-blue" style="--w: {{ linux | times: 100 | divided_by: os_max }}%"></div></div>
-        <span class="sp-count">{{ linux }}</span>
-      </div>
-      {% endif %}
-      {% if windows > 0 %}
-      <div class="sp-row">
-        <span class="lbl"><span class="dot dot-amber"></span>Windows</span>
-        <div class="sp-track"><div class="sp-seg seg-amber" style="--w: {{ windows | times: 100 | divided_by: os_max }}%"></div></div>
-        <span class="sp-count">{{ windows }}</span>
-      </div>
-      {% endif %}
-    </div>
-
+  <div>
+    <h4>Breakdown</h4>
+    {% if very_easy > 0 %}<div class="stats-row"><span class="lbl">Very Easy</span><div class="bar"><div class="fill" style="width: {{ very_easy | times: 100 | divided_by: diff_max }}%"></div></div><span class="cnt">{{ very_easy }}</span></div>{% endif %}
+    {% if easy > 0 %}<div class="stats-row"><span class="lbl">Easy</span><div class="bar"><div class="fill" style="width: {{ easy | times: 100 | divided_by: diff_max }}%"></div></div><span class="cnt">{{ easy }}</span></div>{% endif %}
+    {% if medium > 0 %}<div class="stats-row"><span class="lbl">Medium</span><div class="bar"><div class="fill" style="width: {{ medium | times: 100 | divided_by: diff_max }}%"></div></div><span class="cnt">{{ medium }}</span></div>{% endif %}
+    {% if hard > 0 %}<div class="stats-row"><span class="lbl">Hard</span><div class="bar"><div class="fill" style="width: {{ hard | times: 100 | divided_by: diff_max }}%"></div></div><span class="cnt">{{ hard }}</span></div>{% endif %}
+    {% if insane > 0 %}<div class="stats-row"><span class="lbl">Insane</span><div class="bar"><div class="fill" style="width: {{ insane | times: 100 | divided_by: diff_max }}%"></div></div><span class="cnt">{{ insane }}</span></div>{% endif %}
+    {% if linux > 0 or windows > 0 %}<div style="margin-top:1rem;padding-top:0.85rem;border-top:1px solid #f3f4f6;"></div>{% endif %}
+    {% if linux > 0 %}<div class="stats-row"><span class="lbl">Linux</span><div class="bar"><div class="fill" style="width: {{ linux | times: 100 | divided_by: os_max }}%"></div></div><span class="cnt">{{ linux }}</span></div>{% endif %}
+    {% if windows > 0 %}<div class="stats-row"><span class="lbl">Windows</span><div class="bar"><div class="fill" style="width: {{ windows | times: 100 | divided_by: os_max }}%"></div></div><span class="cnt">{{ windows }}</span></div>{% endif %}
   </div>
 </section>
