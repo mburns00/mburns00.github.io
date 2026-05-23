@@ -2,6 +2,7 @@
 title: "AWS Solutions Architect Associate"
 issuer: "Amazon Web Services"
 status: "In Progress"
+nav_order: 3
 tags: [aws, cloud, architecture]
 ---
 

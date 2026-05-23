@@ -2,6 +2,7 @@
 title: "Bachelor of Information Technology"
 issuer: "Southern Cross University"
 earned: "November 2024"
+nav_order: 2
 tags: [degree, cybersecurity, networking]
 ---
 

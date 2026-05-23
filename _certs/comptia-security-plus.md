@@ -3,6 +3,7 @@ title: "CompTIA Security+"
 issuer: "CompTIA"
 earned: "July 2024"
 expires: "July 2027"
+nav_order: 4
 tags: [comptia, security, foundational]
 ---
 

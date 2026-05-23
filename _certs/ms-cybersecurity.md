@@ -2,6 +2,7 @@
 title: "Master of Cybersecurity"
 issuer: "University of Sydney"
 earned: "2026"
+nav_order: 1
 tags: [degree, cybersecurity, graduate, cloud-security]
 ---
 

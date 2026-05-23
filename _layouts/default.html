@@ -31,6 +31,43 @@
       window.addEventListener('resize', update);
       update();
     })();
+
+    // Dropdown nav — click/tap toggle + keyboard support (hover still works via pure CSS)
+    (function() {
+      var triggers = document.querySelectorAll('[data-dropdown-trigger]');
+      triggers.forEach(function(trigger) {
+        var parent = trigger.closest('.has-dropdown');
+        if (!parent) return;
+
+        // Tap-to-toggle on touch devices (first tap opens dropdown, second tap navigates)
+        trigger.addEventListener('click', function(e) {
+          var isOpen = parent.classList.contains('open');
+          var hasTouch = matchMedia('(hover: none)').matches;
+          if (hasTouch && !isOpen) {
+            e.preventDefault();
+            document.querySelectorAll('.has-dropdown.open').forEach(function(el) { el.classList.remove('open'); });
+            parent.classList.add('open');
+            trigger.setAttribute('aria-expanded', 'true');
+          }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!parent.contains(e.target)) {
+            parent.classList.remove('open');
+            trigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        // Esc closes
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') {
+            parent.classList.remove('open');
+            trigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+    })();
   </script>
 </body>
 </html>
