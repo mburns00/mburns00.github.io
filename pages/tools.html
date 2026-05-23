@@ -25,9 +25,7 @@ permalink: /tools/
   </div>
 </div>
 
-<!-- Featured Project: CryptoOS Arcade -->
-{% assign featured = tools_list | where: "title", "CryptoOS Arcade" | first %}
-{% if featured %}
+<!-- Featured Project: Beyond CTFs (capstone) -->
 <div class="reveal">
   <p class="section-label">Featured Project</p>
 </div>
@@ -35,70 +33,72 @@ permalink: /tools/
   <div class="fp-header">
     <span class="fp-badge">Featured</span>
   </div>
-  <h3 class="fp-title">{{ featured.title }}</h3>
-  <p class="fp-tagline">{{ featured.tagline }}</p>
+  <h3 class="fp-title">Beyond CTFs</h3>
+  <p class="fp-tagline">Evaluation framework for autonomous pentesting LLMs &mdash; SFT/DPO/GRPO post-training comparison mapped to OWASP Agentic Top 10, NIST AI 600-1, MITRE ATLAS.</p>
 
-  <!-- Room Flow -->
+  <!-- Model variant flow -->
   <div class="room-flow">
     <div class="room-node r-xor">
-      <span class="rn-label">XOR</span>
-      <span class="rn-sub">Fundamentals</span>
+      <span class="rn-label">Baseline</span>
+      <span class="rn-sub">Qwen3-14B</span>
     </div>
     <div class="room-arrow"><span>&rarr;</span></div>
     <div class="room-node r-prg">
-      <span class="rn-label">PRG</span>
-      <span class="rn-sub">Primitives</span>
+      <span class="rn-label">SFT</span>
+      <span class="rn-sub">Supervised</span>
     </div>
     <div class="room-arrow"><span>&rarr;</span></div>
     <div class="room-node r-block">
-      <span class="rn-label">Modes</span>
-      <span class="rn-sub">Block Ciphers</span>
+      <span class="rn-label">DPO</span>
+      <span class="rn-sub">Preference</span>
     </div>
     <div class="room-arrow"><span>&rarr;</span></div>
     <div class="room-node r-mac">
-      <span class="rn-label">AEAD</span>
-      <span class="rn-sub">Integrity</span>
+      <span class="rn-label">GRPO</span>
+      <span class="rn-sub">Group Reward</span>
     </div>
     <div class="room-arrow"><span>&rarr;</span></div>
     <div class="room-node r-dh">
-      <span class="rn-label">DH</span>
-      <span class="rn-sub">Key Exchange</span>
+      <span class="rn-label">Eval</span>
+      <span class="rn-sub">12-Dim Rubric</span>
     </div>
     <div class="room-arrow"><span>&rarr;</span></div>
     <div class="room-node r-sig">
-      <span class="rn-label">PKI</span>
-      <span class="rn-sub">Signatures</span>
+      <span class="rn-label">ATT&amp;CK</span>
+      <span class="rn-sub">Stage Mapping</span>
     </div>
   </div>
 
   <!-- Key Metrics -->
   <div class="fp-metrics">
     <div class="fp-metric">
-      <div class="m-val" data-counter="6">0</div>
-      <div class="m-key">Rooms</div>
+      <div class="m-val" data-counter="32">0</div>
+      <div class="m-key">Controlled Cells</div>
     </div>
     <div class="fp-metric">
-      <div class="m-val green" data-counter="30">0</div>
-      <div class="m-key">Interactive Levels</div>
+      <div class="m-val green" data-counter="4">0</div>
+      <div class="m-key">Qwen3-14B Variants</div>
     </div>
     <div class="fp-metric">
-      <div class="m-val orange" data-counter="0">1</div>
-      <div class="m-key">Dependencies</div>
+      <div class="m-val orange" data-counter="12">0</div>
+      <div class="m-key">Eval Dimensions</div>
     </div>
     <div class="fp-metric">
-      <div class="m-val purple" data-counter="4500">0</div>
-      <div class="m-key">Lines of Code</div>
+      <div class="m-val purple" data-counter="574">0</div>
+      <div class="m-key">MCP Tools Wired</div>
     </div>
   </div>
 
-  <!-- Play Button -->
-  <div style="text-align: center; margin-top: 0.5rem;">
-    <a href="{{ '/assets/crypto-arcade/index.html' | relative_url }}" target="_blank" rel="noopener" class="fp-play-btn">
-      Play Now <span class="play-arrow">&rarr;</span>
+  <!-- CTAs -->
+  <div style="text-align: center; margin-top: 1rem; display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+    <a href="https://github.com/mburns00/beyond-ctfs" target="_blank" rel="noopener" class="fp-play-btn">
+      GitHub Repo <span class="play-arrow">&rarr;</span>
+    </a>
+    <a href="https://github.com/mburns00/beyond-ctfs/blob/main/docs/Beyond_CTFs_Final_Report.pdf" target="_blank" rel="noopener" class="fp-play-btn" style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(96, 165, 250, 0.2);">
+      Final Report (PDF) <span class="play-arrow">&rarr;</span>
     </a>
   </div>
 </div>
-{% endif %}
 
 <!-- All Projects -->
 <div class="reveal latest-section">

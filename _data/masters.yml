@@ -28,16 +28,16 @@ units:
     status: completed
   - code: OCSE5619
     name: Applied Cryptography
-    status: current
+    status: completed
   - code: OCSE5707
     name: Cybersecurity Capstone Project A
-    status: current
+    status: completed
   - code: OCSE5615
     name: "Theory and Practice of Cloud Security"
-    status: remaining
+    status: completed
   - code: OCSE5708
     name: Cybersecurity Capstone Project B
-    status: remaining
+    status: completed
   - code: OCMP5349
     name: Cloud Computing
-    status: remaining
+    status: completed
