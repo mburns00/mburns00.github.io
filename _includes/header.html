@@ -11,7 +11,23 @@
         {% else %}
           {% if page.url == link.url or page.url contains link.url %}{% assign is_active = true %}{% endif %}
         {% endif %}
+
+        {% if link.title == "Education" %}
+        <li class="has-dropdown">
+          <a href="{{ link.url | relative_url }}" {% if is_active %}class="active"{% endif %} aria-haspopup="true">{{ link.title }} <span class="caret" aria-hidden="true">▾</span></a>
+          <ul class="dropdown" role="menu">
+            {% assign certs_sorted = site.certs | sort: "earned" | reverse %}
+            {% for cert in certs_sorted %}
+              <li role="none"><a role="menuitem" href="{{ cert.url | relative_url }}">{{ cert.title }}{% if cert.issuer %} <span class="dd-meta">{{ cert.issuer }}</span>{% endif %}</a></li>
+            {% endfor %}
+            <li role="none" class="dd-divider"></li>
+            <li role="none"><a role="menuitem" href="{{ link.url | relative_url }}" class="dd-all">All credentials &rarr;</a></li>
+          </ul>
+        </li>
+        {% else %}
         <li><a href="{{ link.url | relative_url }}" {% if is_active %}class="active"{% endif %}>{{ link.title }}</a></li>
+        {% endif %}
+
         {% endfor %}
       </ul>
     </nav>
