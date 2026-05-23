@@ -13,280 +13,621 @@ title: "Home"
 {% assign box_count = site.writeups | size %}
 
 <style>
-  /* ─── Researcher-style hero ─── */
-  .rh-grid {
+  /* ╔════════════════════════════════════════════════════════════╗
+     ║  Editorial researcher home — typographic, asymmetric        ║
+     ╚════════════════════════════════════════════════════════════╝ */
+
+  /* ─── Hero ─── */
+  .ed-hero {
     display: grid;
-    grid-template-columns: 1fr 180px;
-    gap: 3rem;
-    align-items: start;
-    margin: 2rem 0 3.5rem 0;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 5rem;
+    align-items: end;
+    margin: 4rem 0 6rem 0;
+    position: relative;
   }
-  .rh-name {
-    font-size: 2.25rem;
-    font-weight: 700;
-    color: #0f172a;
-    letter-spacing: -0.025em;
-    margin: 0 0 0.4rem 0;
-    line-height: 1.15;
-  }
-  .rh-tagline {
-    color: #4b5563;
-    font-size: 1.05rem;
-    margin: 0 0 1.4rem 0;
-    line-height: 1.5;
-  }
-  .rh-bio {
-    color: #1f2937;
-    font-size: 1rem;
-    line-height: 1.75;
-    margin: 0 0 1rem 0;
-  }
-  .rh-bio strong {
-    color: #0f172a;
+  .ed-hero::before {
+    content: "01";
+    position: absolute;
+    top: -1rem;
+    left: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #cbd5e1;
+    letter-spacing: 0.15em;
     font-weight: 600;
   }
-  .rh-bio a {
-    color: #2563eb;
-    border-bottom: 1px dotted rgba(37, 99, 235, 0.5);
-    transition: border-color 200ms;
-  }
-  .rh-bio a:hover { border-bottom-color: #2563eb; }
-  .rh-quicklinks {
-    margin-top: 1.25rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.4rem;
-    font-size: 0.92rem;
-  }
-  .rh-quicklinks a {
-    color: #2563eb;
-    border-bottom: 1px solid transparent;
-    padding-bottom: 1px;
-    transition: border-color 150ms;
-  }
-  .rh-quicklinks a:hover { border-bottom-color: #2563eb; }
-  .rh-photo {
-    width: 180px;
-    height: 220px;
-    border-radius: 6px;
-    object-fit: cover;
-    object-position: center 25%;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
-    display: block;
-  }
 
-  /* ─── Inline availability banner ─── */
-  .rh-avail {
-    background: #f0f9ff;
-    border: 1px solid #bae6fd;
-    border-radius: 6px;
-    padding: 0.85rem 1.1rem;
-    margin-bottom: 3rem;
-    color: #0c4a6e;
-    font-size: 0.92rem;
-    line-height: 1.55;
-  }
-  .rh-avail strong { color: #082f49; font-weight: 600; }
-  .rh-avail .sep { color: #7dd3fc; margin: 0 0.4rem; }
-
-  /* ─── Section heading ─── */
-  .rh-section {
-    margin-bottom: 2rem;
-  }
-  .rh-section > h2 {
-    font-size: 1.25rem;
-    font-weight: 600;
+  /* ─── Name treatment — mixed sans + serif ─── */
+  .ed-name {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 800;
     color: #0f172a;
-    margin: 2.5rem 0 1.25rem 0;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #e5e7eb;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.045em;
+    line-height: 0.95;
+    margin: 0 0 1.5rem 0;
   }
-
-  /* ─── Paper-style entry ─── */
-  .rh-entry {
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid #f3f4f6;
-  }
-  .rh-entry:last-child { border-bottom: none; padding-bottom: 0; }
-  .rh-entry h3 {
-    color: #0f172a;
-    font-size: 1.05rem;
-    font-weight: 600;
-    margin: 0 0 0.3rem 0;
-    line-height: 1.45;
-  }
-  .rh-entry .authors {
-    color: #4b5563;
-    font-size: 0.92rem;
-    margin: 0 0 0.25rem 0;
-  }
-  .rh-entry .venue {
-    color: #6b7280;
-    font-size: 0.88rem;
+  .ed-name .surname {
+    font-family: 'Source Serif Pro', Georgia, serif;
     font-style: italic;
-    margin: 0 0 0.85rem 0;
-  }
-  .rh-entry .desc {
-    color: #1f2937;
-    font-size: 0.95rem;
-    line-height: 1.7;
-    margin: 0 0 0.85rem 0;
-  }
-  .rh-entry .tag-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    margin: 0.75rem 0;
-  }
-  .rh-entry .tag {
-    font-size: 0.72rem;
-    background: #f3f4f6;
-    border: 1px solid #e5e7eb;
-    color: #4b5563;
-    padding: 0.18em 0.55em;
-    border-radius: 3px;
-    font-family: 'JetBrains Mono', monospace;
-  }
-  .rh-entry .linkbar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.1rem;
-    font-size: 0.88rem;
-    font-family: 'JetBrains Mono', monospace;
-  }
-  .rh-entry .linkbar a {
-    color: #2563eb;
-    border-bottom: 1px solid transparent;
-    padding-bottom: 1px;
-    transition: border-color 150ms;
-  }
-  .rh-entry .linkbar a:hover { border-bottom-color: #2563eb; }
-
-  /* ─── Stats line ─── */
-  .rh-stats {
-    display: flex;
-    gap: 2.5rem;
-    flex-wrap: wrap;
-    padding: 1.25rem 0;
-    border-top: 1px solid #f3f4f6;
-    border-bottom: 1px solid #f3f4f6;
-    margin: 2rem 0 3rem 0;
-  }
-  .rh-stat {
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-  }
-  .rh-stat .v {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1.5rem;
     font-weight: 700;
-    color: #0f172a;
-    line-height: 1;
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.025em;
+    position: relative;
   }
-  .rh-stat .k {
+  .ed-name .surname::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.05em;
+    height: 0.08em;
+    background: linear-gradient(90deg, transparent 0%, rgba(37, 99, 235, 0.45) 30%, rgba(124, 58, 237, 0.45) 70%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  /* ─── Tagline — small caps mono ─── */
+  .ed-tagline {
+    font-family: 'JetBrains Mono', monospace;
     font-size: 0.78rem;
     color: #6b7280;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.18em;
+    margin: 0 0 2rem 0;
+    line-height: 1.6;
+  }
+  .ed-tagline .sep {
+    color: #cbd5e1;
+    margin: 0 0.5rem;
   }
 
-  @media (max-width: 768px) {
-    .rh-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-    .rh-photo { width: 140px; height: 170px; }
-    .rh-name { font-size: 1.85rem; }
-    .rh-stats { gap: 1.5rem; }
+  /* ─── Bio — serif first para with drop cap ─── */
+  .ed-bio {
+    font-family: 'Source Serif Pro', Georgia, serif;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: #1f2937;
+    margin: 0 0 1.25rem 0;
+    max-width: 38rem;
+  }
+  .ed-bio:first-of-type::first-letter {
+    font-family: 'Source Serif Pro', Georgia, serif;
+    font-size: 3.4rem;
+    font-weight: 700;
+    float: left;
+    line-height: 1;
+    margin: 0.1rem 0.55rem 0 0;
+    color: #2563eb;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .ed-bio em {
+    font-style: italic;
+    color: #0f172a;
+  }
+  .ed-bio strong {
+    font-weight: 700;
+    color: #0f172a;
+    background: linear-gradient(180deg, transparent 60%, rgba(124, 58, 237, 0.12) 60%);
+    padding: 0 0.1em;
+  }
+  .ed-bio a {
+    color: #2563eb;
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    transition: background 200ms ease;
+    padding: 0 2px;
+  }
+  .ed-bio a:hover {
+    background: rgba(37, 99, 235, 0.08);
+  }
+
+  /* ─── Quick-link rail ─── */
+  .ed-rail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin-top: 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.84rem;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .ed-rail a {
+    color: #1f2937;
+    padding: 0.85rem 1.4rem;
+    border-right: 1px solid #e5e7eb;
+    transition: all 150ms ease;
+    position: relative;
+    text-decoration: none;
+  }
+  .ed-rail a:first-child { padding-left: 0; }
+  .ed-rail a:last-child { border-right: none; }
+  .ed-rail a:hover {
+    color: #2563eb;
+    background: rgba(37, 99, 235, 0.03);
+  }
+  .ed-rail a::before {
+    content: "→";
+    color: #cbd5e1;
+    margin-right: 0.5rem;
+    transition: all 150ms ease;
+  }
+  .ed-rail a:hover::before {
+    color: #2563eb;
+    transform: translateX(2px);
+    display: inline-block;
+  }
+
+  /* ─── Photo block — asymmetric, framed ─── */
+  .ed-photo-frame {
+    position: relative;
+    width: 100%;
+    max-width: 280px;
+    justify-self: end;
+    align-self: end;
+    margin-bottom: 0.5rem;
+  }
+  .ed-photo-frame::before {
+    content: "";
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    right: -14px;
+    bottom: -14px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.12) 0%, rgba(124, 58, 237, 0.12) 100%);
+    border-radius: 4px;
+    z-index: 0;
+  }
+  .ed-photo-frame::after {
+    content: "";
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    right: -7px;
+    bottom: -7px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    z-index: 0;
+  }
+  .ed-photo {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center 22%;
+    border-radius: 4px;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+    filter: grayscale(0.05) contrast(1.02);
+    transition: filter 400ms ease, transform 400ms ease;
+  }
+  .ed-photo:hover {
+    filter: grayscale(0) contrast(1.05);
+    transform: translate(-3px, -3px);
+  }
+  .ed-photo-caption {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: #9ca3af;
+    margin-top: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    text-align: right;
+    position: relative;
+    z-index: 1;
+  }
+  .ed-photo-caption .blink {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #16a34a;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    box-shadow: 0 0 8px rgba(22, 163, 74, 0.5);
+    animation: ed-blink 2s ease-in-out infinite;
+    vertical-align: middle;
+  }
+  @keyframes ed-blink {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* ─── Pull quote (editorial moment) ─── */
+  .ed-pullquote {
+    margin: 5rem 0 6rem 0;
+    padding: 2.5rem 0;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+    position: relative;
+    text-align: center;
+  }
+  .ed-pullquote::before {
+    content: "“";
+    font-family: 'Source Serif Pro', Georgia, serif;
+    font-size: 6rem;
+    color: #2563eb;
+    opacity: 0.15;
+    position: absolute;
+    top: -2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    line-height: 1;
+    font-weight: 700;
+  }
+  .ed-pullquote blockquote {
+    font-family: 'Source Serif Pro', Georgia, serif;
+    font-size: clamp(1.4rem, 3.5vw, 2.1rem);
+    font-style: italic;
+    font-weight: 400;
+    color: #0f172a;
+    line-height: 1.35;
+    margin: 0 auto;
+    max-width: 38rem;
+    letter-spacing: -0.015em;
+    padding: 0;
+    border: none;
+  }
+  .ed-pullquote blockquote strong {
+    font-style: normal;
+    background: linear-gradient(180deg, transparent 60%, rgba(124, 58, 237, 0.15) 60%);
+    padding: 0 0.1em;
+    font-weight: 700;
+  }
+
+  /* ─── Section header with chapter numbers ─── */
+  .ed-section {
+    margin: 4rem 0 3rem 0;
+  }
+  .ed-section-head {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 1.5rem;
+    align-items: baseline;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .ed-section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #2563eb;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+  }
+  .ed-section-head h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.03em;
+    margin: 0;
+    line-height: 1;
+  }
+  .ed-section-head .h2-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: #9ca3af;
+    margin-left: 0.75rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ─── Stats line (now with strong typography) ─── */
+  .ed-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding: 2rem 0;
+    margin: 4rem 0;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .ed-stat .v {
+    font-family: 'Source Serif Pro', Georgia, serif;
+    font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .ed-stat .v em {
+    font-style: italic;
+    color: #2563eb;
+  }
+  .ed-stat .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 500;
+  }
+
+  /* ─── Paper-style entries (Featured + Selected) ─── */
+  .ed-entry {
+    padding: 2rem 0;
+    border-top: 1px solid #f3f4f6;
+    display: grid;
+    grid-template-columns: 1fr 7rem;
+    gap: 2rem;
+    align-items: start;
+    transition: background 200ms ease;
+  }
+  .ed-entry:first-child { border-top: none; padding-top: 1rem; }
+  .ed-entry:hover {
+    background: linear-gradient(90deg, rgba(37, 99, 235, 0.015), transparent 70%);
+  }
+  .ed-entry-content h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.4rem 0;
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+  }
+  .ed-entry-content h3 a {
+    color: inherit;
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition: background-size 250ms ease;
+  }
+  .ed-entry-content h3 a:hover {
+    background-size: 100% 1px;
+  }
+  .ed-entry-content .ed-byline {
+    font-family: 'Source Serif Pro', Georgia, serif;
+    font-style: italic;
+    font-size: 0.92rem;
+    color: #6b7280;
+    margin: 0 0 0.85rem 0;
+  }
+  .ed-entry-content .ed-desc {
+    font-family: 'Inter', sans-serif;
+    color: #374151;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin: 0 0 0.9rem 0;
+  }
+  .ed-entry-content .ed-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin: 0.5rem 0 0.8rem 0;
+  }
+  .ed-entry-content .ed-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: #4b5563;
+    background: transparent;
+    border: 1px solid #e5e7eb;
+    padding: 0.18em 0.55em;
+    border-radius: 3px;
+  }
+  .ed-entry-content .ed-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    margin-top: 0.5rem;
+  }
+  .ed-entry-content .ed-links a {
+    color: #2563eb;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(37, 99, 235, 0.3);
+    transition: border-color 150ms ease;
+  }
+  .ed-entry-content .ed-links a:hover {
+    border-bottom-color: #2563eb;
+  }
+  .ed-entry-side {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding-top: 0.3rem;
+    line-height: 1.5;
+  }
+  .ed-entry-side .ed-year {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.2rem;
+    font-family: 'Source Serif Pro', Georgia, serif;
+    font-style: italic;
+  }
+
+  /* ─── More section ─── */
+  .ed-more {
+    margin: 5rem 0 2rem 0;
+    padding-top: 3rem;
+    border-top: 1px solid #e5e7eb;
+    text-align: center;
+  }
+  .ed-more p {
+    font-family: 'Source Serif Pro', Georgia, serif;
+    font-size: 1.05rem;
+    color: #4b5563;
+    line-height: 1.7;
+    margin: 0;
+  }
+  .ed-more p a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(37, 99, 235, 0.3);
+    transition: border-color 150ms ease;
+  }
+  .ed-more p a:hover { border-bottom-color: #2563eb; }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 900px) {
+    .ed-hero {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .ed-photo-frame {
+      max-width: 220px;
+      justify-self: start;
+    }
+    .ed-name { font-size: clamp(2.5rem, 11vw, 4rem); }
+    .ed-bio:first-of-type::first-letter { font-size: 2.8rem; }
+    .ed-stats { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .ed-entry { grid-template-columns: 1fr; gap: 0.5rem; }
+    .ed-entry-side { text-align: left; padding-top: 0; }
+    .ed-section-head { grid-template-columns: 1fr; gap: 0.3rem; }
   }
 </style>
 
 <div class="container">
 
-  <!-- ─── HERO ─── -->
-  <section class="rh-grid">
-    <div>
-      <h1 class="rh-name">Matthew Burns</h1>
-      <p class="rh-tagline">AI security researcher &middot; adversarial evaluation of autonomous AI agents &middot; LLM post-training research</p>
-      <p class="rh-bio">I build adversarial evaluation infrastructure for autonomous AI agents — sitting at an intersection that rarely meets in one person: <strong>offensive security</strong>, <strong>LLM fine-tuning</strong>, and <strong>AI governance</strong>. My Master's capstone at the University of Sydney is the open-source <a href="https://github.com/mburns00/beyond-ctfs"><em>Beyond CTFs</em></a> framework — a real-world evaluation rubric for autonomous pentesting LLMs comparing SFT, DPO, and GRPO post-training strategies.</p>
-      <p class="rh-bio">Methodological integrity is the point — null-tolerant reporting, pre-registered hypotheses, blind scoring, honest inter-rater reliability disclosure. Not benchmark theatre.</p>
-      <div class="rh-quicklinks">
-        <a href="{{ '/assets/resume/Matthew_Burns_Resume_2026.pdf' | relative_url }}" target="_blank">CV (PDF)</a>
+  <!-- ═══ HERO ═══ -->
+  <section class="ed-hero">
+    <div class="ed-hero-content">
+      <h1 class="ed-name">Matthew <span class="surname">Burns</span></h1>
+      <p class="ed-tagline">AI Security Researcher <span class="sep">·</span> Adversarial LLM Evaluation <span class="sep">·</span> Sydney AU</p>
+
+      <p class="ed-bio">I build adversarial evaluation infrastructure for autonomous AI agents &mdash; sitting at an intersection that rarely meets in one person: <strong>offensive security</strong>, <strong>LLM fine-tuning</strong>, and <strong>AI governance</strong>. My Master&rsquo;s capstone at the University of Sydney is the open-source <a href="https://github.com/mburns00/beyond-ctfs"><em>Beyond CTFs</em></a> framework &mdash; a real-world evaluation rubric for autonomous pentesting LLMs comparing SFT, DPO, and GRPO post-training strategies.</p>
+
+      <p class="ed-bio">Australian citizen, security-clearance eligible (NV1 / NV2 / PV). Based in Gold Coast; open to roles across Sydney, Canberra, or remote within Australia.</p>
+
+      <nav class="ed-rail" aria-label="Quick links">
+        <a href="{{ '/assets/resume/Matthew_Burns_Resume_2026.pdf' | relative_url }}" target="_blank">CV</a>
         <a href="https://github.com/mburns00" target="_blank">GitHub</a>
         <a href="https://www.linkedin.com/in/mburns00/" target="_blank">LinkedIn</a>
         <a href="mailto:MatthewKBurns00@gmail.com">Email</a>
         <a href="{{ '/about/' | relative_url }}">About</a>
-      </div>
+      </nav>
     </div>
-    <img class="rh-photo" src="{{ '/assets/images/matthew-burns.jpg' | relative_url }}" alt="Matthew Burns" loading="lazy" />
+
+    <figure class="ed-photo-frame">
+      <img class="ed-photo" src="{{ '/assets/images/matthew-burns.jpg' | relative_url }}" alt="Matthew Burns portrait" loading="lazy" />
+      <figcaption class="ed-photo-caption"><span class="blink"></span>Open to work &middot; 2026</figcaption>
+    </figure>
   </section>
 
-  <!-- ─── AVAILABILITY ─── -->
-  <div class="rh-avail">
-    <strong>Open to roles:</strong> AI Security Engineer <span class="sep">·</span> AI Red Team <span class="sep">·</span> ML Security Engineer <span class="sep">·</span> Penetration Tester. <strong>Based in</strong> Gold Coast, QLD. <strong>Open to work in</strong> Sydney / Canberra / Remote AU. <strong>Australian citizen</strong>, security-clearance eligible (NV1 / NV2 / PV).
-  </div>
+  <!-- ═══ PULL QUOTE ═══ -->
+  <section class="ed-pullquote">
+    <blockquote>
+      Methodological integrity is the point. <strong>Not benchmark theatre.</strong>
+    </blockquote>
+  </section>
 
-  <!-- ─── STATS LINE ─── -->
-  <div class="rh-stats">
-    <div class="rh-stat"><span class="v">{{ done_count }}/{{ total_units }}</span><span class="k">Master's units</span></div>
-    <div class="rh-stat"><span class="v">{{ aws_done }}/{{ aws_total }}</span><span class="k">AWS SAA-C03</span></div>
-    <div class="rh-stat"><span class="v">{{ box_count }}</span><span class="k">HTB writeups</span></div>
-    <div class="rh-stat"><span class="v">{{ site.tools | size }}</span><span class="k">Projects</span></div>
-  </div>
-
-  <!-- ─── FEATURED RESEARCH ─── -->
-  <div class="rh-section">
-    <h2>Featured research</h2>
-    <div class="rh-entry">
-      <h3>Beyond CTFs — Evaluating Autonomous Pentesting Agents Through a Safety-Governance Framework with Empirical Fine-Tuning Strategy Analysis</h3>
-      <p class="authors">Matthew K. Burns</p>
-      <p class="venue">Master of Cybersecurity Capstone &middot; OCSE5707 / OCSE5708 &middot; The University of Sydney, 2026</p>
-      <p class="desc">A real-world evaluation framework for autonomous pentesting LLMs. 12-dimensional rubric (8 performance + 4 safety) grounded in PTES and MITRE ATT&amp;CK. Quasi-experimental, Latin-square comparison of four Qwen3-14B variants (Baseline, SFT, DPO, GRPO) across 32 controlled cells on Hack The Box machines. Triple-blind LLM-as-judge scoring; statistical pipeline runs Friedman → Wilcoxon (Bonferroni α = .00833) → Cliff's δ → Holm–Bonferroni. Behaviour mapped to OWASP Agentic Top 10, NIST AI 600-1, MITRE ATLAS, and the Singapore Agentic AI Framework. Apache-2.0 open source.</p>
-      <div class="tag-row">
-        <span class="tag">SFT</span><span class="tag">DPO</span><span class="tag">GRPO</span><span class="tag">MITRE ATT&amp;CK</span><span class="tag">MITRE ATLAS</span><span class="tag">OWASP Agentic Top 10</span><span class="tag">NIST AI 600-1</span><span class="tag">Qwen3-14B</span>
-      </div>
-      <div class="linkbar">
-        <a href="https://github.com/mburns00/beyond-ctfs" target="_blank">[code]</a>
-        <a href="https://github.com/mburns00/beyond-ctfs/blob/main/docs/Beyond_CTFs_Final_Report.pdf" target="_blank">[PDF — Final Report]</a>
-        <a href="{{ '/tools/beyond-ctfs/' | relative_url }}">[project page]</a>
-      </div>
+  <!-- ═══ STATS ═══ -->
+  <section class="ed-stats">
+    <div class="ed-stat">
+      <span class="v">{{ done_count }}<em>/</em>{{ total_units }}</span>
+      <span class="k">Master&rsquo;s units</span>
     </div>
-  </div>
+    <div class="ed-stat">
+      <span class="v">{{ aws_done }}<em>/</em>{{ aws_total }}</span>
+      <span class="k">AWS&nbsp;SAA-C03</span>
+    </div>
+    <div class="ed-stat">
+      <span class="v">{{ box_count }}</span>
+      <span class="k">HTB write-ups</span>
+    </div>
+    <div class="ed-stat">
+      <span class="v">{{ site.tools | size }}</span>
+      <span class="k">Projects shipped</span>
+    </div>
+  </section>
 
-  <!-- ─── SELECTED PROJECTS ─── -->
-  <div class="rh-section">
-    <h2>Selected projects</h2>
-
-    <div class="rh-entry">
-      <h3>CyberSec Qwen3 — First-generation offensive-security LLM fine-tune</h3>
-      <p class="venue">Independent research &middot; 2026</p>
-      <p class="desc">Week-long research sprint fine-tuning Qwen3-14B for offensive security using a three-phase pipeline (SFT → DPO → GRPO). Benchmarked against live HackTheBox machines via a custom MCP tool bridge. The data-composition, reward-design, and evaluation lessons from this sprint directly shaped the Beyond CTFs thesis methodology.</p>
-      <div class="linkbar">
-        <a href="{{ '/tools/cybersec-qwen3/' | relative_url }}">[project page]</a>
-      </div>
+  <!-- ═══ FEATURED RESEARCH ═══ -->
+  <section class="ed-section">
+    <div class="ed-section-head">
+      <div class="ed-section-num">02 / Featured</div>
+      <h2>Research<span class="h2-meta">— published openly</span></h2>
     </div>
 
-    <div class="rh-entry">
-      <h3>CryptoOS Arcade — Interactive cryptography teaching tool</h3>
-      <p class="venue">Side project &middot; 2026</p>
-      <p class="desc">Six-room gamified cryptography learning experience built as a single-page web app — from XOR fundamentals through to TLS and digital signatures. 30 interactive levels, KaTeX math rendering, Web Audio API sound effects, zero dependencies.</p>
-      <div class="linkbar">
-        <a href="{{ '/assets/crypto-arcade/index.html' | relative_url }}" target="_blank">[play]</a>
-        <a href="{{ '/tools/cryptoos-arcade/' | relative_url }}">[project page]</a>
+    <article class="ed-entry">
+      <div class="ed-entry-content">
+        <h3><a href="https://github.com/mburns00/beyond-ctfs" target="_blank">Beyond CTFs &mdash; Evaluating Autonomous Pentesting Agents Through a Safety-Governance Framework with Empirical Fine-Tuning Strategy Analysis</a></h3>
+        <p class="ed-byline">Matthew K. Burns &middot; The University of Sydney</p>
+        <p class="ed-desc">A real-world evaluation framework for autonomous pentesting LLMs. 12-dimensional rubric (8 performance + 4 safety) grounded in PTES and MITRE ATT&amp;CK. Quasi-experimental, Latin-square comparison of four Qwen3-14B variants (Baseline, SFT, DPO, GRPO) across 32 controlled cells on Hack The Box machines. Triple-blind LLM-as-judge scoring; statistical pipeline runs Friedman &rarr; Wilcoxon (Bonferroni &alpha; = .00833) &rarr; Cliff&rsquo;s &delta; &rarr; Holm&ndash;Bonferroni. Behaviour mapped to OWASP Agentic Top 10, NIST AI 600-1, MITRE ATLAS, and the Singapore Agentic AI Framework. Apache-2.0 open source.</p>
+        <div class="ed-tags">
+          <span class="ed-tag">SFT</span><span class="ed-tag">DPO</span><span class="ed-tag">GRPO</span><span class="ed-tag">MITRE ATT&amp;CK</span><span class="ed-tag">MITRE ATLAS</span><span class="ed-tag">OWASP Agentic Top 10</span><span class="ed-tag">NIST AI 600-1</span><span class="ed-tag">Qwen3-14B</span>
+        </div>
+        <div class="ed-links">
+          <a href="https://github.com/mburns00/beyond-ctfs" target="_blank">→ Code</a>
+          <a href="https://github.com/mburns00/beyond-ctfs/blob/main/docs/Beyond_CTFs_Final_Report.pdf" target="_blank">→ Final Report&nbsp;(PDF)</a>
+          <a href="{{ '/tools/beyond-ctfs/' | relative_url }}">→ Project page</a>
+        </div>
       </div>
-    </div>
-  </div>
+      <aside class="ed-entry-side">
+        <span class="ed-year">2026</span>
+        Master&rsquo;s<br>Capstone
+      </aside>
+    </article>
+  </section>
 
-  <!-- ─── More ─── -->
-  <div class="rh-section">
-    <h2>More</h2>
-    <p style="color:#374151; line-height:1.7; margin:0;">
-      HackTheBox write-ups at <a href="{{ '/ctfs/' | relative_url }}" style="color:#2563eb;">/ctfs</a> &middot;
-      All projects at <a href="{{ '/tools/' | relative_url }}" style="color:#2563eb;">/tools</a> &middot;
-      Education and certifications at <a href="{{ '/certs/' | relative_url }}" style="color:#2563eb;">/certs</a> &middot;
-      Full bio at <a href="{{ '/about/' | relative_url }}" style="color:#2563eb;">/about</a>.
+  <!-- ═══ SELECTED PROJECTS ═══ -->
+  <section class="ed-section">
+    <div class="ed-section-head">
+      <div class="ed-section-num">03 / Selected</div>
+      <h2>Projects<span class="h2-meta">— see all at /tools</span></h2>
+    </div>
+
+    <article class="ed-entry">
+      <div class="ed-entry-content">
+        <h3><a href="{{ '/tools/cybersec-qwen3/' | relative_url }}">CyberSec Qwen3 &mdash; first-generation offensive-security LLM fine-tune</a></h3>
+        <p class="ed-byline">Independent research &middot; 2026</p>
+        <p class="ed-desc">Week-long research sprint fine-tuning Qwen3-14B for offensive security using a three-phase pipeline (SFT &rarr; DPO &rarr; GRPO). Benchmarked against live HackTheBox machines via a custom MCP tool bridge. The data-composition, reward-design, and evaluation lessons from this sprint directly shaped the Beyond CTFs thesis methodology.</p>
+        <div class="ed-links">
+          <a href="{{ '/tools/cybersec-qwen3/' | relative_url }}">→ Project page</a>
+        </div>
+      </div>
+      <aside class="ed-entry-side">
+        <span class="ed-year">2026</span>
+        Research<br>Sprint
+      </aside>
+    </article>
+
+    <article class="ed-entry">
+      <div class="ed-entry-content">
+        <h3><a href="{{ '/tools/cryptoos-arcade/' | relative_url }}">CryptoOS Arcade &mdash; interactive cryptography teaching tool</a></h3>
+        <p class="ed-byline">Side project &middot; 2026</p>
+        <p class="ed-desc">Six-room gamified cryptography learning experience built as a single-page web app &mdash; from XOR fundamentals through to TLS and digital signatures. 30 interactive levels, KaTeX math rendering, Web Audio API sound effects, zero dependencies.</p>
+        <div class="ed-links">
+          <a href="{{ '/assets/crypto-arcade/index.html' | relative_url }}" target="_blank">→ Play</a>
+          <a href="{{ '/tools/cryptoos-arcade/' | relative_url }}">→ Project page</a>
+        </div>
+      </div>
+      <aside class="ed-entry-side">
+        <span class="ed-year">2026</span>
+        Side<br>Project
+      </aside>
+    </article>
+  </section>
+
+  <!-- ═══ MORE ═══ -->
+  <section class="ed-more">
+    <p>
+      HackTheBox write-ups at <a href="{{ '/ctfs/' | relative_url }}">/ctfs</a> &middot;
+      all projects at <a href="{{ '/tools/' | relative_url }}">/tools</a> &middot;
+      education and certifications at <a href="{{ '/certs/' | relative_url }}">/certs</a> &middot;
+      longer bio at <a href="{{ '/about/' | relative_url }}">/about</a>.
     </p>
-  </div>
+  </section>
 
 </div>
