@@ -5,360 +5,294 @@ title: "Home"
 
 {% assign masters = site.data.masters %}
 {% assign completed_units = masters.units | where: "status", "completed" %}
-{% assign current_units = masters.units | where: "status", "current" %}
-{% assign remaining_units = masters.units | where: "status", "remaining" %}
 {% assign total_units = masters.units | size %}
 {% assign done_count = completed_units | size %}
-{% assign now_count = current_units | size %}
-{% assign left_count = remaining_units | size %}
-
 {% assign aws = site.data.aws_study %}
 {% assign aws_done = aws.modules | where: "status", "completed" | size %}
-{% assign aws_wip = aws.modules | where: "status", "current" | size %}
 {% assign aws_total = aws.modules | size %}
-
 {% assign box_count = site.writeups | size %}
-{% assign box_goal = 100 %}
 
 <style>
-  /* Hero CTAs */
-  .hero-ctas {
-    margin-top: 2rem;
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
+  /* ─── Researcher-style hero ─── */
+  .rh-grid {
+    display: grid;
+    grid-template-columns: 1fr 180px;
+    gap: 3rem;
+    align-items: start;
+    margin: 2rem 0 3.5rem 0;
   }
-  .hero-cta {
-    padding: 0.75rem 1.4rem;
-    border-radius: 10px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    text-decoration: none;
-    transition: all 250ms ease;
-    will-change: transform;
+  .rh-name {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.025em;
+    margin: 0 0 0.4rem 0;
+    line-height: 1.15;
   }
-  .hero-cta.primary {
-    background: linear-gradient(135deg, #60a5fa, #818cf8);
-    color: #0a0e1a !important;
+  .rh-tagline {
+    color: #4b5563;
+    font-size: 1.05rem;
+    margin: 0 0 1.4rem 0;
+    line-height: 1.5;
+  }
+  .rh-bio {
+    color: #1f2937;
+    font-size: 1rem;
+    line-height: 1.75;
+    margin: 0 0 1rem 0;
+  }
+  .rh-bio strong {
+    color: #0f172a;
     font-weight: 600;
   }
-  .hero-cta.primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(96, 165, 250, 0.3);
+  .rh-bio a {
+    color: #2563eb;
+    border-bottom: 1px dotted rgba(37, 99, 235, 0.5);
+    transition: border-color 200ms;
   }
-  .hero-cta.secondary {
-    background: rgba(15, 23, 42, 0.5);
-    color: #e2e8f0;
-    border: 1px solid rgba(96, 165, 250, 0.2);
-  }
-  .hero-cta.secondary:hover {
-    background: rgba(15, 23, 42, 0.8);
-    border-color: rgba(96, 165, 250, 0.4);
-    transform: translateY(-2px);
-  }
-
-  /* Featured project card */
-  .featured-project {
-    background: rgba(15, 23, 42, 0.45);
-    border: 1px solid rgba(96, 165, 250, 0.1);
-    border-radius: 18px;
-    padding: 2.5rem;
-    margin-bottom: 4rem;
-    transition: all 400ms ease;
-  }
-  .featured-project:hover {
-    background: rgba(15, 23, 42, 0.65);
-    border-color: rgba(96, 165, 250, 0.2);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 80px rgba(96, 165, 250, 0.05);
-  }
-  .featured-project h3 {
-    font-size: 1.45rem;
-    color: #f1f5f9;
-    margin: 0 0 0.4rem 0;
-    line-height: 1.3;
-  }
-  .featured-project .project-tag {
-    display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.68rem;
-    color: #60a5fa;
-    background: rgba(96, 165, 250, 0.1);
-    padding: 0.3em 0.7em;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .featured-project .lead {
-    color: #cbd5e1;
-    font-size: 1.02rem;
-    line-height: 1.75;
-    margin-bottom: 1.5rem;
-  }
-  .featured-stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    margin: 1.5rem 0 2rem 0;
-  }
-  .stat-cell {
-    background: rgba(96, 165, 250, 0.04);
-    border: 1px solid rgba(96, 165, 250, 0.08);
-    border-radius: 10px;
-    padding: 1rem;
-    text-align: center;
-  }
-  .stat-cell .stat-num {
-    display: block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1.55rem;
-    color: #60a5fa;
-    font-weight: 700;
-    margin-bottom: 0.25rem;
-  }
-  .stat-cell .stat-label {
-    font-size: 0.68rem;
-    color: #64748b;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-  .featured-tags {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 1.5rem 0;
+  .rh-bio a:hover { border-bottom-color: #2563eb; }
+  .rh-quicklinks {
+    margin-top: 1.25rem;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
+    gap: 1.4rem;
+    font-size: 0.92rem;
   }
-  .featured-tags li {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: #94a3b8;
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(96, 165, 250, 0.1);
-    padding: 0.25em 0.65em;
-    border-radius: 5px;
+  .rh-quicklinks a {
+    color: #2563eb;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 1px;
+    transition: border-color 150ms;
   }
-  .project-ctas {
+  .rh-quicklinks a:hover { border-bottom-color: #2563eb; }
+  .rh-photo {
+    width: 180px;
+    height: 180px;
+    border-radius: 6px;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
     display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-  }
-
-  /* "Looking for" section */
-  .looking-for {
-    background: rgba(15, 23, 42, 0.3);
-    border: 1px solid rgba(74, 222, 128, 0.1);
-    border-radius: 16px;
-    padding: 2rem 2.25rem;
-    margin-bottom: 4rem;
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 2.5rem;
-  }
-  .looking-for-content h3 {
-    font-size: 1.1rem;
-    color: #f1f5f9;
-    margin: 0 0 0.85rem 0;
-  }
-  .looking-for-content p {
-    color: #94a3b8;
-    line-height: 1.7;
-    margin: 0 0 1.1rem 0;
-    font-size: 0.95rem;
-  }
-  .looking-for-tags {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-  .looking-for-tags li {
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.72rem;
-    color: #4ade80;
-    background: rgba(74, 222, 128, 0.08);
-    border: 1px solid rgba(74, 222, 128, 0.16);
-    padding: 0.3em 0.7em;
-    border-radius: 5px;
+    text-align: center;
+    padding: 1rem;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
   }
-  .looking-for-meta {
+
+  /* ─── Inline availability banner ─── */
+  .rh-avail {
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: 6px;
+    padding: 0.85rem 1.1rem;
+    margin-bottom: 3rem;
+    color: #0c4a6e;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+  .rh-avail strong { color: #082f49; font-weight: 600; }
+  .rh-avail .sep { color: #7dd3fc; margin: 0 0.4rem; }
+
+  /* ─── Section heading ─── */
+  .rh-section {
+    margin-bottom: 2rem;
+  }
+  .rh-section > h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #0f172a;
+    margin: 2.5rem 0 1.25rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    letter-spacing: -0.01em;
+  }
+
+  /* ─── Paper-style entry ─── */
+  .rh-entry {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .rh-entry:last-child { border-bottom: none; padding-bottom: 0; }
+  .rh-entry h3 {
+    color: #0f172a;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0 0 0.3rem 0;
+    line-height: 1.45;
+  }
+  .rh-entry .authors {
+    color: #4b5563;
+    font-size: 0.92rem;
+    margin: 0 0 0.25rem 0;
+  }
+  .rh-entry .venue {
+    color: #6b7280;
+    font-size: 0.88rem;
+    font-style: italic;
+    margin: 0 0 0.85rem 0;
+  }
+  .rh-entry .desc {
+    color: #1f2937;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin: 0 0 0.85rem 0;
+  }
+  .rh-entry .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0.75rem 0;
+  }
+  .rh-entry .tag {
+    font-size: 0.72rem;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    color: #4b5563;
+    padding: 0.18em 0.55em;
+    border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .rh-entry .linkbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.1rem;
+    font-size: 0.88rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .rh-entry .linkbar a {
+    color: #2563eb;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 1px;
+    transition: border-color 150ms;
+  }
+  .rh-entry .linkbar a:hover { border-bottom-color: #2563eb; }
+
+  /* ─── Stats line ─── */
+  .rh-stats {
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    padding: 1.25rem 0;
+    border-top: 1px solid #f3f4f6;
+    border-bottom: 1px solid #f3f4f6;
+    margin: 2rem 0 3rem 0;
+  }
+  .rh-stat {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 0;
+    gap: 0.15rem;
   }
-  .looking-for-meta .meta-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+  .rh-stat .v {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.78rem;
-    color: #64748b;
-    padding: 0.6rem 0;
-    border-bottom: 1px solid rgba(96, 165, 250, 0.05);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1;
   }
-  .looking-for-meta .meta-row:last-child { border-bottom: none; }
-  .looking-for-meta .meta-row strong {
-    color: #e2e8f0;
-    font-weight: 500;
-    text-align: right;
-    max-width: 65%;
+  .rh-stat .k {
+    font-size: 0.78rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
 
   @media (max-width: 768px) {
-    .featured-stats { grid-template-columns: repeat(2, 1fr); }
-    .looking-for { grid-template-columns: 1fr; gap: 1.5rem; }
-    .hero-ctas { flex-direction: column; }
-    .hero-cta { width: 100%; text-align: center; }
-    .featured-project { padding: 1.5rem; }
+    .rh-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .rh-photo { width: 140px; height: 140px; }
+    .rh-name { font-size: 1.85rem; }
+    .rh-stats { gap: 1.5rem; }
   }
 </style>
 
 <div class="container">
 
-  <!-- HERO -->
-  <section class="hero">
-    <h1 class="hero-fade">Matthew <span class="accent">Burns</span></h1>
-    <p class="hero-subtitle hero-fade">AI security researcher &middot; adversarial evaluation of autonomous AI agents &middot; LLM post-training research</p>
-    <div class="hero-ctas hero-fade">
-      <a href="{{ '/assets/resume/Matthew_Burns_Resume_2026.pdf' | relative_url }}" class="hero-cta primary" target="_blank">Resume (PDF)</a>
-      <a href="https://github.com/mburns00/beyond-ctfs" class="hero-cta secondary" target="_blank">Beyond CTFs Repo</a>
-      <a href="mailto:MatthewKBurns00@gmail.com" class="hero-cta secondary">Get in touch</a>
+  <!-- ─── HERO ─── -->
+  <section class="rh-grid">
+    <div>
+      <h1 class="rh-name">Matthew Burns</h1>
+      <p class="rh-tagline">AI security researcher &middot; adversarial evaluation of autonomous AI agents &middot; LLM post-training research</p>
+      <p class="rh-bio">I build adversarial evaluation infrastructure for autonomous AI agents — sitting at an intersection that rarely meets in one person: <strong>offensive security</strong>, <strong>LLM fine-tuning</strong>, and <strong>AI governance</strong>. My Master's capstone at the University of Sydney is the open-source <a href="https://github.com/mburns00/beyond-ctfs"><em>Beyond CTFs</em></a> framework — a real-world evaluation rubric for autonomous pentesting LLMs comparing SFT, DPO, and GRPO post-training strategies.</p>
+      <p class="rh-bio">Methodological integrity is the point — null-tolerant reporting, pre-registered hypotheses, blind scoring, honest inter-rater reliability disclosure. Not benchmark theatre.</p>
+      <div class="rh-quicklinks">
+        <a href="{{ '/assets/resume/Matthew_Burns_Resume_2026.pdf' | relative_url }}" target="_blank">CV (PDF)</a>
+        <a href="https://github.com/mburns00" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/mburns00/" target="_blank">LinkedIn</a>
+        <a href="mailto:MatthewKBurns00@gmail.com">Email</a>
+        <a href="{{ '/about/' | relative_url }}">About</a>
+      </div>
     </div>
+    <div class="rh-photo" aria-label="Profile photo placeholder">[photo<br>placeholder]</div>
   </section>
 
-  <!-- FEATURED RESEARCH -->
-  <div class="reveal">
-    <p class="section-label">Featured Research</p>
+  <!-- ─── AVAILABILITY ─── -->
+  <div class="rh-avail">
+    <strong>Open to roles:</strong> AI Security Engineer <span class="sep">·</span> AI Red Team <span class="sep">·</span> ML Security Engineer <span class="sep">·</span> Penetration Tester. <strong>Based in</strong> Gold Coast, QLD. <strong>Open to work in</strong> Sydney / Canberra / Remote AU. <strong>Australian citizen</strong>, security-clearance eligible (NV1 / NV2 / PV).
   </div>
-  <div class="featured-project reveal">
-    <span class="project-tag">Master's Capstone &middot; Open-Source</span>
-    <h3>Beyond CTFs &mdash; Evaluation Framework for Autonomous Pentesting Agents</h3>
-    <p class="lead">A real-world evaluation framework for autonomous pentesting LLMs. Across 32 controlled cells on Hack The Box machines, I compared four fine-tuned Qwen3-14B variants using a 12-dimensional rubric grounded in PTES and MITRE ATT&amp;CK &mdash; with behaviour mapped to OWASP Agentic Top 10, NIST AI 600-1, MITRE ATLAS, and the Singapore Agentic AI Framework. Null-tolerant reporting, blind scoring, pre-registered hypotheses.</p>
 
-    <div class="featured-stats">
-      <div class="stat-cell">
-        <span class="stat-num">32</span>
-        <span class="stat-label">Controlled Cells</span>
-      </div>
-      <div class="stat-cell">
-        <span class="stat-num">4</span>
-        <span class="stat-label">Qwen3-14B Variants</span>
-      </div>
-      <div class="stat-cell">
-        <span class="stat-num">12</span>
-        <span class="stat-label">Eval Dimensions</span>
-      </div>
-      <div class="stat-cell">
-        <span class="stat-num">8</span>
-        <span class="stat-label">HTB Machines</span>
-      </div>
-    </div>
+  <!-- ─── STATS LINE ─── -->
+  <div class="rh-stats">
+    <div class="rh-stat"><span class="v">{{ done_count }}/{{ total_units }}</span><span class="k">Master's units</span></div>
+    <div class="rh-stat"><span class="v">{{ aws_done }}/{{ aws_total }}</span><span class="k">AWS SAA-C03</span></div>
+    <div class="rh-stat"><span class="v">{{ box_count }}</span><span class="k">HTB writeups</span></div>
+    <div class="rh-stat"><span class="v">{{ site.tools | size }}</span><span class="k">Projects</span></div>
+  </div>
 
-    <ul class="featured-tags">
-      <li>SFT</li>
-      <li>DPO</li>
-      <li>GRPO</li>
-      <li>MITRE ATT&amp;CK</li>
-      <li>MITRE ATLAS</li>
-      <li>OWASP Agentic Top 10</li>
-      <li>NIST AI 600-1</li>
-      <li>PyTorch / Ollama</li>
-      <li>574-tool MCP harness</li>
-      <li>Krippendorff α IRR</li>
-    </ul>
-
-    <div class="project-ctas">
-      <a href="https://github.com/mburns00/beyond-ctfs" class="hero-cta primary" target="_blank">GitHub Repo</a>
-      <a href="https://github.com/mburns00/beyond-ctfs/blob/main/docs/Beyond_CTFs_Final_Report.pdf" class="hero-cta secondary" target="_blank">Final Report (PDF)</a>
+  <!-- ─── FEATURED RESEARCH ─── -->
+  <div class="rh-section">
+    <h2>Featured research</h2>
+    <div class="rh-entry">
+      <h3>Beyond CTFs — Evaluating Autonomous Pentesting Agents Through a Safety-Governance Framework with Empirical Fine-Tuning Strategy Analysis</h3>
+      <p class="authors">Matthew K. Burns</p>
+      <p class="venue">Master of Cybersecurity Capstone &middot; OCSE5707 / OCSE5708 &middot; The University of Sydney, 2026</p>
+      <p class="desc">A real-world evaluation framework for autonomous pentesting LLMs. 12-dimensional rubric (8 performance + 4 safety) grounded in PTES and MITRE ATT&amp;CK. Quasi-experimental, Latin-square comparison of four Qwen3-14B variants (Baseline, SFT, DPO, GRPO) across 32 controlled cells on Hack The Box machines. Triple-blind LLM-as-judge scoring; statistical pipeline runs Friedman → Wilcoxon (Bonferroni α = .00833) → Cliff's δ → Holm–Bonferroni. Behaviour mapped to OWASP Agentic Top 10, NIST AI 600-1, MITRE ATLAS, and the Singapore Agentic AI Framework. Apache-2.0 open source.</p>
+      <div class="tag-row">
+        <span class="tag">SFT</span><span class="tag">DPO</span><span class="tag">GRPO</span><span class="tag">MITRE ATT&amp;CK</span><span class="tag">MITRE ATLAS</span><span class="tag">OWASP Agentic Top 10</span><span class="tag">NIST AI 600-1</span><span class="tag">Qwen3-14B</span>
+      </div>
+      <div class="linkbar">
+        <a href="https://github.com/mburns00/beyond-ctfs" target="_blank">[code]</a>
+        <a href="https://github.com/mburns00/beyond-ctfs/blob/main/docs/Beyond_CTFs_Final_Report.pdf" target="_blank">[PDF — Final Report]</a>
+        <a href="{{ '/tools/beyond-ctfs/' | relative_url }}">[project page]</a>
+      </div>
     </div>
   </div>
 
-  <!-- LOOKING FOR -->
-  <div class="reveal">
-    <p class="section-label">Currently looking for</p>
-  </div>
-  <div class="looking-for reveal">
-    <div class="looking-for-content">
-      <h3>AI Security &middot; AI Red Team &middot; ML Security roles in Australia</h3>
-      <p>Targeting AI safety engineering, AI red team, and ML security engineering at the Australian AI Safety Institute, major Australian cyber consultancies (CyberCX and similar), national-security cyber operations (ASD), or AU frontier-adjacent teams.</p>
-      <ul class="looking-for-tags">
-        <li>AI Security Engineer</li>
-        <li>AI Red Team</li>
-        <li>ML Security</li>
-        <li>Application Security</li>
-        <li>Penetration Tester</li>
-      </ul>
-    </div>
-    <div class="looking-for-meta">
-      <div class="meta-row"><span>Citizenship</span><strong>Australian</strong></div>
-      <div class="meta-row"><span>Clearance</span><strong>NV1 / NV2 / PV eligible</strong></div>
-      <div class="meta-row"><span>Based in</span><strong>Gold Coast, QLD</strong></div>
-      <div class="meta-row"><span>Open to work in</span><strong>Sydney &middot; Canberra &middot; Remote AU</strong></div>
-      <div class="meta-row"><span>Availability</span><strong>Full-time late 2026 &middot; Contract now</strong></div>
-    </div>
-  </div>
+  <!-- ─── SELECTED PROJECTS ─── -->
+  <div class="rh-section">
+    <h2>Selected projects</h2>
 
-  <!-- PROGRESS & CREDENTIALS (demoted from lead) -->
-  <div class="reveal">
-    <p class="section-label">Progress &amp; Credentials</p>
-  </div>
-
-  <div class="ring-row reveal reveal-stagger">
-    <div class="ring-card">
-      <div class="ring-wrap">
-        <svg viewBox="0 0 140 140">
-          <circle class="ring-bg" cx="70" cy="70" r="58"/>
-          <circle class="ring-fill blue" cx="70" cy="70" r="58"
-            data-progress="{{ done_count | times: 1.0 | divided_by: total_units }}"/>
-        </svg>
-        <div class="ring-center">
-          <span class="ring-number" data-counter="{{ done_count }}">0</span>
-          <span class="ring-of">/ {{ total_units }}</span>
-        </div>
+    <div class="rh-entry">
+      <h3>CyberSec Qwen3 — First-generation offensive-security LLM fine-tune</h3>
+      <p class="venue">Independent research &middot; 2026</p>
+      <p class="desc">Week-long research sprint fine-tuning Qwen3-14B for offensive security using a three-phase pipeline (SFT → DPO → GRPO). Benchmarked against live HackTheBox machines via a custom MCP tool bridge. The data-composition, reward-design, and evaluation lessons from this sprint directly shaped the Beyond CTFs thesis methodology.</p>
+      <div class="linkbar">
+        <a href="{{ '/tools/cybersec-qwen3/' | relative_url }}">[project page]</a>
       </div>
-      <div class="ring-label">{{ masters.program }}</div>
-      <div class="ring-sub">{{ masters.university }} &middot; {{ masters.specialisation }}</div>
     </div>
 
-    <div class="ring-card">
-      <div class="ring-wrap">
-        <svg viewBox="0 0 140 140">
-          <circle class="ring-bg" cx="70" cy="70" r="58"/>
-          <circle class="ring-fill orange" cx="70" cy="70" r="58"
-            data-progress="{{ aws_done | times: 1.0 | divided_by: aws_total }}"/>
-        </svg>
-        <div class="ring-center">
-          <span class="ring-number orange" data-counter="{{ aws_done }}">0</span>
-          <span class="ring-of">/ {{ aws_total }}</span>
-        </div>
+    <div class="rh-entry">
+      <h3>CryptoOS Arcade — Interactive cryptography teaching tool</h3>
+      <p class="venue">Side project &middot; 2026</p>
+      <p class="desc">Six-room gamified cryptography learning experience built as a single-page web app — from XOR fundamentals through to TLS and digital signatures. 30 interactive levels, KaTeX math rendering, Web Audio API sound effects, zero dependencies.</p>
+      <div class="linkbar">
+        <a href="{{ '/assets/crypto-arcade/index.html' | relative_url }}" target="_blank">[play]</a>
+        <a href="{{ '/tools/cryptoos-arcade/' | relative_url }}">[project page]</a>
       </div>
-      <div class="ring-label"><a href="{{ '/aws-study/' | relative_url }}">AWS SAA-C03</a></div>
-      <div class="ring-sub">{{ aws_wip }} module{% if aws_wip != 1 %}s{% endif %} in progress</div>
-    </div>
-
-    <div class="ring-card">
-      <div class="ring-wrap">
-        <svg viewBox="0 0 140 140">
-          <circle class="ring-bg" cx="70" cy="70" r="58"/>
-          <circle class="ring-fill cyan" cx="70" cy="70" r="58"
-            data-progress="{{ box_count | times: 1.0 | divided_by: box_goal }}"/>
-        </svg>
-        <div class="ring-center">
-          <span class="ring-number cyan" data-counter="{{ box_count }}">0</span>
-          <span class="ring-of">/ {{ box_goal }}</span>
-        </div>
-      </div>
-      <div class="ring-label"><a href="{{ '/ctfs/' | relative_url }}">HackTheBox</a></div>
-      <div class="ring-sub">2026 goal: {{ box_goal }} boxes</div>
     </div>
   </div>
 
-  <!-- View all writeups CTA -->
-  <p class="view-all" style="text-align:center; margin: 2rem 0 4rem 0;">
-    <a href="{{ '/ctfs/' | relative_url }}">View HackTheBox write-ups &rarr;</a>
-  </p>
+  <!-- ─── More ─── -->
+  <div class="rh-section">
+    <h2>More</h2>
+    <p style="color:#374151; line-height:1.7; margin:0;">
+      HackTheBox write-ups at <a href="{{ '/ctfs/' | relative_url }}" style="color:#2563eb;">/ctfs</a> &middot;
+      All projects at <a href="{{ '/tools/' | relative_url }}" style="color:#2563eb;">/tools</a> &middot;
+      Education and certifications at <a href="{{ '/certs/' | relative_url }}" style="color:#2563eb;">/certs</a> &middot;
+      Full bio at <a href="{{ '/about/' | relative_url }}" style="color:#2563eb;">/about</a>.
+    </p>
+  </div>
+
 </div>
