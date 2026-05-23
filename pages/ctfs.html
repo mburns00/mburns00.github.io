@@ -24,31 +24,6 @@ permalink: /ctfs/
   </div>
 </div>
 
-<!-- Activity Heatmap -->
-{% if total > 0 %}
-<div class="heatmap-wrap reveal">
-  <div class="heatmap-header">
-    <h3>Activity</h3>
-    <div class="heatmap-legend">
-      <span>Less</span>
-      <div class="swatch c0"></div>
-      <div class="swatch c1"></div>
-      <div class="swatch c2"></div>
-      <div class="swatch c3"></div>
-      <span>More</span>
-    </div>
-  </div>
-  <div id="heatmap-months"></div>
-  <div id="heatmap"></div>
-</div>
-
-<script>
-  window.writeupDates = [
-    {% for writeup in site.writeups %}"{{ writeup.date | date: '%Y-%m-%d' }}"{% unless forloop.last %},{% endunless %}{% endfor %}
-  ];
-</script>
-{% endif %}
-
 <!-- Stats Dashboard -->
 {% if total > 0 %}
 {% include stats-dashboard.html %}
