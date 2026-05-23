@@ -105,20 +105,7 @@ permalink: /certs/
     margin: 1rem 0 3rem 0;
   }
   .roadmap-card {
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 1.75rem 1.85rem;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
-    position: relative;
-    overflow: hidden;
-  }
-  .roadmap-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 100% 0%, rgba(22, 163, 74, 0.04), transparent 50%);
-    pointer-events: none;
+    padding: 0;
   }
   .roadmap-head {
     display: flex;
@@ -157,14 +144,8 @@ permalink: /certs/
     cursor: default;
     position: relative;
   }
-  .roadmap-unit.completed {
-    border-left-color: #16a34a;
-    background: linear-gradient(90deg, rgba(22, 163, 74, 0.04), transparent 30%);
-  }
-  .roadmap-unit.current {
-    border-left-color: #2563eb;
-    background: linear-gradient(90deg, rgba(37, 99, 235, 0.05), transparent 30%);
-  }
+  .roadmap-unit.completed { border-left-color: #0f172a; }
+  .roadmap-unit.current { border-left-color: #2563eb; }
   .roadmap-unit.remaining {
     border-left-color: #d1d5db;
   }
@@ -248,10 +229,6 @@ permalink: /certs/
           {% for tag in cert.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
         </div>
         {% endif %}
-        <div class="card-cta">
-          <span class="cta-text">View details</span>
-          <span class="cta-arrow" aria-hidden="true">&rarr;</span>
-        </div>
       </div>
     </a>
     {% endfor %}
