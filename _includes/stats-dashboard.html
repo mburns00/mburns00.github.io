@@ -1,12 +1,11 @@
 {% comment %}
-  Liquid computes stats from site.writeups at build time,
-  then injects them as JS variables for Chart.js to render client-side.
+  Stats dashboard — text-forward researcher style, no Chart.js.
+  All bars driven by Liquid math at build time.
 {% endcomment %}
 
 {% assign total = site.writeups | size %}
 {% assign rooted = site.writeups | where: "status", "rooted" | size %}
 {% assign user_only = site.writeups | where: "status", "user-only" | size %}
-{% assign failed_count = site.writeups | where: "status", "failed" | size %}
 
 {% assign very_easy = site.writeups | where: "difficulty", "Very Easy" | size %}
 {% assign easy = site.writeups | where: "difficulty", "Easy" | size %}
@@ -17,41 +16,236 @@
 {% assign linux = site.writeups | where: "os", "Linux" | size %}
 {% assign windows = site.writeups | where: "os", "Windows" | size %}
 
-<script>
-  window.siteStats = {
-    total: {{ total }},
-    rooted: {{ rooted }},
-    userOnly: {{ user_only }},
-    failed: {{ failed_count }},
-    difficulty: { veryEasy: {{ very_easy }}, easy: {{ easy }}, medium: {{ medium }}, hard: {{ hard }}, insane: {{ insane }} },
-    os: { linux: {{ linux }}, windows: {{ windows }} },
-    boxGoal: 30,
-    timeline: [
-      {% for writeup in site.writeups %}
-      { date: "{{ writeup.date | date: '%Y-%m-%d' }}", title: {{ writeup.title | jsonify }}, status: "{{ writeup.status }}" }{% unless forloop.last %},{% endunless %}
-      {% endfor %}
-    ]
-  };
-</script>
+{% assign goal = 30 %}
+{% assign progress = total | times: 100 | divided_by: goal %}
+{% assign remaining = goal | minus: total %}
+{% if remaining < 0 %}{% assign remaining = 0 %}{% endif %}
 
-<section class="stats-dashboard reveal">
-  <p class="section-label">Stats Dashboard</p>
-  <div class="charts-grid reveal-stagger">
-    <div class="chart-card">
-      <h3>Difficulty Breakdown</h3>
-      <canvas id="difficultyChart"></canvas>
+{% comment %} Max difficulty count for normalizing bar widths {% endcomment %}
+{% assign diff_max = easy %}
+{% if very_easy > diff_max %}{% assign diff_max = very_easy %}{% endif %}
+{% if medium > diff_max %}{% assign diff_max = medium %}{% endif %}
+{% if hard > diff_max %}{% assign diff_max = hard %}{% endif %}
+{% if insane > diff_max %}{% assign diff_max = insane %}{% endif %}
+{% if diff_max == 0 %}{% assign diff_max = 1 %}{% endif %}
+
+{% assign os_max = linux %}
+{% if windows > os_max %}{% assign os_max = windows %}{% endif %}
+{% if os_max == 0 %}{% assign os_max = 1 %}{% endif %}
+
+<style>
+  .mp { margin: 1rem 0 3rem 0; }
+
+  .mp-row {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 1.5rem 1.75rem;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    margin-bottom: 1rem;
+  }
+  .mp-row.headline {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+  .mp-row.headline .mp-cell + .mp-cell {
+    border-left: 1px solid #e5e7eb;
+    padding-left: 2rem;
+  }
+  .mp-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.3rem;
+  }
+  .mp-num .mp-of {
+    font-size: 1.4rem;
+    color: #9ca3af;
+    font-weight: 500;
+    margin-left: 0.3rem;
+  }
+  .mp-key {
+    font-size: 0.72rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+  .mp-bar {
+    height: 6px;
+    background: #f3f4f6;
+    border-radius: 99px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+  }
+  .mp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%);
+    border-radius: 99px;
+    transition: width 900ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .mp-sub {
+    font-size: 0.78rem;
+    color: #6b7280;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .mp-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .mp-block {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 1.5rem 1.75rem;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  }
+  .mp-block h4 {
+    font-size: 0.72rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    margin: 0 0 1.25rem 0;
+  }
+
+  .mp-bar-row {
+    display: grid;
+    grid-template-columns: 90px 1fr 36px;
+    gap: 0.85rem;
+    align-items: center;
+    margin-bottom: 0.7rem;
+    font-size: 0.88rem;
+  }
+  .mp-bar-row:last-child { margin-bottom: 0; }
+  .mp-bar-label {
+    color: #1f2937;
+    font-weight: 500;
+  }
+  .mp-bar-track {
+    height: 8px;
+    background: #f3f4f6;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .mp-bar-segment {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 900ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .mp-bar-count {
+    font-family: 'JetBrains Mono', monospace;
+    color: #0f172a;
+    font-weight: 600;
+    text-align: right;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 768px) {
+    .mp-row.headline {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    .mp-row.headline .mp-cell + .mp-cell {
+      border-left: none;
+      padding-left: 0;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 1.25rem;
+    }
+    .mp-split { grid-template-columns: 1fr; }
+  }
+</style>
+
+<section class="mp reveal">
+  <p class="section-label">Stats</p>
+
+  <!-- Headline metrics row -->
+  <div class="mp-row headline">
+    <div class="mp-cell">
+      <div class="mp-num">{{ total }}<span class="mp-of">/ {{ goal }}</span></div>
+      <div class="mp-key">2026 Box Goal</div>
+      <div class="mp-bar"><div class="mp-fill" style="width: {{ progress }}%"></div></div>
+      <div class="mp-sub">{{ progress }}% complete &middot; {{ remaining }} remaining</div>
     </div>
-    <div class="chart-card">
-      <h3>Operating System</h3>
-      <canvas id="osChart"></canvas>
+    <div class="mp-cell">
+      <div class="mp-num" style="color: #16a34a;">{{ rooted }}</div>
+      <div class="mp-key">Rooted</div>
+      <div class="mp-sub">User + root flag</div>
     </div>
-    <div class="chart-card">
-      <h3>2026 Goal: 30 Boxes</h3>
-      <canvas id="goalChart"></canvas>
+    <div class="mp-cell">
+      <div class="mp-num" style="color: #d97706;">{{ user_only }}</div>
+      <div class="mp-key">User Only</div>
+      <div class="mp-sub">Initial foothold</div>
     </div>
-    <div class="chart-card">
-      <h3>Progress Timeline</h3>
-      <canvas id="timelineChart"></canvas>
+  </div>
+
+  <!-- Split breakdowns -->
+  <div class="mp-split">
+
+    <div class="mp-block">
+      <h4>By difficulty</h4>
+      {% if very_easy > 0 %}
+      <div class="mp-bar-row">
+        <span class="mp-bar-label">Very Easy</span>
+        <div class="mp-bar-track"><div class="mp-bar-segment" style="width: {{ very_easy | times: 100 | divided_by: diff_max }}%; background: #0891b2"></div></div>
+        <span class="mp-bar-count">{{ very_easy }}</span>
+      </div>
+      {% endif %}
+      {% if easy > 0 %}
+      <div class="mp-bar-row">
+        <span class="mp-bar-label">Easy</span>
+        <div class="mp-bar-track"><div class="mp-bar-segment" style="width: {{ easy | times: 100 | divided_by: diff_max }}%; background: #16a34a"></div></div>
+        <span class="mp-bar-count">{{ easy }}</span>
+      </div>
+      {% endif %}
+      {% if medium > 0 %}
+      <div class="mp-bar-row">
+        <span class="mp-bar-label">Medium</span>
+        <div class="mp-bar-track"><div class="mp-bar-segment" style="width: {{ medium | times: 100 | divided_by: diff_max }}%; background: #d97706"></div></div>
+        <span class="mp-bar-count">{{ medium }}</span>
+      </div>
+      {% endif %}
+      {% if hard > 0 %}
+      <div class="mp-bar-row">
+        <span class="mp-bar-label">Hard</span>
+        <div class="mp-bar-track"><div class="mp-bar-segment" style="width: {{ hard | times: 100 | divided_by: diff_max }}%; background: #dc2626"></div></div>
+        <span class="mp-bar-count">{{ hard }}</span>
+      </div>
+      {% endif %}
+      {% if insane > 0 %}
+      <div class="mp-bar-row">
+        <span class="mp-bar-label">Insane</span>
+        <div class="mp-bar-track"><div class="mp-bar-segment" style="width: {{ insane | times: 100 | divided_by: diff_max }}%; background: #7c3aed"></div></div>
+        <span class="mp-bar-count">{{ insane }}</span>
+      </div>
+      {% endif %}
     </div>
+
+    <div class="mp-block">
+      <h4>By operating system</h4>
+      {% if linux > 0 %}
+      <div class="mp-bar-row">
+        <span class="mp-bar-label">Linux</span>
+        <div class="mp-bar-track"><div class="mp-bar-segment" style="width: {{ linux | times: 100 | divided_by: os_max }}%; background: #2563eb"></div></div>
+        <span class="mp-bar-count">{{ linux }}</span>
+      </div>
+      {% endif %}
+      {% if windows > 0 %}
+      <div class="mp-bar-row">
+        <span class="mp-bar-label">Windows</span>
+        <div class="mp-bar-track"><div class="mp-bar-segment" style="width: {{ windows | times: 100 | divided_by: os_max }}%; background: #d97706"></div></div>
+        <span class="mp-bar-count">{{ windows }}</span>
+      </div>
+      {% endif %}
+    </div>
+
   </div>
 </section>
