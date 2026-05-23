@@ -38,23 +38,7 @@ title: "Home"
     display: flex;
     flex-direction: column;
   }
-  /* Profile photo — background-image gives real crop control on portrait sources */
-  .home-photo {
-    width: 140px;
-    height: 140px;
-    border-radius: 4px;
-    background-image: url("{{ '/assets/images/matthew-burns.jpg' | relative_url }}");
-    background-size: 150% auto;
-    background-position: 28% 28%;
-    background-repeat: no-repeat;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
-    margin: 0 0 1.75rem 0;
-    display: block;
-    filter: grayscale(0.04);
-    transition: filter 200ms ease;
-  }
-  .home-photo:hover { filter: grayscale(0); }
+  /* Photo lives on /about/ — home is text-only sidebar */
 
   .home-name {
     font-size: clamp(1.85rem, 3.2vw, 2.4rem);
@@ -294,7 +278,6 @@ title: "Home"
       max-height: none;
       padding: 2rem 0 0 0;
     }
-    .home-photo { width: 110px; height: 110px; }
     .home-blurb { margin-bottom: 1.5rem; }
     .side-nav { display: none; }
     .home-main {
@@ -313,7 +296,6 @@ title: "Home"
 
   <!-- ─── Sidebar ─── -->
   <aside class="home-side">
-    <div class="home-photo" role="img" aria-label="Matthew Burns"></div>
     <h1 class="home-name">Matthew Burns</h1>
     <p class="home-role">AI security researcher.<br>Adversarial evaluation of autonomous agents.</p>
     <p class="home-blurb">Master of Cybersecurity at The University of Sydney. Australian citizen, clearance eligible, based in Gold Coast.</p>
