@@ -124,18 +124,6 @@
     color: $text-heading;
     margin: 0;
     font-weight: 600;
-
-    // Type icon prefix based on tags
-    .cert-node[data-type="degree"] &::before {
-      content: "🎓";
-      margin-right: 0.5rem;
-      font-size: 1rem;
-    }
-    .cert-node[data-type="cert"] &::before {
-      content: "📜";
-      margin-right: 0.5rem;
-      font-size: 0.95rem;
-    }
   }
 
   .status-pill {

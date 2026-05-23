@@ -24,16 +24,16 @@ layout: default
 
       <div class="ch-meta">
         {% if page.earned %}
-          <span class="ch-meta-item"><span class="mi-icon">&#10003;</span> {{ page.earned }}</span>
+          <span class="ch-meta-item">Earned {{ page.earned }}</span>
         {% endif %}
         {% if page.expires %}
-          <span class="ch-meta-item"><span class="mi-icon">&#8634;</span> Expires {{ page.expires }}</span>
+          <span class="ch-meta-item">Expires {{ page.expires }}</span>
         {% endif %}
         {% if page.status and page.status contains "2026" %}
-          <span class="ch-meta-item"><span class="mi-icon">&#9201;</span> Expected 2026</span>
+          <span class="ch-meta-item">Expected 2026</span>
         {% endif %}
         {% if page.credential_id %}
-          <span class="ch-meta-item"><span class="mi-icon">#</span> {{ page.credential_id }}</span>
+          <span class="ch-meta-item">ID {{ page.credential_id }}</span>
         {% endif %}
       </div>
 

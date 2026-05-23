@@ -283,7 +283,6 @@ permalink: /certs/
     <div class="roadmap-grid">
       {% for unit in masters.units %}
       <div class="roadmap-unit {{ unit.status }}" title="{{ unit.code }} — {{ unit.name }}">
-        {% if unit.status == 'completed' %}<span class="ru-check">&#10003;</span>{% endif %}
         <span class="ru-code">{{ unit.code }}</span>
         <span class="ru-name">{{ unit.name }}</span>
       </div>
@@ -297,9 +296,7 @@ permalink: /certs/
   <h2>Credentials timeline</h2>
   <div class="cert-timeline" data-scroll-fill>
     {% for cert in certs_sorted %}
-    {% assign cert_type = "cert" %}
-    {% if cert.tags contains "degree" %}{% assign cert_type = "degree" %}{% endif %}
-    <a href="{{ cert.url | relative_url }}" class="cert-node {% if cert.earned %}earned{% elsif cert.status %}in-progress{% endif %}" data-type="{{ cert_type }}" data-tilt-card>
+    <a href="{{ cert.url | relative_url }}" class="cert-node {% if cert.earned %}earned{% elsif cert.status %}in-progress{% endif %}" data-tilt-card>
       <div class="cert-card">
         <div class="card-top">
           <h3 class="card-title">{{ cert.title }}</h3>
@@ -311,9 +308,9 @@ permalink: /certs/
         </div>
         {% if cert.issuer %}<p class="card-issuer">{{ cert.issuer }}</p>{% endif %}
         <div class="card-dates">
-          {% if cert.earned %}<span class="date-earned">&#10003; {{ cert.earned }}</span>{% endif %}
-          {% if cert.expires %}<span>&#8634; Exp: {{ cert.expires }}</span>{% endif %}
-          {% if cert.status and cert.status contains "2026" %}<span>&#9201; Expected 2026</span>{% endif %}
+          {% if cert.earned %}<span class="date-earned">Earned {{ cert.earned }}</span>{% endif %}
+          {% if cert.expires %}<span>Expires {{ cert.expires }}</span>{% endif %}
+          {% if cert.status and cert.status contains "2026" %}<span>Expected 2026</span>{% endif %}
         </div>
         {% if cert.tags.size > 0 %}
         <div class="card-tags">
