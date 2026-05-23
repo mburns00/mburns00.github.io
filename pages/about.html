@@ -5,27 +5,28 @@ permalink: /about/
 ---
 
 <style>
-  /* ━━ Intro — two-column with photo ━━ */
+  /* ━━ Intro — photo on LEFT, bio flowing right ━━ */
   .about-intro {
     display: grid;
-    grid-template-columns: 1fr 160px;
+    grid-template-columns: 180px 1fr;
     gap: 2.5rem;
     align-items: start;
     margin: 1.5rem 0 3.5rem 0;
   }
-  .about-intro-text { min-width: 0; max-width: 640px; }
+  .about-intro-text { min-width: 0; max-width: 600px; }
   .about-photo {
-    width: 160px;
-    height: 160px;
+    width: 180px;
+    height: 220px;
     border-radius: 4px;
-    object-fit: cover;
-    object-position: 40% 32%;
+    background-image: url("{{ '/assets/images/matthew-burns.jpg' | relative_url }}");
+    background-size: 145% auto;
+    background-position: 30% 26%;
+    background-repeat: no-repeat;
     border: 1px solid #e5e7eb;
     box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
     display: block;
     filter: grayscale(0.04);
     transition: filter 200ms ease;
-    justify-self: end;
   }
   .about-photo:hover { filter: grayscale(0); }
   .about-intro .lead {
@@ -266,9 +267,8 @@ permalink: /about/
       gap: 1.5rem;
     }
     .about-photo {
-      width: 120px;
-      height: 120px;
-      justify-self: start;
+      width: 140px;
+      height: 170px;
     }
     .bento-grid {
       grid-template-columns: 1fr;
@@ -299,14 +299,14 @@ permalink: /about/
   }
 </style>
 
-<!-- Intro — text + photo -->
+<!-- Intro — photo on left, bio on right -->
 <div class="about-intro">
+  <div class="about-photo" role="img" aria-label="Matthew Burns"></div>
   <div class="about-intro-text">
     <p class="lead">AI security researcher from Australia. I build adversarial evaluation infrastructure for autonomous AI agents.</p>
     <p>My Master's capstone at the University of Sydney is a real-world evaluation framework for autonomous pentesting LLMs — comparing four fine-tuned Qwen3-14B variants across 32 controlled cells on Hack The Box machines, with behaviour mapped to OWASP Agentic Top 10, NIST AI 600-1, MITRE ATLAS, and the Singapore Agentic AI Framework. The framework is published open-source as <a href="https://github.com/mburns00/beyond-ctfs">beyond-ctfs</a>.</p>
     <p>Methodological integrity is the point — null-tolerant reporting, pre-registered hypotheses, blind scoring, honest inter-rater reliability disclosure. Not benchmark theatre.</p>
   </div>
-  <img class="about-photo" src="{{ '/assets/images/matthew-burns.jpg' | relative_url }}" alt="Matthew Burns" loading="lazy" />
 </div>
 
 <!-- Credentials -->
