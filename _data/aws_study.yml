@@ -1,0 +1,92 @@
+exam: "SAA-C03"
+course: "Cantrill"
+practice: "Tutorials Dojo"
+target_weeks: 8
+
+modules:
+  - num: 1
+    name: "Course Fundamentals & AWS Accounts"
+    week: "1-2"
+    status: completed
+  - num: 2
+    name: "AWS Fundamentals"
+    week: "1-2"
+    status: current
+  - num: 3
+    name: "IAM, Accounts & Organizations"
+    week: "1-2"
+    status: remaining
+  - num: 4
+    name: "S3"
+    week: "1-2"
+    status: remaining
+  - num: 5
+    name: "VPC Basics"
+    week: "1-2"
+    status: remaining
+  - num: 6
+    name: "EC2 Basics"
+    week: "3-4"
+    status: remaining
+  - num: 7
+    name: "Containers & ECS"
+    week: "3-4"
+    status: remaining
+  - num: 8
+    name: "Advanced EC2"
+    week: "3-4"
+    status: remaining
+  - num: 9
+    name: "Route 53"
+    week: "3-4"
+    status: remaining
+  - num: 10
+    name: "RDS"
+    week: "3-4"
+    status: remaining
+  - num: 11
+    name: "Network Storage (EFS)"
+    week: "5-6"
+    status: remaining
+  - num: 12
+    name: "HA & Scaling"
+    week: "5-6"
+    status: remaining
+  - num: 13
+    name: "Serverless & App Services"
+    week: "5-6"
+    status: remaining
+  - num: 14
+    name: "CloudFront & CDN"
+    week: "5-6"
+    status: remaining
+  - num: 15
+    name: "Advanced VPC"
+    week: "7-8"
+    status: remaining
+  - num: 16
+    name: "Hybrid & Migration"
+    week: "7-8"
+    status: remaining
+  - num: 17
+    name: "Security & Operations"
+    week: "7-8"
+    status: remaining
+  - num: 18
+    name: "CloudFormation"
+    week: "7-8"
+    status: remaining
+  - num: 19
+    name: "DynamoDB & NoSQL"
+    week: "7-8"
+    status: remaining
+  - num: 20
+    name: "ML Services"
+    week: "7-8"
+    status: remaining
+  - num: 21
+    name: "Exam Preparation"
+    week: "7-8"
+    status: remaining
+
+practice_exams: []

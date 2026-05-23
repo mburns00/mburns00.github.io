@@ -1,0 +1,37 @@
+---
+title: "Education"
+subtitle: "Degrees, certifications, and credentials."
+permalink: /certs/
+---
+
+<div class="cert-timeline reveal" data-scroll-fill>
+  {% for cert in site.certs %}
+  <a href="{{ cert.url | relative_url }}" class="cert-node {% if cert.earned %}earned{% elsif cert.status %}in-progress{% endif %}" data-tilt-card>
+    <div class="cert-card">
+      <div class="card-top">
+        <h3 class="card-title">{{ cert.title }}</h3>
+        {% if cert.earned %}
+          <span class="status-pill earned">Earned</span>
+        {% elsif cert.status %}
+          <span class="status-pill in-progress">In Progress</span>
+        {% endif %}
+      </div>
+      {% if cert.issuer %}<p class="card-issuer">{{ cert.issuer }}</p>{% endif %}
+      <div class="card-dates">
+        {% if cert.earned %}<span>{{ cert.earned }}</span>{% endif %}
+        {% if cert.expires %}<span>Exp: {{ cert.expires }}</span>{% endif %}
+        {% if cert.status and cert.status contains "2026" %}<span>Expected 2026</span>{% endif %}
+      </div>
+      {% if cert.tags.size > 0 %}
+      <div class="card-tags">
+        {% for tag in cert.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </a>
+  {% endfor %}
+</div>
+
+{% if site.certs.size == 0 %}
+<p class="empty-state">Education details coming soon.</p>
+{% endif %}

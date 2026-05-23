@@ -1,0 +1,43 @@
+program: "Master of Cybersecurity"
+university: "University of Sydney"
+faculty: "Faculty of Engineering"
+specialisation: "Cloud Security"
+gpa: "5.50"
+
+units:
+  - code: OINF5301
+    name: Information Security Management
+    status: completed
+  - code: OINF5992
+    name: Understanding IT Innovations
+    status: completed
+  - code: OCSE5616
+    name: Cybersecurity Engineering
+    status: completed
+  - code: OCMP5318
+    name: Machine Learning and Data Mining
+    status: completed
+  - code: OCSE5614
+    name: "Data Privacy: Theory and Practice"
+    status: completed
+  - code: OCMP5618
+    name: Applied Cybersecurity
+    status: completed
+  - code: OINF5990
+    name: Professional Practice in IT
+    status: completed
+  - code: OCSE5619
+    name: Applied Cryptography
+    status: current
+  - code: OCSE5707
+    name: Cybersecurity Capstone Project A
+    status: current
+  - code: OCSE5615
+    name: "Theory and Practice of Cloud Security"
+    status: remaining
+  - code: OCSE5708
+    name: Cybersecurity Capstone Project B
+    status: remaining
+  - code: OCMP5349
+    name: Cloud Computing
+    status: remaining

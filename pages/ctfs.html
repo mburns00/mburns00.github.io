@@ -1,0 +1,74 @@
+---
+title: "CTF Write-ups"
+subtitle: "HTB, THM, and competition challenge write-ups — reconnaissance through root."
+permalink: /ctfs/
+---
+
+{% assign total = site.writeups | size %}
+{% assign rooted = site.writeups | where: "status", "rooted" | size %}
+{% assign in_progress = site.writeups | where: "status", "in-progress" | size %}
+
+<!-- Stat Counters -->
+<div class="stat-row reveal reveal-stagger">
+  <div class="stat-card">
+    <div class="big-num blue" data-counter="{{ total }}">0</div>
+    <div class="stat-desc">Boxes Attempted</div>
+  </div>
+  <div class="stat-card">
+    <div class="big-num green" data-counter="{{ rooted }}">0</div>
+    <div class="stat-desc">Rooted</div>
+  </div>
+  <div class="stat-card">
+    <div class="big-num orange" data-counter="{{ in_progress }}">0</div>
+    <div class="stat-desc">In Progress</div>
+  </div>
+</div>
+
+<!-- Activity Heatmap -->
+{% if total > 0 %}
+<div class="heatmap-wrap reveal">
+  <div class="heatmap-header">
+    <h3>Activity</h3>
+    <div class="heatmap-legend">
+      <span>Less</span>
+      <div class="swatch c0"></div>
+      <div class="swatch c1"></div>
+      <div class="swatch c2"></div>
+      <div class="swatch c3"></div>
+      <span>More</span>
+    </div>
+  </div>
+  <div id="heatmap-months"></div>
+  <div id="heatmap"></div>
+</div>
+
+<script>
+  window.writeupDates = [
+    {% for writeup in site.writeups %}"{{ writeup.date | date: '%Y-%m-%d' }}"{% unless forloop.last %},{% endunless %}{% endfor %}
+  ];
+</script>
+{% endif %}
+
+<!-- Stats Dashboard -->
+{% if total > 0 %}
+{% include stats-dashboard.html %}
+{% endif %}
+
+<!-- Write-up Cards -->
+<div class="reveal latest-section">
+  <p class="section-label">All Write-ups</p>
+</div>
+<div class="card-grid reveal reveal-stagger">
+  {% assign sorted = site.writeups | sort: "date" | reverse %}
+  {% for writeup in sorted %}
+    {% include writeup-card.html writeup=writeup %}
+  {% endfor %}
+</div>
+
+{% if site.writeups.size == 0 %}
+<p class="empty-state">No write-ups yet. Boxes are being pwned — check back soon.</p>
+{% endif %}
+
+{% if total > 0 %}
+<script src="{{ '/assets/js/stats.js' | relative_url }}"></script>
+{% endif %}

@@ -1,0 +1,129 @@
+---
+title: "Projects"
+subtitle: "Security projects and scripts I've built."
+permalink: /tools/
+---
+
+{% assign tools_list = site.tools %}
+{% assign total_projects = tools_list | size %}
+{% assign tool_count = tools_list | where: "category", "tool" | size %}
+{% assign script_count = tools_list | where: "category", "script" | size %}
+
+<!-- Stats Header -->
+<div class="proj-stats reveal reveal-stagger">
+  <div class="proj-stat">
+    <div class="ps-num blue" data-counter="{{ total_projects }}">0</div>
+    <div class="ps-label">Total Projects</div>
+  </div>
+  <div class="proj-stat">
+    <div class="ps-num cyan" data-counter="{{ tool_count }}">0</div>
+    <div class="ps-label">Tools</div>
+  </div>
+  <div class="proj-stat">
+    <div class="ps-num orange" data-counter="{{ script_count }}">0</div>
+    <div class="ps-label">Scripts</div>
+  </div>
+</div>
+
+<!-- Featured Project: CryptoOS Arcade -->
+{% assign featured = tools_list | where: "title", "CryptoOS Arcade" | first %}
+{% if featured %}
+<div class="reveal">
+  <p class="section-label">Featured Project</p>
+</div>
+<div class="featured-project reveal" data-spotlight>
+  <div class="fp-header">
+    <span class="fp-badge">Featured</span>
+  </div>
+  <h3 class="fp-title">{{ featured.title }}</h3>
+  <p class="fp-tagline">{{ featured.tagline }}</p>
+
+  <!-- Room Flow -->
+  <div class="room-flow">
+    <div class="room-node r-xor">
+      <span class="rn-label">XOR</span>
+      <span class="rn-sub">Fundamentals</span>
+    </div>
+    <div class="room-arrow"><span>&rarr;</span></div>
+    <div class="room-node r-prg">
+      <span class="rn-label">PRG</span>
+      <span class="rn-sub">Primitives</span>
+    </div>
+    <div class="room-arrow"><span>&rarr;</span></div>
+    <div class="room-node r-block">
+      <span class="rn-label">Modes</span>
+      <span class="rn-sub">Block Ciphers</span>
+    </div>
+    <div class="room-arrow"><span>&rarr;</span></div>
+    <div class="room-node r-mac">
+      <span class="rn-label">AEAD</span>
+      <span class="rn-sub">Integrity</span>
+    </div>
+    <div class="room-arrow"><span>&rarr;</span></div>
+    <div class="room-node r-dh">
+      <span class="rn-label">DH</span>
+      <span class="rn-sub">Key Exchange</span>
+    </div>
+    <div class="room-arrow"><span>&rarr;</span></div>
+    <div class="room-node r-sig">
+      <span class="rn-label">PKI</span>
+      <span class="rn-sub">Signatures</span>
+    </div>
+  </div>
+
+  <!-- Key Metrics -->
+  <div class="fp-metrics">
+    <div class="fp-metric">
+      <div class="m-val" data-counter="6">0</div>
+      <div class="m-key">Rooms</div>
+    </div>
+    <div class="fp-metric">
+      <div class="m-val green" data-counter="30">0</div>
+      <div class="m-key">Interactive Levels</div>
+    </div>
+    <div class="fp-metric">
+      <div class="m-val orange" data-counter="0">1</div>
+      <div class="m-key">Dependencies</div>
+    </div>
+    <div class="fp-metric">
+      <div class="m-val purple" data-counter="4500">0</div>
+      <div class="m-key">Lines of Code</div>
+    </div>
+  </div>
+
+  <!-- Play Button -->
+  <div style="text-align: center; margin-top: 0.5rem;">
+    <a href="{{ '/assets/crypto-arcade/index.html' | relative_url }}" target="_blank" rel="noopener" class="fp-play-btn">
+      Play Now <span class="play-arrow">&rarr;</span>
+    </a>
+  </div>
+</div>
+{% endif %}
+
+<!-- All Projects -->
+<div class="reveal latest-section">
+  <p class="section-label">All Projects</p>
+</div>
+<div class="proj-grid reveal reveal-stagger">
+  {% for tool in tools_list %}
+  <a href="{{ tool.url | relative_url }}" class="proj-card cat-{{ tool.category }}" data-spotlight>
+    <div class="pc-top">
+      <h3 class="pc-title">{{ tool.title }}</h3>
+      <span class="pc-cat {{ tool.category }}">{{ tool.category }}</span>
+    </div>
+    {% if tool.tagline %}<p class="pc-desc">{{ tool.tagline }}</p>{% endif %}
+    <div class="pc-tags">
+      {% for tag in tool.tags %}
+        <span class="pc-tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
+    {% if tool.status == "on-hold" %}
+    <div class="pc-status on-hold"><span class="sd"></span> On Hold</div>
+    {% endif %}
+  </a>
+  {% endfor %}
+</div>
+
+{% if tools_list.size == 0 %}
+<p class="empty-state">Projects coming soon.</p>
+{% endif %}

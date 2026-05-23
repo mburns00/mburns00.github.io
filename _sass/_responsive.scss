@@ -1,0 +1,38 @@
+@media (max-width: $bp-lg) {
+  .charts-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: $bp-md) {
+  .hero h1 {
+    font-size: 2.25rem;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-stats {
+    gap: $spacing-lg;
+
+    .stat .stat-number {
+      font-size: 1.5rem;
+    }
+  }
+
+  .writeup-header .writeup-title {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: $bp-sm) {
+  .container {
+    padding: 0 $spacing-md;
+  }
+
+  .quick-stats {
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+}

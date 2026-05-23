@@ -1,0 +1,2 @@
+{% assign diff = include.difficulty | downcase | replace: " ", "-" %}
+<span class="badge badge-{{ diff }}">{{ include.difficulty }}</span>

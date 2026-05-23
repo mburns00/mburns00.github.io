@@ -1,0 +1,142 @@
+---
+layout: default
+title: "Home"
+---
+
+{% assign masters = site.data.masters %}
+{% assign completed_units = masters.units | where: "status", "completed" %}
+{% assign current_units = masters.units | where: "status", "current" %}
+{% assign remaining_units = masters.units | where: "status", "remaining" %}
+{% assign total_units = masters.units | size %}
+{% assign done_count = completed_units | size %}
+{% assign now_count = current_units | size %}
+{% assign left_count = remaining_units | size %}
+
+{% assign aws = site.data.aws_study %}
+{% assign aws_done = aws.modules | where: "status", "completed" | size %}
+{% assign aws_wip = aws.modules | where: "status", "current" | size %}
+{% assign aws_total = aws.modules | size %}
+
+{% assign box_count = site.writeups | size %}
+{% assign box_goal = 100 %}
+
+<div class="container">
+  <section class="hero">
+    <h1 class="hero-fade">Matthew <span class="accent">Burns</span></h1>
+    <p class="hero-subtitle hero-fade">AI security researcher &middot; adversarial evaluation of autonomous AI agents &middot; LLM post-training research</p>
+  </section>
+
+  <!-- Dashboard Ring Summary -->
+  <div class="reveal">
+    <p class="section-label">Progress Dashboard</p>
+  </div>
+
+  <div class="ring-row reveal reveal-stagger">
+    <!-- Masters Ring -->
+    <div class="ring-card">
+      <div class="ring-wrap">
+        <svg viewBox="0 0 140 140">
+          <circle class="ring-bg" cx="70" cy="70" r="58"/>
+          <circle class="ring-fill blue" cx="70" cy="70" r="58"
+            data-progress="{{ done_count | times: 1.0 | divided_by: total_units }}"/>
+        </svg>
+        <div class="ring-center">
+          <span class="ring-number" data-counter="{{ done_count }}">0</span>
+          <span class="ring-of">/ {{ total_units }}</span>
+        </div>
+      </div>
+      <div class="ring-label">{{ masters.program }}</div>
+      <div class="ring-sub">{{ masters.university }}</div>
+    </div>
+
+    <!-- AWS Ring -->
+    <div class="ring-card">
+      <div class="ring-wrap">
+        <svg viewBox="0 0 140 140">
+          <circle class="ring-bg" cx="70" cy="70" r="58"/>
+          <circle class="ring-fill orange" cx="70" cy="70" r="58"
+            data-progress="{{ aws_done | times: 1.0 | divided_by: aws_total }}"/>
+        </svg>
+        <div class="ring-center">
+          <span class="ring-number orange" data-counter="{{ aws_done }}">0</span>
+          <span class="ring-of">/ {{ aws_total }}</span>
+        </div>
+      </div>
+      <div class="ring-label"><a href="{{ '/aws-study/' | relative_url }}">AWS SAA-C03</a></div>
+      <div class="ring-sub">{{ aws_wip }} module{% if aws_wip != 1 %}s{% endif %} in progress</div>
+    </div>
+
+    <!-- HTB Ring -->
+    <div class="ring-card">
+      <div class="ring-wrap">
+        <svg viewBox="0 0 140 140">
+          <circle class="ring-bg" cx="70" cy="70" r="58"/>
+          <circle class="ring-fill cyan" cx="70" cy="70" r="58"
+            data-progress="{{ box_count | times: 1.0 | divided_by: box_goal }}"/>
+        </svg>
+        <div class="ring-center">
+          <span class="ring-number cyan" data-counter="{{ box_count }}">0</span>
+          <span class="ring-of">/ {{ box_goal }}</span>
+        </div>
+      </div>
+      <div class="ring-label"><a href="{{ '/ctfs/' | relative_url }}">HackTheBox</a></div>
+      <div class="ring-sub">2026 goal: {{ box_goal }} boxes</div>
+    </div>
+  </div>
+
+  <!-- Masters Detail -->
+  <div class="tracker-detail reveal">
+    <h3>{{ masters.program }}</h3>
+    <p class="meta">{{ masters.university }} &middot; {{ masters.faculty }} &middot; <span class="specialisation-badge">{{ masters.specialisation }}</span> &middot; GPA <strong class="hl">{{ masters.gpa }}</strong></p>
+
+    <div class="prog-bar">
+      {% for unit in masters.units %}
+      <div class="prog-seg {% if unit.status == 'completed' %}done{% elsif unit.status == 'current' %}now{% else %}later{% endif %}"></div>
+      {% endfor %}
+    </div>
+    <div class="prog-label">
+      <span><span class="hl" data-counter="{{ done_count }}">0</span> / {{ total_units }} units</span>
+      <span>{{ now_count }} current &middot; {{ left_count }} remaining</span>
+    </div>
+
+    <ul class="unit-list">
+      {% for unit in completed_units %}
+      <li class="unit-item"><span class="unit-dot done"></span><span class="unit-code">{{ unit.code }}</span><span class="unit-name">{{ unit.name }}</span></li>
+      {% endfor %}
+    </ul>
+    {% if now_count > 0 %}
+    <p class="unit-divider">Currently Studying</p>
+    <ul class="unit-list">
+      {% for unit in current_units %}
+      <li class="unit-item"><span class="unit-dot now"></span><span class="unit-code">{{ unit.code }}</span><span class="unit-name">{{ unit.name }}</span></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% if left_count > 0 %}
+    <p class="unit-divider">Remaining</p>
+    <ul class="unit-list">
+      {% for unit in remaining_units %}
+      <li class="unit-item"><span class="unit-dot later"></span><span class="unit-code">{{ unit.code }}</span><span class="unit-name dim">{{ unit.name }}</span></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+
+  <!-- Latest Write-ups -->
+  <div class="reveal latest-section">
+    <p class="section-label">Latest Write-ups</p>
+  </div>
+  <div class="card-grid reveal reveal-stagger">
+    {% assign recent = site.writeups | sort: "date" | reverse %}
+    {% for writeup in recent limit:3 %}
+      {% include writeup-card.html writeup=writeup %}
+    {% endfor %}
+  </div>
+
+  {% assign total = site.writeups | size %}
+  {% if total > 3 %}
+  <p class="view-all">
+    <a href="{{ '/ctfs/' | relative_url }}">View all write-ups &rarr;</a>
+  </p>
+  {% endif %}
+</div>

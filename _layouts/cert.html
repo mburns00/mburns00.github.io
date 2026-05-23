@@ -1,0 +1,51 @@
+---
+layout: default
+---
+
+<article class="container">
+  <div class="cert-detail reveal">
+    <div class="cert-hero {% if page.earned %}earned-hero{% else %}progress-hero{% endif %}" data-spotlight>
+      <div class="ch-breadcrumb">
+        <a href="{{ '/certs/' | relative_url }}">Education</a>
+        <span class="sep">/</span>
+        <span>{{ page.title }}</span>
+      </div>
+
+      <div class="ch-top">
+        <h1 class="ch-title">{{ page.title }}</h1>
+        {% if page.earned %}
+          <span class="ch-status earned">Earned</span>
+        {% elsif page.status %}
+          <span class="ch-status in-progress">In Progress</span>
+        {% endif %}
+      </div>
+
+      {% if page.issuer %}<p class="ch-issuer">{{ page.issuer }}</p>{% endif %}
+
+      <div class="ch-meta">
+        {% if page.earned %}
+          <span class="ch-meta-item"><span class="mi-icon">&#10003;</span> {{ page.earned }}</span>
+        {% endif %}
+        {% if page.expires %}
+          <span class="ch-meta-item"><span class="mi-icon">&#8634;</span> Expires {{ page.expires }}</span>
+        {% endif %}
+        {% if page.status and page.status contains "2026" %}
+          <span class="ch-meta-item"><span class="mi-icon">&#9201;</span> Expected 2026</span>
+        {% endif %}
+        {% if page.credential_id %}
+          <span class="ch-meta-item"><span class="mi-icon">#</span> {{ page.credential_id }}</span>
+        {% endif %}
+      </div>
+
+      {% if page.tags.size > 0 %}
+      <div class="ch-tags">
+        {% for tag in page.tags %}<span class="ch-tag">{{ tag }}</span>{% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="cert-body reveal">
+      {{ content }}
+    </div>
+  </div>
+</article>

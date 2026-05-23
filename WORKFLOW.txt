@@ -1,0 +1,27 @@
+BOXTESTING WORKFLOW
+===================
+
+1. SPAWN    → python3 eval/benchmark.py --machine-id <ID> --name <Name>
+2. HACK     → Model runs: nmap → enumerate → exploit → privesc → flags
+3. OBSERVE  → Claude Code watches every command, output, and decision
+4. SORT     → Rooted boxes → completed/  |  Failed boxes → failed/
+5. REPORT   → python3 eval/benchmark.py --report BoxTesting/completed/<Name>
+6. TRAIN    → python3 BoxTesting/templates/convert_to_training.py BoxTesting/completed/
+7. PUBLISH  → Push completed writeups to GitHub as public writeups
+8. RETRAIN  → Feed new JSONL into fine-tuning pipeline, repeat from step 1
+
+DIRECTORIES
+-----------
+active/     → Box currently being worked on
+completed/  → Successful boxes (writeups + training data source)
+failed/     → Boxes we couldn't crack (review and retry later)
+
+COMMANDS
+--------
+List easy boxes:     python3 eval/htb.py machines --difficulty Easy
+Check VPN:           python3 eval/htb.py vpn-status
+Spawn a box:         python3 eval/htb.py spawn <ID>
+Stop a box:          python3 eval/htb.py stop <ID>
+Run benchmark:       python3 eval/benchmark.py --machine-id <ID> --name <Name>
+Generate report:     python3 eval/benchmark.py --report BoxTesting/active/<Name>
+Convert to training: python3 BoxTesting/templates/convert_to_training.py BoxTesting/completed/

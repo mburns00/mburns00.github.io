@@ -1,0 +1,198 @@
+// ── Shared styles for detail pages (writeup, tool, cert) ──
+// These pages share an identical hero + body card pattern.
+
+// Breadcrumb
+%detail-breadcrumb {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  color: $slate-600;
+  margin-bottom: $spacing-md;
+
+  a {
+    color: $accent-blue;
+    text-decoration: none;
+    transition: color 300ms ease;
+    &:hover { color: $accent-blue-light; }
+  }
+
+  .sep {
+    margin: 0 0.4rem;
+    color: $slate-700;
+  }
+}
+
+// Hero card base
+%detail-hero {
+  background: $card-bg;
+  border: 1px solid $card-border;
+  border-radius: $radius-lg;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-xl;
+  position: relative;
+  overflow: hidden;
+  transition: all $transition-card;
+
+  &:hover {
+    background: $card-bg-hover;
+    border-color: $card-border-hover;
+    box-shadow: $card-shadow;
+  }
+
+  // Cursor spotlight
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: $radius-lg;
+    background: radial-gradient(
+      500px circle at var(--mx, 50%) var(--my, 50%),
+      rgba($accent-blue, 0.05) 0%, transparent 100%
+    );
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 400ms ease;
+  }
+  &:hover::after { opacity: 1; }
+}
+
+// Title
+%detail-title {
+  font-size: 1.8rem;
+  color: $text-heading;
+  margin: 0;
+  line-height: 1.2;
+}
+
+// Top row (title + badge/status)
+%detail-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: $spacing-md;
+  margin-bottom: $spacing-sm;
+  flex-wrap: wrap;
+}
+
+// Tags
+%detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+%detail-tag {
+  display: inline-block;
+  padding: 0.1em 0.45em;
+  background: rgba($neon-blue, 0.08);
+  color: $neon-blue;
+  border-radius: $radius-sm;
+  font-size: 0.68rem;
+  font-family: $font-mono;
+  border: 1px solid rgba($neon-blue, 0.06);
+  transition: all 400ms ease;
+}
+
+// Body card (content area)
+%detail-body {
+  background: rgba(15, 23, 42, 0.3);
+  border: 1px solid rgba($accent-blue, 0.04);
+  border-radius: $radius-lg;
+  padding: $spacing-xl;
+  transition: all 400ms ease;
+
+  &:hover {
+    border-color: rgba($accent-blue, 0.08);
+  }
+
+  h2 {
+    color: $text-heading;
+    font-size: 1.2rem;
+    margin-top: $spacing-xl;
+    margin-bottom: 0.75rem;
+    padding-bottom: $spacing-sm;
+    border-bottom: 1px solid $card-border;
+
+    &:first-child { margin-top: 0; }
+  }
+
+  h3 {
+    color: $neon-blue;
+    font-size: 1rem;
+    margin-top: $spacing-lg;
+  }
+
+  p {
+    color: $slate-400;
+    line-height: 1.7;
+    margin-bottom: $spacing-md;
+  }
+
+  strong { color: $text-heading; }
+
+  ul, ol {
+    color: $slate-400;
+    padding-left: 1.2rem;
+    margin-bottom: $spacing-md;
+  }
+
+  li {
+    margin-bottom: 0.35rem;
+    line-height: 1.6;
+  }
+
+  a {
+    color: $accent-blue;
+    text-decoration: none;
+    border-bottom: 1px solid rgba($accent-blue, 0.2);
+    transition: all 300ms ease;
+
+    &:hover {
+      color: $accent-blue-light;
+      border-color: rgba($accent-blue, 0.5);
+    }
+  }
+
+  // Tables in content
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    font-family: $font-mono;
+    margin-bottom: $spacing-lg;
+  }
+
+  th {
+    text-align: left;
+    color: $slate-600;
+    font-weight: 600;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: $spacing-sm 0.75rem;
+    border-bottom: 1px solid $card-border;
+  }
+
+  td {
+    padding: $spacing-sm 0.75rem;
+    color: $slate-400;
+    border-bottom: 1px solid rgba($border, 0.2);
+    transition: all 300ms ease;
+
+    &:first-child {
+      color: $neon-blue;
+      white-space: nowrap;
+    }
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td {
+    background: rgba($accent-blue, 0.03);
+    color: $text-heading;
+  }
+}
+
+// Responsive shared
+@media (max-width: $bp-md) {
+  %detail-hero, %detail-body { padding: $spacing-lg; }
+  %detail-title { font-size: 1.4rem; }
+}

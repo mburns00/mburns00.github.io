@@ -1,0 +1,300 @@
+---
+title: "AWS SAA-C03 Study Log"
+subtitle: "Tracking progress through the Solutions Architect Associate certification."
+permalink: /aws-study/
+---
+
+<style>
+  /* ── Gauge Header ── */
+  .gauge-hero {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
+  .gauge-wrap {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    flex-shrink: 0;
+  }
+  .gauge-wrap svg { width: 100%; height: 100%; }
+  .gauge-bg { fill: none; stroke: rgba(96, 165, 250, 0.06); stroke-width: 10; }
+  .gauge-fill {
+    fill: none;
+    stroke: #ffab40;
+    stroke-width: 10;
+    stroke-linecap: round;
+    transform-origin: center;
+    transform: rotate(-90deg);
+  }
+  .gauge-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .gauge-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffab40;
+    line-height: 1;
+  }
+  .gauge-of {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: #334155;
+    margin-top: 0.15rem;
+  }
+  .gauge-info h3 {
+    font-size: 1.25rem;
+    color: #e2e8f0;
+    margin: 0 0 0.5rem;
+  }
+  .gauge-info p {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin: 0 0 1rem;
+    line-height: 1.6;
+  }
+  .study-repo-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: #60a5fa;
+    background: rgba(96, 165, 250, 0.08);
+    padding: 0.4em 0.8em;
+    border-radius: 6px;
+    border: 1px solid rgba(96, 165, 250, 0.06);
+    text-decoration: none;
+    transition: all 400ms ease;
+  }
+  .study-repo-link:hover {
+    background: rgba(96, 165, 250, 0.15);
+    border-color: rgba(96, 165, 250, 0.2);
+    box-shadow: 0 0 20px rgba(96, 165, 250, 0.1);
+  }
+
+  /* ── Week Section ── */
+  .week-section {
+    background: rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(96, 165, 250, 0.06);
+    border-radius: 16px;
+    padding: 1.75rem;
+    margin-bottom: 1.5rem;
+    transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .week-section:hover {
+    background: rgba(15, 23, 42, 0.7);
+    border-color: rgba(96, 165, 250, 0.15);
+    box-shadow: 0 0 60px rgba(96, 165, 250, 0.06), 0 20px 50px rgba(0, 0, 0, 0.35);
+  }
+  .week-section h3 {
+    color: #e2e8f0;
+    font-size: 1rem;
+    margin: 0 0 1.25rem;
+  }
+
+  /* ── Module Table ── */
+  .mod-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .mod-table th {
+    text-align: left;
+    color: #334155;
+    font-weight: 600;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid rgba(96, 165, 250, 0.06);
+  }
+  .mod-table td {
+    padding: 0.6rem 0.75rem;
+    color: #94a3b8;
+    border-bottom: 1px solid rgba(42, 58, 78, 0.2);
+    transition: all 300ms ease;
+  }
+  .mod-table tr:last-child td { border-bottom: none; }
+  .mod-table tr:hover td {
+    background: rgba(96, 165, 250, 0.03);
+    color: #e2e8f0;
+  }
+  /* Status dots */
+  .st { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
+  .st-done { background: #60a5fa; box-shadow: 0 0 6px rgba(96, 165, 250, 0.4); }
+  .st-wip { background: #ffab40; box-shadow: 0 0 6px rgba(255, 171, 64, 0.4); animation: pulse-st 2s ease-in-out infinite; }
+  .st-todo { background: rgba(107, 123, 149, 0.15); }
+  @keyframes pulse-st {
+    0%, 100% { box-shadow: 0 0 4px rgba(255, 171, 64, 0.2); }
+    50%      { box-shadow: 0 0 10px rgba(255, 171, 64, 0.5); }
+  }
+
+  /* ── Keyword & Exam sections ── */
+  .ref-section {
+    background: rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(96, 165, 250, 0.06);
+    border-radius: 16px;
+    padding: 1.75rem;
+    margin-bottom: 1.5rem;
+    transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .ref-section:hover {
+    background: rgba(15, 23, 42, 0.7);
+    border-color: rgba(96, 165, 250, 0.15);
+    box-shadow: 0 0 60px rgba(96, 165, 250, 0.06), 0 20px 50px rgba(0, 0, 0, 0.35);
+  }
+  .ref-section h3 {
+    color: #e2e8f0;
+    font-size: 1rem;
+    margin: 0 0 1rem;
+  }
+  .ref-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+  .ref-table th {
+    text-align: left;
+    color: #334155;
+    font-weight: 600;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid rgba(96, 165, 250, 0.06);
+  }
+  .ref-table td {
+    padding: 0.5rem 0.75rem;
+    color: #94a3b8;
+    border-bottom: 1px solid rgba(42, 58, 78, 0.2);
+    transition: all 300ms ease;
+  }
+  .ref-table td:first-child {
+    color: #4fc3f7;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+  }
+  .ref-table tr:last-child td { border-bottom: none; }
+  .ref-table tr:hover td {
+    background: rgba(96, 165, 250, 0.03);
+  }
+
+  @media (max-width: 768px) {
+    .gauge-hero { flex-direction: column; align-items: flex-start; }
+    .gauge-wrap { width: 120px; height: 120px; }
+    .gauge-num { font-size: 1.8rem; }
+  }
+</style>
+
+{% assign aws = site.data.aws_study %}
+{% assign aws_done = aws.modules | where: "status", "completed" | size %}
+{% assign aws_wip = aws.modules | where: "status", "current" | size %}
+{% assign aws_total = aws.modules | size %}
+
+<!-- Gauge Header -->
+<div class="gauge-hero reveal">
+  <div class="gauge-wrap">
+    <svg viewBox="0 0 160 160">
+      <circle class="gauge-bg" cx="80" cy="80" r="68"/>
+      <circle class="gauge-fill" cx="80" cy="80" r="68"
+        data-progress="{{ aws_done | times: 1.0 | divided_by: aws_total }}"/>
+    </svg>
+    <div class="gauge-center">
+      <span class="gauge-num" data-counter="{{ aws_done }}">0</span>
+      <span class="gauge-of">/ {{ aws_total }}</span>
+    </div>
+  </div>
+  <div class="gauge-info">
+    <h3>{{ aws.course }} Course</h3>
+    <p>Following the Cantrill course with Tutorials Dojo practice exams. Target: pass SAA-C03 in 8 weeks.</p>
+    <a href="https://github.com/mburns00/aws-saa-c03-journey" class="study-repo-link" target="_blank">View study repo &rarr;</a>
+  </div>
+</div>
+
+<!-- Week 1-2 -->
+<div class="week-section reveal">
+  <h3>Week 1-2: Foundations &amp; Core Services</h3>
+  <table class="mod-table">
+    <tr><th>#</th><th>Module</th><th>Cantrill</th><th>Quiz</th><th>Status</th></tr>
+    <tr><td>1</td><td>Course Fundamentals &amp; AWS Accounts</td><td><span class="st st-done"></span></td><td>-</td><td><span class="st st-done"></span></td></tr>
+    <tr><td>2</td><td>AWS Fundamentals</td><td><span class="st st-wip"></span></td><td>-</td><td><span class="st st-wip"></span></td></tr>
+    <tr><td>3</td><td>IAM, Accounts &amp; Organizations</td><td><span class="st st-todo"></span></td><td><span class="st st-todo"></span></td><td><span class="st st-todo"></span></td></tr>
+    <tr><td>4</td><td>S3</td><td><span class="st st-todo"></span></td><td><span class="st st-todo"></span></td><td><span class="st st-todo"></span></td></tr>
+    <tr><td>5</td><td>VPC Basics</td><td><span class="st st-todo"></span></td><td><span class="st st-todo"></span></td><td><span class="st st-todo"></span></td></tr>
+  </table>
+</div>
+
+<!-- Week 3-4 -->
+<div class="week-section reveal">
+  <h3>Week 3-4: Compute &amp; Databases</h3>
+  <table class="mod-table">
+    <tr><th>#</th><th>Module</th><th>Cantrill</th><th>Quiz</th><th>Status</th></tr>
+    <tr><td>6</td><td>EC2 Basics</td><td><span class="st st-todo"></span></td><td><span class="st st-todo"></span></td><td><span class="st st-todo"></span></td></tr>
+    <tr><td>7</td><td>Containers &amp; ECS</td><td><span class="st st-todo"></span></td><td>-</td><td><span class="st st-todo"></span></td></tr>
+    <tr><td>8</td><td>Advanced EC2</td><td><span class="st st-todo"></span></td><td>-</td><td><span class="st st-todo"></span></td></tr>
+    <tr><td>9</td><td>Route 53</td><td><span class="st st-todo"></span></td><td>-</td><td><span class="st st-todo"></span></td></tr>
+    <tr><td>10</td><td>RDS</td><td><span class="st st-todo"></span></td><td><span class="st st-todo"></span></td><td><span class="st st-todo"></span></td></tr>
+  </table>
+</div>
+
+<!-- Week 5-6 -->
+<div class="week-section reveal">
+  <h3>Week 5-6: Storage, HA &amp; Serverless</h3>
+  <table class="mod-table">
+    <tr><th>#</th><th>Module</th><th>Cantrill</th><th>Quiz</th><th>Status</th></tr>
+    <tr><td>11</td><td>Network Storage (EFS)</td><td><span class="st st-todo"></span></td><td><span class="st st-todo"></span></td><td><span class="st st-todo"></span></td></tr>
+    <tr><td>12</td><td>HA &amp; Scaling</td><td><span class="st st-todo"></span></td><td><span class="st st-todo"></span></td><td><span class="st st-todo"></span></td></tr>
+    <tr><td>13</td><td>Serverless &amp; App Services</td><td><span class="st st-todo"></span></td><td><span class="st st-todo"></span></td><td><span class="st st-todo"></span></td></tr>
+    <tr><td>14</td><td>CloudFront &amp; CDN</td><td><span class="st st-todo"></span></td><td><span class="st st-todo"></span></td><td><span class="st st-todo"></span></td></tr>
+  </table>
+</div>
+
+<!-- Week 7-8 -->
+<div class="week-section reveal">
+  <h3>Week 7-8: Advanced &amp; Exam Prep</h3>
+  <table class="mod-table">
+    <tr><th>#</th><th>Module</th><th>Cantrill</th><th>Quiz</th><th>Status</th></tr>
+    <tr><td>15</td><td>Advanced VPC</td><td><span class="st st-todo"></span></td><td>-</td><td><span class="st st-todo"></span></td></tr>
+    <tr><td>16</td><td>Hybrid &amp; Migration</td><td><span class="st st-todo"></span></td><td>-</td><td><span class="st st-todo"></span></td></tr>
+    <tr><td>17</td><td>Security &amp; Operations</td><td><span class="st st-todo"></span></td><td>-</td><td><span class="st st-todo"></span></td></tr>
+    <tr><td>18</td><td>CloudFormation</td><td><span class="st st-todo"></span></td><td>-</td><td><span class="st st-todo"></span></td></tr>
+    <tr><td>19</td><td>DynamoDB &amp; NoSQL</td><td><span class="st st-todo"></span></td><td><span class="st st-todo"></span></td><td><span class="st st-todo"></span></td></tr>
+    <tr><td>20</td><td>ML Services</td><td><span class="st st-todo"></span></td><td>-</td><td><span class="st st-todo"></span></td></tr>
+    <tr><td>21</td><td>Exam Preparation</td><td><span class="st st-todo"></span></td><td>-</td><td><span class="st st-todo"></span></td></tr>
+  </table>
+</div>
+
+<!-- Exam Keywords -->
+<div class="ref-section reveal">
+  <h3>Exam Keywords Quick Reference</h3>
+  <table class="ref-table">
+    <tr><th>Keyword</th><th>Think...</th></tr>
+    <tr><td>"millisecond latency"</td><td>ElastiCache, DynamoDB DAX</td></tr>
+    <tr><td>"serverless"</td><td>Lambda, Fargate, Aurora Serverless</td></tr>
+    <tr><td>"most cost-effective"</td><td>Spot instances, S3 lifecycle, Reserved</td></tr>
+    <tr><td>"highly available"</td><td>Multi-AZ, multiple regions</td></tr>
+    <tr><td>"decouple"</td><td>SQS, EventBridge</td></tr>
+    <tr><td>"fault-tolerant"</td><td>Auto Scaling, Multi-AZ</td></tr>
+    <tr><td>"real-time"</td><td>Kinesis Data Streams</td></tr>
+    <tr><td>"near real-time"</td><td>Kinesis Firehose</td></tr>
+  </table>
+</div>
+
+<!-- Practice Exam Scores -->
+<div class="ref-section reveal">
+  <h3>Practice Exam Scores</h3>
+  <table class="mod-table">
+    <tr><th>Exam</th><th>Score</th><th>Date</th><th>Pass?</th></tr>
+    <tr><td>Diagnostic Test</td><td>-</td><td>-</td><td></td></tr>
+    <tr><td>Timed Set 1</td><td>-</td><td>-</td><td></td></tr>
+    <tr><td>Timed Set 2</td><td>-</td><td>-</td><td></td></tr>
+  </table>
+</div>

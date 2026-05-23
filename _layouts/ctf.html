@@ -1,0 +1,24 @@
+---
+layout: default
+---
+<article class="container">
+  <div class="writeup-header">
+    <h1 class="writeup-title">{{ page.title }}</h1>
+    <div class="writeup-meta">
+      {% if page.event %}<span class="meta-item">{{ page.event }}</span>{% endif %}
+      {% if page.category %}<span class="badge badge-medium">{{ page.category }}</span>{% endif %}
+      {% if page.points %}<span class="meta-item">{{ page.points }} pts</span>{% endif %}
+      <span class="meta-item">{{ page.date | date: "%B %d, %Y" }}</span>
+    </div>
+    {% if page.tags.size > 0 %}
+    <div class="writeup-tags">
+      {% for tag in page.tags %}
+      <span class="tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  <div class="writeup-content">
+    {{ content }}
+  </div>
+</article>

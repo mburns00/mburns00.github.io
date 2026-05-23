@@ -1,0 +1,25 @@
+# Jekyll build output
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# VPN configs (sensitive)
+vpn/*.ovpn
+vpn/*.conf
+
+# Ruby
+Gemfile.lock
+*.gem
+.bundle/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+*~
+.vscode/
+.idea/

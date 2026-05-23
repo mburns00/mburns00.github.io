@@ -1,0 +1,25 @@
+// Rouge dark syntax theme (Monokai-ish for HTB aesthetic)
+.highlight {
+  background: $bg-secondary;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  padding: $spacing-lg;
+  overflow-x: auto;
+  margin-bottom: $spacing-lg;
+
+  .c, .cm, .c1, .cs   { color: #6b7b95; font-style: italic; } // comments
+  .k, .kc, .kd, .kn,
+  .kp, .kr, .kt        { color: #ff6188; }                     // keywords
+  .s, .sb, .sc, .sd,
+  .s2, .se, .sh, .si,
+  .sx, .s1, .ss, .sr   { color: #ffd866; }                     // strings
+  .na                   { color: $neon-blue; }                  // attr name
+  .nb, .nc, .no         { color: #78dce8; }                     // builtins
+  .nf, .nx              { color: $accent-blue; }                 // function
+  .mi, .mf, .mh, .mo   { color: #ab9df2; }                     // numbers
+  .o, .ow               { color: #ff6188; }                     // operators
+  .p                    { color: $text-primary; }               // punctuation
+  .nv, .vi, .vg, .vc   { color: $neon-blue; }                  // variables
+  .nn                   { color: $text-heading; }               // namespace
+  .err                  { color: $neon-red; }                   // error
+}

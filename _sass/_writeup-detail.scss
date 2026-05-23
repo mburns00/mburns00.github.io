@@ -1,0 +1,124 @@
+// ── Writeup detail page (HTB box write-ups) ──
+
+.wu-detail {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.wu-hero {
+  @extend %detail-hero;
+
+  .wu-breadcrumb { @extend %detail-breadcrumb; }
+  .wu-title      { @extend %detail-title; }
+  .wu-tags       { @extend %detail-tags; }
+  .wu-tag        { @extend %detail-tag; }
+
+  &:hover .wu-tag {
+    background: rgba($neon-blue, 0.14);
+    border-color: rgba($neon-blue, 0.14);
+  }
+
+  .wu-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    align-items: center;
+    margin-bottom: $spacing-md;
+  }
+
+  .wu-date {
+    color: $slate-600;
+    font-size: 0.8rem;
+  }
+
+  .wu-flags {
+    display: flex;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-md;
+  }
+}
+
+// Flag indicators
+.wu-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: $font-mono;
+  font-size: 0.72rem;
+  padding: 0.25em 0.6em;
+  border-radius: 6px;
+  border: 1px solid;
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  &.obtained {
+    color: $success-green;
+    background: rgba($success-green, 0.06);
+    border-color: rgba($success-green, 0.1);
+
+    .dot { box-shadow: 0 0 6px rgba($success-green, 0.4); }
+  }
+
+  &.missing {
+    color: $slate-600;
+    background: rgba($border, 0.2);
+    border-color: rgba($border, 0.15);
+  }
+}
+
+// Tools used strip
+.wu-tools {
+  background: rgba(15, 23, 42, 0.35);
+  border: 1px solid rgba($accent-blue, 0.04);
+  border-radius: $radius-md;
+  padding: $spacing-md 1.25rem;
+  margin-bottom: $spacing-xl;
+  transition: all 400ms ease;
+
+  &:hover { border-color: rgba($accent-blue, 0.1); }
+
+  h3 {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $slate-600;
+    margin: 0 0 $spacing-sm;
+  }
+}
+
+.wu-tools-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    font-family: $font-mono;
+    font-size: 0.72rem;
+    background: rgba($accent-blue, 0.06);
+    color: $accent-blue;
+    padding: 0.2em 0.5em;
+    border-radius: $radius-sm;
+    border: 1px solid rgba($accent-blue, 0.06);
+    transition: all 300ms ease;
+
+    &:hover { background: rgba($accent-blue, 0.12); }
+  }
+}
+
+// Content body
+.wu-body {
+  @extend %detail-body;
+}
+
+@media (max-width: $bp-md) {
+  .wu-hero .wu-title { font-size: 1.4rem; }
+  .wu-hero, .wu-body { padding: $spacing-lg; }
+}

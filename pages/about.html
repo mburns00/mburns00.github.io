@@ -1,0 +1,406 @@
+---
+title: "About"
+subtitle: ""
+permalink: /about/
+---
+
+<style>
+  /* ━━ Intro ━━ */
+  .about-intro {
+    margin-bottom: 4rem;
+    max-width: 640px;
+  }
+  .about-intro .lead {
+    font-size: 1.15rem;
+    color: #cbd5e1;
+    line-height: 1.85;
+    margin-bottom: 1rem;
+  }
+  .about-intro .lead:first-of-type::first-line {
+    color: #f1f5f9;
+    font-weight: 600;
+  }
+  .about-intro p {
+    color: #94a3b8;
+    line-height: 1.8;
+    font-size: 1rem;
+  }
+  .about-intro .accent-line {
+    width: 48px;
+    height: 3px;
+    background: linear-gradient(90deg, #60a5fa, #818cf8);
+    border-radius: 3px;
+    margin-bottom: 1.75rem;
+  }
+
+  /* ━━ Credential timeline ━━ */
+  .timeline {
+    position: relative;
+    display: flex;
+    margin-bottom: 4rem;
+    padding: 0 1rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    top: 7px;
+    height: 2px;
+    background: linear-gradient(90deg, #4ade80 0%, #4ade80 38%, #60a5fa 50%, #1e293b 62%, #1e293b 100%);
+    border-radius: 2px;
+  }
+  .timeline-node {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    padding-top: 28px;
+    cursor: default;
+    transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .timeline-node:hover {
+    transform: translateY(-3px);
+  }
+  .timeline-node::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    z-index: 2;
+    background: #141d2b;
+    transition: all 400ms ease;
+  }
+  .timeline-node.earned::before {
+    background: #4ade80;
+    box-shadow: 0 0 10px rgba(74, 222, 128, 0.4);
+  }
+  .timeline-node:hover.earned::before {
+    box-shadow: 0 0 20px rgba(74, 222, 128, 0.6);
+    transform: translateX(-50%) scale(1.3);
+  }
+  .timeline-node.active::before {
+    background: #141d2b;
+    border: 2.5px solid #60a5fa;
+    box-shadow: 0 0 10px rgba(96, 165, 250, 0.3);
+    animation: pulse-node 2.5s ease-in-out infinite;
+  }
+  @keyframes pulse-node {
+    0%, 100% { box-shadow: 0 0 8px rgba(96, 165, 250, 0.2); }
+    50%      { box-shadow: 0 0 18px rgba(96, 165, 250, 0.5); }
+  }
+  .timeline-node.pending::before {
+    background: #141d2b;
+    border: 2px solid #1e293b;
+  }
+  .node-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin-bottom: 0.15rem;
+  }
+  .node-org {
+    font-size: 0.72rem;
+    color: #475569;
+    margin-bottom: 0.25rem;
+  }
+  .node-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: #334155;
+  }
+  .timeline-node.earned .node-date { color: #4ade80; }
+  .timeline-node.active .node-date { color: #60a5fa; }
+
+  /* ━━ Bento grid ━━ */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1rem;
+    margin-bottom: 4rem;
+  }
+  .bento-card {
+    background: rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(96, 165, 250, 0.06);
+    border-radius: 16px;
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    will-change: transform;
+    transition: box-shadow 400ms ease, background 400ms ease, border-color 400ms ease;
+  }
+  .bento-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    background: radial-gradient(
+      500px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(96, 165, 250, 0.06) 0%,
+      transparent 100%
+    );
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 400ms ease;
+  }
+  .bento-card:hover::before { opacity: 1; }
+  .bento-card:hover {
+    background: rgba(15, 23, 42, 0.7);
+    border-color: rgba(96, 165, 250, 0.15);
+    box-shadow:
+      0 0 60px rgba(96, 165, 250, 0.06),
+      0 20px 50px rgba(0, 0, 0, 0.35);
+  }
+  .bento-card:nth-child(1) {
+    grid-row: 1 / 3;
+  }
+  .bento-card:nth-child(4) {
+    grid-column: 2 / 4;
+  }
+  .bento-card h3 {
+    font-size: 1.05rem;
+    color: #f1f5f9;
+    margin: 0 0 0.6rem 0;
+    position: relative;
+  }
+  .bento-card .card-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: #334155;
+    margin-bottom: 0.75rem;
+    position: relative;
+  }
+  .bento-card p {
+    font-size: 0.88rem;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.7;
+    position: relative;
+  }
+  .bento-card .sub-tags {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    position: relative;
+  }
+  .bento-card .sub-tags li {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: #60a5fa;
+    background: rgba(96, 165, 250, 0.08);
+    border: 1px solid rgba(96, 165, 250, 0.06);
+    padding: 0.2em 0.55em;
+    border-radius: 6px;
+    transition: all 400ms ease;
+  }
+  .bento-card:hover .sub-tags li {
+    background: rgba(96, 165, 250, 0.14);
+    border-color: rgba(96, 165, 250, 0.14);
+  }
+
+  /* ━━ Contact ━━ */
+  .contact-section {
+    margin-bottom: 2rem;
+  }
+  .contact-row {
+    display: flex;
+    gap: 1rem;
+  }
+  .contact-link {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-radius: 14px;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(96, 165, 250, 0.06);
+    text-decoration: none;
+    color: inherit;
+    transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+  .contact-link:hover {
+    background: rgba(15, 23, 42, 0.7);
+    border-color: rgba(96, 165, 250, 0.2);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    color: inherit;
+  }
+  .contact-link .c-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: rgba(96, 165, 250, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: #60a5fa;
+    flex-shrink: 0;
+    transition: all 400ms ease;
+  }
+  .contact-link:hover .c-icon {
+    background: rgba(96, 165, 250, 0.12);
+    box-shadow: 0 0 12px rgba(96, 165, 250, 0.1);
+  }
+  .contact-link .c-label {
+    font-size: 0.68rem;
+    color: #334155;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 0.15rem;
+  }
+  .contact-link .c-value {
+    font-size: 0.88rem;
+    color: #e2e8f0;
+    word-break: break-all;
+  }
+
+  /* ━━ Responsive ━━ */
+  @media (max-width: 768px) {
+    .bento-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+    }
+    .bento-card:nth-child(1) { grid-row: auto; }
+    .bento-card:nth-child(4) { grid-column: auto; }
+    .timeline { flex-direction: column; gap: 0.5rem; padding: 0; }
+    .timeline::before {
+      width: 2px; height: 100%;
+      top: 0; left: 7px; right: auto;
+      background: linear-gradient(180deg, #4ade80 0%, #4ade80 38%, #60a5fa 50%, #1e293b 62%, #1e293b 100%);
+    }
+    .timeline-node {
+      text-align: left;
+      padding-top: 0;
+      padding-left: 32px;
+      padding-bottom: 1.25rem;
+    }
+    .timeline-node::before {
+      left: 0; top: 3px;
+      transform: none;
+    }
+    .timeline-node:hover.earned::before {
+      transform: scale(1.3);
+    }
+    .contact-row { flex-direction: column; }
+  }
+</style>
+
+<!-- Intro -->
+<div class="about-intro">
+  <div class="accent-line hero-fade"></div>
+  <p class="lead hero-fade">AI security researcher from Australia. I build adversarial evaluation infrastructure for autonomous AI agents.</p>
+  <p class="hero-fade">My Master's capstone at the University of Sydney is a real-world evaluation framework for autonomous pentesting LLMs — comparing four fine-tuned Qwen3-14B variants across 32 controlled cells on Hack The Box machines, with behaviour mapped to OWASP Agentic Top 10, NIST AI 600-1, MITRE ATLAS, and the Singapore Agentic AI Framework. The framework is published open-source as <a href="https://github.com/mburns00/beyond-ctfs">beyond-ctfs</a>.</p>
+  <p class="hero-fade">Methodological integrity is the point — null-tolerant reporting, pre-registered hypotheses, blind scoring, honest inter-rater reliability disclosure. Not benchmark theatre.</p>
+</div>
+
+<!-- Credentials -->
+<div class="reveal">
+  <p class="section-label">Background</p>
+  <p style="color: #94a3b8; line-height: 1.8; margin-bottom: 2rem;">Came up through a few desk jobs before committing to cybersecurity full-time. The goal is to contribute to Australia's cybersecurity space in a meaningful way — always looking for opportunities where I can keep learning and actually make an impact.</p>
+  <div class="timeline reveal-stagger">
+    <div class="timeline-node earned">
+      <div class="node-title">B.I.T</div>
+      <div class="node-org">Southern Cross University</div>
+      <div class="node-date">Nov 2024</div>
+    </div>
+    <div class="timeline-node earned">
+      <div class="node-title">CompTIA Security+</div>
+      <div class="node-org">CompTIA</div>
+      <div class="node-date">Jul 2024</div>
+    </div>
+    <div class="timeline-node active">
+      <div class="node-title">Master of Cybersecurity</div>
+      <div class="node-org">University of Sydney</div>
+      <div class="node-date">Expected 2026</div>
+    </div>
+    <div class="timeline-node pending">
+      <div class="node-title">AWS SAA-C03</div>
+      <div class="node-org">Amazon Web Services</div>
+      <div class="node-date">In Progress</div>
+    </div>
+  </div>
+</div>
+
+<!-- Focus areas -->
+<div class="reveal">
+  <p class="section-label">Focus Areas</p>
+  <div class="bento-grid reveal-stagger">
+    <div class="bento-card" data-tilt>
+      <span class="card-num">01</span>
+      <h3>Adversarial AI Evaluation</h3>
+      <p>Designing rubrics, harnesses, and blind-scoring protocols that surface how autonomous agents fail — not just whether they pass. Triple-blind LLM-as-judge methodology with variant-redacted transcripts.</p>
+      <ul class="sub-tags">
+        <li>OWASP Agentic Top 10</li>
+        <li>MITRE ATLAS</li>
+        <li>NIST AI 600-1</li>
+      </ul>
+    </div>
+    <div class="bento-card" data-tilt>
+      <span class="card-num">02</span>
+      <h3>LLM Post-Training</h3>
+      <p>SFT, DPO, and GRPO trade-off analysis on offensive-security LLMs. Quasi-experimental, statistically rigorous, locked inference config.</p>
+      <ul class="sub-tags">
+        <li>SFT</li>
+        <li>DPO</li>
+        <li>GRPO</li>
+        <li>Qwen / Llama</li>
+        <li>PyTorch</li>
+      </ul>
+    </div>
+    <div class="bento-card" data-tilt>
+      <span class="card-num">03</span>
+      <h3>AI Safety &amp; Governance</h3>
+      <p>Translating empirical agent behaviour into governance-actionable risk language. Null-tolerant reporting; failure modes get surfaced, not hidden.</p>
+    </div>
+    <div class="bento-card" data-tilt>
+      <span class="card-num">04</span>
+      <h3>Offensive Security</h3>
+      <p>Penetration testing methodology, MITRE ATT&amp;CK-mapped attack chains, HackTheBox engagements. The traditional craft underneath every meaningful AI red-team eval.</p>
+      <ul class="sub-tags">
+        <li>PTES</li>
+        <li>MITRE ATT&amp;CK</li>
+        <li>HackTheBox</li>
+        <li>OWASP Top 10</li>
+        <li>Linux hardening</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Contact -->
+<div class="contact-section reveal">
+  <p class="section-label">Contact</p>
+  <div class="contact-row reveal-stagger">
+    <a href="https://github.com/mburns00" class="contact-link" data-magnetic target="_blank">
+      <div class="c-icon">GH</div>
+      <div>
+        <div class="c-label">GitHub</div>
+        <div class="c-value">mburns00</div>
+      </div>
+    </a>
+    <a href="mailto:MatthewKBurns00@gmail.com" class="contact-link" data-magnetic>
+      <div class="c-icon">@</div>
+      <div>
+        <div class="c-label">Email</div>
+        <div class="c-value">MatthewKBurns00@gmail.com</div>
+      </div>
+    </a>
+    <a href="https://mburns00.github.io" class="contact-link" data-magnetic target="_blank">
+      <div class="c-icon">W</div>
+      <div>
+        <div class="c-label">Website</div>
+        <div class="c-value">mburns00.github.io</div>
+      </div>
+    </a>
+  </div>
+</div>

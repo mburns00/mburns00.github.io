@@ -1,0 +1,46 @@
+---
+layout: default
+---
+
+<article class="container">
+  <div class="tool-detail reveal">
+    <div class="tool-hero {% if page.category == 'script' %}cat-script{% endif %}" data-spotlight>
+      <div class="th-breadcrumb">
+        <a href="{{ '/tools/' | relative_url }}">Projects</a>
+        <span class="sep">/</span>
+        <span>{{ page.title }}</span>
+      </div>
+
+      <div class="th-top">
+        <h1 class="th-title">{{ page.title }}</h1>
+        <div class="th-badges">
+          {% if page.category %}
+            <span class="th-cat {{ page.category }}">{{ page.category }}</span>
+          {% endif %}
+          {% if page.status == "on-hold" %}
+            <span class="th-status on-hold"><span class="sd"></span> On Hold</span>
+          {% endif %}
+        </div>
+      </div>
+
+      {% if page.tagline %}<p class="th-tagline">{{ page.tagline }}</p>{% endif %}
+
+      {% if page.repo or page.demo %}
+      <div class="th-links">
+        {% if page.repo %}<a href="{{ page.repo }}" class="th-link" target="_blank" rel="noopener">GitHub Repo &rarr;</a>{% endif %}
+        {% if page.demo %}<a href="{{ page.demo }}" class="th-link" target="_blank" rel="noopener">Live Demo &rarr;</a>{% endif %}
+      </div>
+      {% endif %}
+
+      {% if page.tags.size > 0 %}
+      <div class="th-tags">
+        {% for tag in page.tags %}<span class="th-tag">{{ tag }}</span>{% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="tool-body writeup-content reveal">
+      {{ content }}
+    </div>
+  </div>
+</article>

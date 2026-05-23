@@ -1,0 +1,9 @@
+- name: GitHub
+  url: https://github.com/mburns00
+  icon: github
+- name: LinkedIn
+  url: https://linkedin.com/in/mburns00
+  icon: linkedin
+- name: HackTheBox
+  url: https://app.hackthebox.com/profile/BuggInYourCloud
+  icon: terminal

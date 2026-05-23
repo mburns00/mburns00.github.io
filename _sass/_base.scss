@@ -1,0 +1,307 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+
+  // Themed scrollbar
+  &::-webkit-scrollbar { width: 8px; }
+  &::-webkit-scrollbar-track { background: $bg-secondary; }
+  &::-webkit-scrollbar-thumb {
+    background: $border;
+    border-radius: 4px;
+    &:hover { background: rgba($accent-blue, 0.3); }
+  }
+  scrollbar-width: thin;
+  scrollbar-color: $border $bg-secondary;
+}
+
+body {
+  font-family: $font-body;
+  background-color: $bg-primary;
+  color: $text-primary;
+  line-height: 1.7;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $text-heading;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  margin-bottom: $spacing-md;
+}
+
+h1 { font-size: 2.25rem; font-weight: 800; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.375rem; }
+h4 { font-size: 1.125rem; letter-spacing: 0; }
+
+p {
+  margin-bottom: $spacing-md;
+}
+
+a {
+  color: $neon-blue;
+  text-decoration: none;
+  transition: color $transition;
+
+  &:hover {
+    color: $accent-blue;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+code {
+  font-family: $font-mono;
+  font-size: 0.875em;
+  background: $surface;
+  padding: 0.15em 0.4em;
+  border-radius: $radius-sm;
+  color: $accent-blue;
+}
+
+pre {
+  background: $bg-secondary;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  padding: $spacing-lg;
+  overflow-x: auto;
+  margin-bottom: $spacing-lg;
+
+  code {
+    background: none;
+    padding: 0;
+    font-size: 0.85rem;
+    color: $text-primary;
+  }
+}
+
+hr {
+  border: none;
+  border-top: 1px solid $border;
+  margin: $spacing-xl 0;
+}
+
+ul, ol {
+  padding-left: $spacing-xl;
+  margin-bottom: $spacing-md;
+}
+
+li {
+  margin-bottom: $spacing-xs;
+}
+
+blockquote {
+  border-left: 3px solid $accent-blue;
+  padding-left: $spacing-lg;
+  color: $text-muted;
+  font-style: italic;
+  margin-bottom: $spacing-lg;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: $spacing-lg;
+
+  th, td {
+    padding: $spacing-sm $spacing-md;
+    border: 1px solid $border;
+    text-align: left;
+  }
+
+  th {
+    background: $surface;
+    color: $text-heading;
+    font-weight: 600;
+  }
+
+  tr:nth-child(even) {
+    background: rgba($surface, 0.5);
+  }
+}
+
+::selection {
+  background: rgba($accent-blue, 0.3);
+  color: $text-heading;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid $accent-blue;
+  outline-offset: 2px;
+  border-radius: $radius-sm;
+}
+
+// ── Ambient gradient orbs ──
+.orbs {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.07;
+}
+.orb-1 {
+  width: 500px; height: 500px;
+  background: $accent-blue;
+  top: -15%; right: -10%;
+  animation: drift 25s ease-in-out infinite;
+}
+.orb-2 {
+  width: 400px; height: 400px;
+  background: $neon-purple;
+  bottom: 10%; left: -8%;
+  animation: drift 25s ease-in-out infinite -8s;
+}
+.orb-3 {
+  width: 350px; height: 350px;
+  background: $accent-blue;
+  top: 50%; right: 15%;
+  animation: drift 25s ease-in-out infinite -16s;
+}
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25%      { transform: translate(40px, -30px) scale(1.05); }
+  50%      { transform: translate(-25px, 35px) scale(0.95); }
+  75%      { transform: translate(20px, 15px) scale(1.02); }
+}
+
+// ── Noise texture ──
+.site-content::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 50;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px;
+}
+
+// ── Scroll reveal ──
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 700ms cubic-bezier(0.4, 0, 0.2, 1),
+              transform 700ms cubic-bezier(0.4, 0, 0.2, 1);
+  &.vis { opacity: 1; transform: none; }
+}
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1),
+              transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.reveal-stagger.vis > * { opacity: 1; transform: none; }
+
+// ── Hero entrance ──
+.hero-fade {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 650ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  &:nth-child(1) { animation-delay: 80ms; }
+  &:nth-child(2) { animation-delay: 180ms; }
+  &:nth-child(3) { animation-delay: 300ms; }
+  &:nth-child(4) { animation-delay: 400ms; }
+  &:nth-child(5) { animation-delay: 520ms; }
+  &:nth-child(6) { animation-delay: 640ms; }
+}
+@keyframes fadeUp {
+  to { opacity: 1; transform: none; }
+}
+
+// ── Section label ──
+.section-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: $accent-blue;
+  margin-bottom: $spacing-lg;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  &::before {
+    content: '';
+    width: 18px;
+    height: 2px;
+    background: linear-gradient(90deg, $accent-blue, transparent);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+}
+
+// ── Cursor spotlight for tiltable elements ──
+[data-tilt] {
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      500px circle at var(--mx, 50%) var(--my, 50%),
+      rgba($accent-blue, 0.06) 0%,
+      transparent 100%
+    );
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 400ms ease;
+    z-index: 1;
+  }
+  &:hover::after { opacity: 1; }
+}
+
+// ── Skip to content (a11y) ──
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: $spacing-md;
+  background: $bg-secondary;
+  color: $accent-blue;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-md;
+  z-index: 200;
+  font-family: $font-mono;
+  font-size: 0.85rem;
+  border: 1px solid $border;
+  transition: top 200ms ease;
+
+  &:focus {
+    top: $spacing-md;
+  }
+}
+
+// ── Reduced motion (a11y) ──
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

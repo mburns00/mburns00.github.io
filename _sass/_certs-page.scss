@@ -1,0 +1,204 @@
+// ── Education / Certs listing page ──
+
+// Scroll-linked Timeline
+.cert-timeline {
+  position: relative;
+  padding-left: 48px;
+  max-width: 720px;
+  margin: 0 auto;
+
+  // Background track
+  &::before {
+    content: '';
+    position: absolute;
+    left: 16px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: $card-border;
+  }
+
+  // Scroll-fill line
+  &::after {
+    content: '';
+    position: absolute;
+    left: 16px;
+    top: 0;
+    width: 2px;
+    height: var(--fill, 0%);
+    background: linear-gradient(180deg, $success-green, $accent-blue, $neon-purple);
+    transition: height 80ms ease-out;
+    border-radius: 0 0 2px 2px;
+  }
+}
+
+// Node link
+.cert-node {
+  position: relative;
+  display: block;
+  margin-bottom: $spacing-xl;
+  text-decoration: none;
+  color: inherit;
+
+  &:last-child { margin-bottom: 0; }
+
+  // Dot
+  &::before {
+    content: '';
+    position: absolute;
+    left: -36px;
+    top: 22px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: $bg-primary;
+    border: 2.5px solid rgba($accent-blue, 0.1);
+    z-index: 2;
+    transition: all $transition-card;
+  }
+
+  &.earned::before {
+    background: $success-green;
+    border-color: $success-green;
+    box-shadow: 0 0 10px rgba($success-green, 0.3);
+  }
+
+  &.in-progress::before {
+    background: $bg-primary;
+    border-color: $accent-blue;
+    box-shadow: 0 0 10px rgba($accent-blue, 0.3);
+    animation: cert-pulse 2.5s ease-in-out infinite;
+  }
+
+  &:hover::before { transform: scale(1.4); }
+  &.earned:hover::before { box-shadow: 0 0 20px rgba($success-green, 0.5); }
+}
+
+@keyframes cert-pulse {
+  0%, 100% { box-shadow: 0 0 6px rgba($accent-blue, 0.2); }
+  50%      { box-shadow: 0 0 18px rgba($accent-blue, 0.5); }
+}
+
+// Card
+.cert-card {
+  background: $card-bg;
+  border: 1px solid $card-border;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  transition: all $transition-card;
+  position: relative;
+  overflow: hidden;
+
+  .cert-node:hover & {
+    background: $card-bg-hover;
+    border-color: $card-border-hover;
+    box-shadow: $card-shadow;
+    transform: translateX(6px);
+  }
+
+  // Spotlight
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: $radius-lg;
+    background: radial-gradient(
+      400px circle at var(--mx, 50%) var(--my, 50%),
+      rgba($accent-blue, 0.06) 0%, transparent 100%
+    );
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 400ms ease;
+  }
+  .cert-node:hover &::after { opacity: 1; }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: $spacing-sm;
+  }
+
+  .card-title {
+    font-size: 1.15rem;
+    color: $text-heading;
+    margin: 0;
+  }
+
+  .status-pill {
+    font-family: $font-mono;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 0.2em 0.6em;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    &.earned {
+      background: rgba($success-green, 0.08);
+      color: $success-green;
+      border: 1px solid rgba($success-green, 0.1);
+    }
+
+    &.in-progress {
+      background: rgba($accent-blue, 0.08);
+      color: $accent-blue;
+      border: 1px solid rgba($accent-blue, 0.1);
+      animation: cert-pill-pulse 2s ease-in-out infinite;
+    }
+  }
+
+  .card-issuer {
+    color: $slate-600;
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .card-dates {
+    font-family: $font-mono;
+    font-size: 0.72rem;
+    color: $slate-700;
+    display: flex;
+    gap: $spacing-md;
+    flex-wrap: wrap;
+
+    span { color: $slate-500; }
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.75rem;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 0.1em 0.45em;
+    background: rgba($neon-blue, 0.08);
+    color: $neon-blue;
+    border-radius: $radius-sm;
+    font-size: 0.68rem;
+    font-family: $font-mono;
+    border: 1px solid rgba($neon-blue, 0.06);
+    transition: all 400ms ease;
+  }
+
+  .cert-node:hover & .tag {
+    background: rgba($neon-blue, 0.14);
+    border-color: rgba($neon-blue, 0.14);
+  }
+}
+
+@keyframes cert-pill-pulse {
+  0%, 100% { opacity: 0.7; }
+  50%      { opacity: 1; }
+}
+
+@media (max-width: $bp-md) {
+  .cert-timeline { padding-left: 36px; }
+  .cert-node::before { left: -26px; width: 12px; height: 12px; }
+}

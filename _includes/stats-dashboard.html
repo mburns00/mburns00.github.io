@@ -1,0 +1,57 @@
+{% comment %}
+  Liquid computes stats from site.writeups at build time,
+  then injects them as JS variables for Chart.js to render client-side.
+{% endcomment %}
+
+{% assign total = site.writeups | size %}
+{% assign rooted = site.writeups | where: "status", "rooted" | size %}
+{% assign user_only = site.writeups | where: "status", "user-only" | size %}
+{% assign failed_count = site.writeups | where: "status", "failed" | size %}
+
+{% assign very_easy = site.writeups | where: "difficulty", "Very Easy" | size %}
+{% assign easy = site.writeups | where: "difficulty", "Easy" | size %}
+{% assign medium = site.writeups | where: "difficulty", "Medium" | size %}
+{% assign hard = site.writeups | where: "difficulty", "Hard" | size %}
+{% assign insane = site.writeups | where: "difficulty", "Insane" | size %}
+
+{% assign linux = site.writeups | where: "os", "Linux" | size %}
+{% assign windows = site.writeups | where: "os", "Windows" | size %}
+
+<script>
+  window.siteStats = {
+    total: {{ total }},
+    rooted: {{ rooted }},
+    userOnly: {{ user_only }},
+    failed: {{ failed_count }},
+    difficulty: { veryEasy: {{ very_easy }}, easy: {{ easy }}, medium: {{ medium }}, hard: {{ hard }}, insane: {{ insane }} },
+    os: { linux: {{ linux }}, windows: {{ windows }} },
+    boxGoal: 100,
+    timeline: [
+      {% for writeup in site.writeups %}
+      { date: "{{ writeup.date | date: '%Y-%m-%d' }}", title: {{ writeup.title | jsonify }}, status: "{{ writeup.status }}" }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ]
+  };
+</script>
+
+<section class="stats-dashboard reveal">
+  <p class="section-label">Stats Dashboard</p>
+  <div class="charts-grid reveal-stagger">
+    <div class="chart-card">
+      <h3>Difficulty Breakdown</h3>
+      <canvas id="difficultyChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Operating System</h3>
+      <canvas id="osChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>2026 Goal: 100 Boxes</h3>
+      <canvas id="goalChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Progress Timeline</h3>
+      <canvas id="timelineChart"></canvas>
+    </div>
+  </div>
+</section>

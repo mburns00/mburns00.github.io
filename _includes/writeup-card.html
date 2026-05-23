@@ -1,0 +1,31 @@
+{% assign writeup = include.writeup %}
+<a href="{{ writeup.url | relative_url }}" class="card" data-tilt>
+  <div class="card-header">
+    <div>
+      <h3 class="card-title">{{ writeup.title }}</h3>
+      <div class="card-meta">
+        <span class="platform-badge {{ writeup.platform | downcase }}">{{ writeup.platform }}</span>
+        &middot;
+        {% include difficulty-badge.html difficulty=writeup.difficulty %}
+        &middot;
+        <span class="os-badge">{{ writeup.os }}</span>
+      </div>
+    </div>
+    <span class="badge badge-{{ writeup.status }}">{{ writeup.status }}</span>
+  </div>
+  {% if writeup.excerpt %}
+  <p class="card-description">{{ writeup.excerpt | strip_html | truncatewords: 30 }}</p>
+  {% endif %}
+  <div class="card-tags">
+    {% for tag in writeup.tags %}
+    <span class="tag">{{ tag }}</span>
+    {% endfor %}
+  </div>
+  <div class="card-footer">
+    <span>{{ writeup.date | date: "%b %d, %Y" }}</span>
+    <div class="flags">
+      <span class="flag {% if writeup.user_flag %}obtained{% else %}missing{% endif %}" title="User flag">&#9873; user</span>
+      <span class="flag {% if writeup.root_flag %}obtained{% else %}missing{% endif %}" title="Root flag">&#9873; root</span>
+    </div>
+  </div>
+</a>

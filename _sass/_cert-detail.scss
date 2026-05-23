@@ -1,0 +1,142 @@
+// ── Cert detail page ──
+
+.cert-detail {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cert-hero {
+  @extend %detail-hero;
+
+  .ch-breadcrumb { @extend %detail-breadcrumb; }
+  .ch-title      { @extend %detail-title; }
+  .ch-tags       { @extend %detail-tags; }
+  .ch-tag        { @extend %detail-tag; }
+
+  &:hover .ch-tag {
+    background: rgba($neon-blue, 0.14);
+    border-color: rgba($neon-blue, 0.14);
+  }
+
+  .ch-top { @extend %detail-top; }
+
+  // Status accent bar
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: $radius-lg $radius-lg 0 0;
+  }
+
+  &.earned-hero::before {
+    background: linear-gradient(90deg, transparent, $success-green, transparent);
+  }
+
+  &.progress-hero::before {
+    background: linear-gradient(90deg, transparent, $accent-blue, transparent);
+    animation: shimmer-bar 3s ease-in-out infinite;
+  }
+
+  .ch-issuer {
+    color: $slate-500;
+    font-size: 0.95rem;
+    margin-bottom: $spacing-md;
+  }
+
+  .ch-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-md;
+  }
+}
+
+@keyframes shimmer-bar {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+// Status pill
+.ch-status {
+  font-family: $font-mono;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.25em 0.7em;
+  border-radius: 9999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  &.earned {
+    color: $success-green;
+    background: rgba($success-green, 0.08);
+    border: 1px solid rgba($success-green, 0.1);
+  }
+
+  &.in-progress {
+    color: $accent-blue;
+    background: rgba($accent-blue, 0.08);
+    border: 1px solid rgba($accent-blue, 0.1);
+    animation: pulse-status 2s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse-status {
+  0%, 100% { opacity: 0.7; }
+  50%      { opacity: 1; }
+}
+
+// Meta pills
+.ch-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  color: $slate-400;
+  background: rgba($border, 0.3);
+  padding: 0.3em 0.65em;
+  border-radius: 6px;
+  border: 1px solid rgba($accent-blue, 0.04);
+  transition: all 300ms ease;
+
+  &:hover {
+    background: rgba($border, 0.5);
+    color: $text-heading;
+  }
+
+  .mi-icon {
+    font-size: 0.8rem;
+    opacity: 0.6;
+  }
+}
+
+// Content body
+.cert-body {
+  @extend %detail-body;
+
+  img {
+    max-width: 420px;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: $spacing-lg auto;
+    border-radius: $radius-md;
+    border: 1px solid rgba($accent-blue, 0.08);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    transition: all 400ms ease;
+
+    &:hover {
+      border-color: rgba($accent-blue, 0.15);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+      transform: scale(1.02);
+    }
+  }
+}
+
+@media (max-width: $bp-md) {
+  .cert-hero .ch-title { font-size: 1.4rem; }
+  .cert-hero, .cert-body { padding: $spacing-lg; }
+}

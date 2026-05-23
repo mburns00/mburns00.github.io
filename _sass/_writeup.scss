@@ -1,0 +1,109 @@
+// Write-up detail page
+.writeup-header {
+  margin-bottom: $spacing-2xl;
+
+  .writeup-title {
+    font-size: 2.5rem;
+    margin-bottom: $spacing-md;
+  }
+
+  .writeup-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-lg;
+    align-items: center;
+    margin-bottom: $spacing-lg;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    color: $text-muted;
+    font-size: 0.9rem;
+  }
+
+  .writeup-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-sm;
+  }
+}
+
+// TOC-style tools list
+.tools-used {
+  background: rgba(15, 23, 42, 0.35);
+  border: 1px solid rgba(96, 165, 250, 0.04);
+  border-radius: 12px;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-xl;
+  transition: all 400ms ease;
+
+  &:hover {
+    border-color: rgba(96, 165, 250, 0.1);
+  }
+
+  h3 {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #475569;
+    margin-bottom: $spacing-sm;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+
+    li {
+      font-family: $font-mono;
+      font-size: 0.72rem;
+      background: rgba($accent-blue, 0.06);
+      color: $accent-blue;
+      padding: 0.2em 0.5em;
+      border-radius: $radius-sm;
+      border: 1px solid rgba($accent-blue, 0.06);
+      transition: all 300ms ease;
+
+      &:hover {
+        background: rgba(96, 165, 250, 0.12);
+      }
+    }
+  }
+}
+
+// Writeup body content
+.writeup-content {
+  h2 {
+    margin-top: $spacing-2xl;
+    padding-bottom: $spacing-sm;
+    border-bottom: 1px solid rgba(96, 165, 250, 0.06);
+    color: $text-heading;
+  }
+
+  h3 {
+    margin-top: $spacing-xl;
+    color: $neon-blue;
+  }
+
+  img {
+    max-width: 420px;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: $spacing-lg auto;
+    border-radius: 12px;
+    border: 1px solid rgba(96, 165, 250, 0.08);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    transition: all 400ms ease;
+
+    &:hover {
+      border-color: rgba(96, 165, 250, 0.15);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+      transform: scale(1.02);
+    }
+  }
+}

@@ -1,0 +1,142 @@
+// ── Tool detail page ──
+
+.tool-detail {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.tool-hero {
+  @extend %detail-hero;
+
+  .th-breadcrumb { @extend %detail-breadcrumb; }
+  .th-title      { @extend %detail-title; }
+  .th-tags       { @extend %detail-tags; }
+  .th-tag        { @extend %detail-tag; }
+
+  &:hover .th-tag {
+    background: rgba($neon-blue, 0.14);
+    border-color: rgba($neon-blue, 0.14);
+  }
+
+  // Category accent bar
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--accent, $accent-blue), transparent);
+    border-radius: $radius-lg $radius-lg 0 0;
+  }
+
+  &.cat-script::before { --accent: #{$neon-orange}; }
+
+  .th-top { @extend %detail-top; }
+
+  .th-badges {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .th-tagline {
+    color: $slate-500;
+    font-size: 0.95rem;
+    margin-bottom: $spacing-md;
+    line-height: 1.5;
+  }
+
+  .th-links {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: $spacing-md;
+  }
+
+  .th-link {
+    display: inline-block;
+    font-family: $font-mono;
+    font-size: 0.75rem;
+    color: $accent-blue;
+    background: rgba($accent-blue, 0.08);
+    padding: 0.35em 0.7em;
+    border-radius: 6px;
+    border: 1px solid rgba($accent-blue, 0.06);
+    text-decoration: none;
+    transition: all 400ms ease;
+
+    &:hover {
+      background: rgba($accent-blue, 0.15);
+      border-color: rgba($accent-blue, 0.2);
+      box-shadow: 0 0 20px rgba($accent-blue, 0.1);
+    }
+  }
+}
+
+// Category badge
+.th-cat {
+  font-family: $font-mono;
+  font-size: 0.62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.2em 0.55em;
+  border-radius: $radius-sm;
+  flex-shrink: 0;
+
+  &.tool {
+    color: $accent-blue;
+    background: rgba($accent-blue, 0.08);
+    border: 1px solid rgba($accent-blue, 0.08);
+  }
+
+  &.script {
+    color: $neon-orange;
+    background: rgba($neon-orange, 0.08);
+    border: 1px solid rgba($neon-orange, 0.08);
+  }
+}
+
+// Status badge
+.th-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: 0.75rem;
+  font-family: $font-mono;
+  font-size: 0.62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.2em 0.55em;
+  border-radius: 9999px;
+
+  &.on-hold {
+    color: $neon-orange;
+    background: rgba($neon-orange, 0.08);
+    border: 1px solid rgba($neon-orange, 0.1);
+  }
+
+  .sd {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: hold-blink 2.5s ease-in-out infinite;
+  }
+}
+
+@keyframes hold-blink {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 1; }
+}
+
+// Content body
+.tool-body {
+  @extend %detail-body;
+}
+
+@media (max-width: $bp-md) {
+  .tool-hero .th-title { font-size: 1.4rem; }
+  .tool-hero, .tool-body { padding: $spacing-lg; }
+}

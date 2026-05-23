@@ -1,0 +1,140 @@
+// ── CTF Write-ups listing page ──
+
+// Stat counters row
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-md;
+  margin-bottom: 2.5rem;
+}
+
+.stat-card {
+  background: $card-bg;
+  border: 1px solid $card-border;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  text-align: center;
+  transition: all $transition-card;
+
+  &:hover {
+    background: $card-bg-hover;
+    border-color: $card-border-hover;
+    box-shadow: $card-shadow;
+    transform: translateY(-3px);
+  }
+
+  .big-num {
+    font-family: $font-mono;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: $spacing-sm;
+
+    &.blue   { color: $accent-blue; }
+    &.green  { color: $success-green; }
+    &.orange { color: $neon-orange; }
+  }
+
+  .stat-desc {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $slate-600;
+  }
+}
+
+// Activity Heatmap
+.heatmap-wrap {
+  background: rgba(15, 23, 42, 0.35);
+  border: 1px solid rgba($accent-blue, 0.04);
+  border-radius: $radius-lg;
+  padding: 1.75rem;
+  margin-bottom: 2.5rem;
+  overflow-x: auto;
+  transition: all 400ms ease;
+
+  &:hover {
+    border-color: rgba($accent-blue, 0.1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.heatmap-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-md;
+
+  h3 {
+    font-size: 0.95rem;
+    color: $text-heading;
+    margin: 0;
+  }
+}
+
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.65rem;
+  color: $slate-600;
+  font-family: $font-mono;
+
+  .swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+
+    &.c0 { background: rgba($accent-blue, 0.04); }
+    &.c1 { background: rgba($accent-blue, 0.25); }
+    &.c2 { background: rgba($accent-blue, 0.5); }
+    &.c3 { background: rgba($accent-blue, 0.8); }
+  }
+}
+
+#heatmap-months {
+  display: grid;
+  grid-template-columns: repeat(53, 1fr);
+  gap: 3px;
+  margin-bottom: 4px;
+  min-width: 650px;
+}
+
+.hm-month {
+  font-family: $font-mono;
+  font-size: 0.6rem;
+  color: $slate-700;
+}
+
+#heatmap {
+  display: grid;
+  grid-template-columns: repeat(53, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  gap: 3px;
+  min-width: 650px;
+}
+
+.hm-cell {
+  width: 100%;
+  aspect-ratio: 1;
+  min-width: 10px;
+  border-radius: 2px;
+  transition: all 300ms ease;
+  cursor: default;
+
+  &:hover {
+    transform: scale(1.8);
+    outline: 1px solid rgba($accent-blue, 0.4);
+    z-index: 10;
+    position: relative;
+  }
+
+  &.c0 { background: rgba($accent-blue, 0.04); }
+  &.c1 { background: rgba($accent-blue, 0.25); }
+  &.c2 { background: rgba($accent-blue, 0.5); }
+  &.c3 { background: rgba($accent-blue, 0.8); }
+}
+
+@media (max-width: $bp-md) {
+  .stat-row { grid-template-columns: 1fr; }
+}
