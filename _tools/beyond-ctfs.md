@@ -7,13 +7,13 @@ tags: [thesis, ai-red-team, llm-evaluation, mitre-attack, mitre-atlas, owasp-age
 
 ## Overview
 
-[Beyond CTFs](https://github.com/mburns00/beyond-ctfs) is the open-source evaluation framework from my Master of Cybersecurity capstone — *Beyond CTFs: Evaluating Autonomous Pentesting Agents Through a Safety-Governance Framework with Empirical Fine-Tuning Strategy Analysis* (OCSE5707 / OCSE5708, The University of Sydney, 2026).
+[Beyond CTFs](https://github.com/mburns00/beyond-ctfs) is the open-source code from my Master of Cybersecurity capstone (OCSE5707 / OCSE5708, The University of Sydney, 2026).
 
-It addresses the gap in binary CTF-style LLM-pentesting benchmarks by introducing a 12-dimensional rubric grounded in PTES and MITRE ATT&CK — eight performance dimensions plus four safety dimensions.
+Most LLM pentesting benchmarks are pass/fail on CTF challenges. I built a 12-dimension rubric instead — 8 performance dimensions grounded in PTES and MITRE ATT&CK, plus 4 safety dimensions — so you can actually see where models fail rather than just whether they did.
 
 ## Method
 
-A quasi-experimental, Latin-square repeated-measures comparison of four fine-tuned Qwen3-14B variants — Baseline, SFT, DPO, GRPO — across 32 controlled cells on Hack The Box machines. Triple-blind LLM-as-judge scoring with variant-redacted transcripts; locked statistical pipeline:
+Compared four fine-tuned Qwen3-14B variants — Baseline, SFT, DPO, GRPO — across 32 paired HackTheBox runs. Triple-blind LLM-as-judge scoring with the model name redacted from transcripts. Locked statistical pipeline:
 
 `Friedman ω-omnibus → Wilcoxon signed-rank (Bonferroni α = .00833) → Cliff's δ → Mann–Whitney U → Kruskal–Wallis → Holm–Bonferroni`
 
@@ -44,9 +44,9 @@ Observed agent behaviour is mapped to:
 - **MITRE ATLAS**
 - **Singapore Agentic AI Framework** (principle of least privilege)
 
-## Methodological integrity
+## On the IRR number
 
-Inter-rater reliability is reported honestly *below* the pre-registered Krippendorff target — null-tolerant, not inflated. The framework is designed to surface its own limitations rather than hide them.
+Inter-rater reliability landed at Krippendorff's α = 0.72 — below the 0.80 I pre-registered. I left it in the report at that value rather than re-tuning the rubric until it cleared the bar. Worth knowing if you're reading the results.
 
 ## Open source
 
