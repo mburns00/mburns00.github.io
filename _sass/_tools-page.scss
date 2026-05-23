@@ -148,36 +148,25 @@
 .fp-metric {
   background: $surface;
   border: 1px solid $border;
-  border-radius: 10px;
+  border-radius: 6px;
   padding: 0.85rem 0.75rem;
   text-align: center;
-  transition: all 250ms ease;
-
-  &:hover {
-    background: #ffffff;
-    border-color: $card-border-hover;
-    box-shadow: $card-shadow;
-    transform: translateY(-2px);
-  }
 
   .m-val {
-    font-family: $font-mono;
-    font-size: 1.3rem;
+    font-size: 1.35rem;
     font-weight: 700;
-    color: $accent-blue;
+    color: $text-heading;
     line-height: 1;
     margin-bottom: 0.3rem;
-
-    &.green  { color: $success-green; }
-    &.orange { color: $neon-orange; }
-    &.purple { color: $neon-purple; }
+    letter-spacing: -0.025em;
   }
 
   .m-key {
+    font-family: $font-mono;
     font-size: 0.62rem;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: $slate-600;
+    letter-spacing: 0.08em;
+    color: $text-muted;
   }
 }
 
