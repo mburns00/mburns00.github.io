@@ -69,17 +69,11 @@ title: "Home"
     width: 180px;
     height: 180px;
     border-radius: 6px;
-    background: #f3f4f6;
+    object-fit: cover;
+    object-position: center top;
     border: 1px solid #e5e7eb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #9ca3af;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    text-align: center;
-    padding: 1rem;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    display: block;
   }
 
   /* ─── Inline availability banner ─── */
@@ -225,7 +219,7 @@ title: "Home"
         <a href="{{ '/about/' | relative_url }}">About</a>
       </div>
     </div>
-    <div class="rh-photo" aria-label="Profile photo placeholder">[photo<br>placeholder]</div>
+    <img class="rh-photo" src="{{ '/assets/images/matthew-burns.jpg' | relative_url }}" alt="Matthew Burns" loading="lazy" />
   </section>
 
   <!-- ─── AVAILABILITY ─── -->
