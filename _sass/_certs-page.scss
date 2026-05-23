@@ -88,29 +88,28 @@
   transition: all $transition-card;
   position: relative;
   overflow: hidden;
+  box-shadow: $card-shadow;
+
+  // Left edge accent — earned green, in-progress blue
+  .cert-node.earned & {
+    border-left: 3px solid $success-green;
+  }
+  .cert-node.in-progress & {
+    border-left: 3px solid $accent-blue;
+  }
 
   .cert-node:hover & {
     background: $card-bg-hover;
     border-color: $card-border-hover;
-    box-shadow: $card-shadow;
+    box-shadow: $card-shadow-hover;
     transform: translateX(6px);
   }
-
-  // Spotlight
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: $radius-lg;
-    background: radial-gradient(
-      400px circle at var(--mx, 50%) var(--my, 50%),
-      rgba($accent-blue, 0.06) 0%, transparent 100%
-    );
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 400ms ease;
+  .cert-node.earned:hover & {
+    border-left-color: $success-green;
   }
-  .cert-node:hover &::after { opacity: 1; }
+  .cert-node.in-progress:hover & {
+    border-left-color: $accent-blue;
+  }
 
   .card-top {
     display: flex;
@@ -152,20 +151,21 @@
   }
 
   .card-issuer {
-    color: $slate-600;
+    color: $slate-500;
     font-size: 0.85rem;
     margin-bottom: 0.75rem;
   }
 
   .card-dates {
     font-family: $font-mono;
-    font-size: 0.72rem;
-    color: $slate-700;
+    font-size: 0.74rem;
+    color: $text-primary;
     display: flex;
     gap: $spacing-md;
     flex-wrap: wrap;
 
-    span { color: $slate-500; }
+    span { color: $text-muted; }
+    .date-earned { color: $success-green; font-weight: 600; }
   }
 
   .card-tags {

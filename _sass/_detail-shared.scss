@@ -92,16 +92,17 @@
   transition: all 400ms ease;
 }
 
-// Body card (content area)
+// Body card (content area) — light theme
 %detail-body {
-  background: rgba(15, 23, 42, 0.3);
-  border: 1px solid rgba($accent-blue, 0.04);
+  background: $card-bg;
+  border: 1px solid $card-border;
   border-radius: $radius-lg;
   padding: $spacing-xl;
-  transition: all 400ms ease;
+  transition: all $transition-card;
+  box-shadow: $card-shadow;
 
   &:hover {
-    border-color: rgba($accent-blue, 0.08);
+    border-color: $card-border-hover;
   }
 
   h2 {
@@ -116,78 +117,83 @@
   }
 
   h3 {
-    color: $neon-blue;
+    color: $accent-blue;
     font-size: 1rem;
     margin-top: $spacing-lg;
   }
 
   p {
-    color: $slate-400;
-    line-height: 1.7;
+    color: $text-primary;
+    line-height: 1.75;
     margin-bottom: $spacing-md;
   }
 
-  strong { color: $text-heading; }
+  strong { color: $text-heading; font-weight: 600; }
 
   ul, ol {
-    color: $slate-400;
+    color: $text-primary;
     padding-left: 1.2rem;
     margin-bottom: $spacing-md;
   }
 
   li {
     margin-bottom: 0.35rem;
-    line-height: 1.6;
+    line-height: 1.65;
   }
 
   a {
     color: $accent-blue;
     text-decoration: none;
-    border-bottom: 1px solid rgba($accent-blue, 0.2);
-    transition: all 300ms ease;
+    border-bottom: 1px solid rgba($accent-blue, 0.3);
+    transition: all 200ms ease;
 
     &:hover {
-      color: $accent-blue-light;
-      border-color: rgba($accent-blue, 0.5);
+      color: $accent-blue-dim;
+      border-color: $accent-blue;
     }
   }
 
-  // Tables in content
+  // Tables
   table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.82rem;
-    font-family: $font-mono;
+    font-size: 0.85rem;
     margin-bottom: $spacing-lg;
   }
 
   th {
     text-align: left;
-    color: $slate-600;
+    color: $text-muted;
     font-weight: 600;
     font-size: 0.7rem;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     padding: $spacing-sm 0.75rem;
     border-bottom: 1px solid $card-border;
+    background: $surface;
   }
 
   td {
     padding: $spacing-sm 0.75rem;
-    color: $slate-400;
-    border-bottom: 1px solid rgba($border, 0.2);
-    transition: all 300ms ease;
+    color: $text-primary;
+    border-bottom: 1px solid $border;
+    transition: background 150ms ease;
 
     &:first-child {
-      color: $neon-blue;
+      color: $accent-blue;
       white-space: nowrap;
+      font-family: $font-mono;
+      font-size: 0.82rem;
     }
   }
 
   tr:last-child td { border-bottom: none; }
-  tr:hover td {
-    background: rgba($accent-blue, 0.03);
-    color: $text-heading;
+  tr:hover td { background: rgba($accent-blue, 0.04); }
+
+  // Code blocks in body
+  code {
+    background: $surface;
+    color: $accent-blue;
   }
 }
 

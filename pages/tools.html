@@ -1,6 +1,6 @@
 ---
 title: "Projects"
-subtitle: "Security projects and scripts I've built."
+subtitle: "Open-source tools, research artifacts, and experiments."
 permalink: /tools/
 ---
 
@@ -9,30 +9,157 @@ permalink: /tools/
 {% assign tool_count = tools_list | where: "category", "tool" | size %}
 {% assign script_count = tools_list | where: "category", "script" | size %}
 
-<!-- Stats Header -->
-<div class="proj-stats reveal reveal-stagger">
-  <div class="proj-stat">
-    <div class="ps-num blue" data-counter="{{ total_projects }}">0</div>
-    <div class="ps-label">Total Projects</div>
-  </div>
-  <div class="proj-stat">
-    <div class="ps-num cyan" data-counter="{{ tool_count }}">0</div>
-    <div class="ps-label">Tools</div>
-  </div>
-  <div class="proj-stat">
-    <div class="ps-num orange" data-counter="{{ script_count }}">0</div>
-    <div class="ps-label">Scripts</div>
+{% assign all_tags = "" | split: "," %}
+{% for tool in tools_list %}
+  {% for tag in tool.tags %}
+    {% unless all_tags contains tag %}
+      {% assign all_tags = all_tags | push: tag %}
+    {% endunless %}
+  {% endfor %}
+{% endfor %}
+{% assign tag_count = all_tags | size %}
+
+<style>
+  /* ─── Page-level enhancements ─── */
+  .proj-overview {
+    margin-bottom: 2.5rem;
+  }
+  .proj-overview-card {
+    background: linear-gradient(135deg, #ffffff 0%, #fafbff 100%);
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 2rem 2.25rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  }
+  .proj-overview-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 95% 5%, rgba(37, 99, 235, 0.07), transparent 40%),
+      radial-gradient(circle at 5% 95%, rgba(124, 58, 237, 0.05), transparent 40%);
+    pointer-events: none;
+  }
+  .proj-overview-grid {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    gap: 2rem;
+    align-items: center;
+    position: relative;
+  }
+  .proj-overview-grid > * + * {
+    border-left: 1px solid #e5e7eb;
+    padding-left: 2rem;
+  }
+  .proj-stat-cell .v {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #0f172a;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.025em;
+  }
+  .proj-stat-cell.tools .v   { color: #2563eb; }
+  .proj-stat-cell.scripts .v { color: #d97706; }
+  .proj-stat-cell.tags .v    { color: #7c3aed; }
+  .proj-stat-cell .k {
+    font-size: 0.7rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+  .proj-blurb {
+    color: #374151;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin: 0;
+    max-width: 28ch;
+  }
+  .proj-blurb strong { color: #0f172a; font-weight: 600; }
+
+  /* ─── Tag cloud (interactive filter) ─── */
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 1.5rem 0 2.25rem 0;
+    padding: 1rem 1.25rem;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  }
+  .tag-cloud-label {
+    font-size: 0.68rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    margin-right: 0.5rem;
+    align-self: center;
+  }
+  .tag-cloud-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: #2563eb;
+    background: #eff6ff;
+    border: 1px solid #dbeafe;
+    padding: 0.22em 0.6em;
+    border-radius: 4px;
+    cursor: default;
+    transition: all 150ms ease;
+  }
+  .tag-cloud-tag:hover {
+    background: #2563eb;
+    color: #ffffff;
+    border-color: #2563eb;
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 768px) {
+    .proj-overview-grid { grid-template-columns: 1fr 1fr; }
+    .proj-overview-grid > * + * { border-left: none; padding-left: 0; }
+    .proj-blurb { grid-column: 1 / -1; }
+  }
+</style>
+
+<!-- ─── OVERVIEW PANEL ─── -->
+<div class="proj-overview reveal">
+  <p class="section-label">Overview</p>
+  <div class="proj-overview-card">
+    <div class="proj-overview-grid">
+      <p class="proj-blurb">
+        <strong>{{ total_projects }} open-source artifacts</strong> spanning research frameworks, fine-tuned models, pentesting tools, and interactive experiments.
+      </p>
+      <div class="proj-stat-cell tools">
+        <div class="v">{{ tool_count }}</div>
+        <div class="k">Tools</div>
+      </div>
+      <div class="proj-stat-cell scripts">
+        <div class="v">{{ script_count }}</div>
+        <div class="k">Scripts</div>
+      </div>
+      <div class="proj-stat-cell tags">
+        <div class="v">{{ tag_count }}</div>
+        <div class="k">Tech Tags</div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- Featured Project: Beyond CTFs (capstone) -->
+<!-- ─── FEATURED PROJECT (Beyond CTFs) ─── -->
 <div class="reveal">
   <p class="section-label">Featured Project</p>
 </div>
 <div class="featured-project reveal" data-spotlight>
   <div class="fp-header">
     <span class="fp-badge">Featured</span>
-    <span class="fp-badge" style="background: rgba(167, 139, 250, 0.12); color: #a78bfa; border-color: rgba(167, 139, 250, 0.25); margin-left: 0.5rem;">Master's Thesis</span>
+    <span class="fp-badge" style="background: rgba(167, 139, 250, 0.12); color: #7c3aed; border-color: rgba(167, 139, 250, 0.25);">Master's Thesis</span>
+    <span class="fp-badge" style="background: rgba(22, 163, 74, 0.1); color: #16a34a; border-color: rgba(22, 163, 74, 0.2);">Open Source</span>
   </div>
   <h3 class="fp-title">Beyond CTFs &mdash; Master's Thesis</h3>
   <p class="fp-tagline">Evaluation framework for autonomous pentesting LLMs &mdash; SFT/DPO/GRPO post-training comparison mapped to OWASP Agentic Top 10, NIST AI 600-1, MITRE ATLAS.</p>
@@ -70,38 +197,28 @@ permalink: /tools/
     </div>
   </div>
 
-  <!-- Key Metrics -->
   <div class="fp-metrics">
-    <div class="fp-metric">
-      <div class="m-val" data-counter="32">0</div>
-      <div class="m-key">Controlled Cells</div>
-    </div>
-    <div class="fp-metric">
-      <div class="m-val green" data-counter="4">0</div>
-      <div class="m-key">Qwen3-14B Variants</div>
-    </div>
-    <div class="fp-metric">
-      <div class="m-val orange" data-counter="12">0</div>
-      <div class="m-key">Eval Dimensions</div>
-    </div>
-    <div class="fp-metric">
-      <div class="m-val purple" data-counter="574">0</div>
-      <div class="m-key">MCP Tools Wired</div>
-    </div>
+    <div class="fp-metric"><div class="m-val" data-counter="32">0</div><div class="m-key">Controlled Cells</div></div>
+    <div class="fp-metric"><div class="m-val green" data-counter="4">0</div><div class="m-key">Qwen3-14B Variants</div></div>
+    <div class="fp-metric"><div class="m-val orange" data-counter="12">0</div><div class="m-key">Eval Dimensions</div></div>
+    <div class="fp-metric"><div class="m-val purple" data-counter="574">0</div><div class="m-key">MCP Tools Wired</div></div>
   </div>
 
-  <!-- CTAs -->
   <div style="text-align: center; margin-top: 1rem; display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
-    <a href="https://github.com/mburns00/beyond-ctfs" target="_blank" rel="noopener" class="fp-play-btn">
-      GitHub Repo <span class="play-arrow">&rarr;</span>
-    </a>
-    <a href="https://github.com/mburns00/beyond-ctfs/blob/main/docs/Beyond_CTFs_Final_Report.pdf" target="_blank" rel="noopener" class="fp-play-btn" style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(96, 165, 250, 0.2);">
-      Final Report (PDF) <span class="play-arrow">&rarr;</span>
-    </a>
+    <a href="https://github.com/mburns00/beyond-ctfs" target="_blank" rel="noopener" class="fp-play-btn">GitHub Repo <span class="play-arrow">&rarr;</span></a>
+    <a href="https://github.com/mburns00/beyond-ctfs/blob/main/docs/Beyond_CTFs_Final_Report.pdf" target="_blank" rel="noopener" class="fp-play-btn" style="background: #ffffff; color: #2563eb; border: 1px solid #cbd5e1; box-shadow: 0 1px 2px rgba(15,23,42,0.04);">Final Report (PDF) <span class="play-arrow">&rarr;</span></a>
   </div>
 </div>
 
-<!-- All Projects -->
+<!-- ─── TAG CLOUD ─── -->
+<div class="tag-cloud reveal">
+  <span class="tag-cloud-label">Tech stack across projects:</span>
+  {% for tag in all_tags %}
+    <span class="tag-cloud-tag">{{ tag }}</span>
+  {% endfor %}
+</div>
+
+<!-- ─── ALL PROJECTS ─── -->
 <div class="reveal latest-section">
   <p class="section-label">All Projects</p>
 </div>
@@ -114,9 +231,10 @@ permalink: /tools/
     </div>
     {% if tool.tagline %}<p class="pc-desc">{{ tool.tagline }}</p>{% endif %}
     <div class="pc-tags">
-      {% for tag in tool.tags %}
+      {% for tag in tool.tags limit:6 %}
         <span class="pc-tag">{{ tag }}</span>
       {% endfor %}
+      {% if tool.tags.size > 6 %}<span class="pc-tag" style="background: transparent; border-color: #e5e7eb; color: #6b7280;">+{{ tool.tags.size | minus: 6 }} more</span>{% endif %}
     </div>
     {% if tool.status == "on-hold" %}
     <div class="pc-status on-hold"><span class="sd"></span> On Hold</div>
