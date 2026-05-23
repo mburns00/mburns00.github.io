@@ -147,15 +147,4 @@
   &:hover::after { opacity: 1; }
 }
 
-// ─── Faint backdrop wash + grain (designer texture) ───
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -2;
-  background:
-    radial-gradient(ellipse at 10% 0%, rgba(37, 99, 235, 0.04), transparent 50%),
-    radial-gradient(ellipse at 95% 100%, rgba(124, 58, 237, 0.03), transparent 50%);
-}
-// Grain texture removed — restraint over decoration.
+// Body backdrop washes removed — clean white.

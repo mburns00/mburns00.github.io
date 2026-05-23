@@ -21,7 +21,7 @@
   }
 }
 
-// Hero card base
+// Hero card base — clean, no spotlight
 %detail-hero {
   background: $card-bg;
   border: 1px solid $card-border;
@@ -29,30 +29,9 @@
   padding: $spacing-xl;
   margin-bottom: $spacing-xl;
   position: relative;
-  overflow: hidden;
-  transition: all $transition-card;
+  transition: border-color 200ms ease;
 
-  &:hover {
-    background: $card-bg-hover;
-    border-color: $card-border-hover;
-    box-shadow: $card-shadow;
-  }
-
-  // Cursor spotlight
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: $radius-lg;
-    background: radial-gradient(
-      500px circle at var(--mx, 50%) var(--my, 50%),
-      rgba($accent-blue, 0.05) 0%, transparent 100%
-    );
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 400ms ease;
-  }
-  &:hover::after { opacity: 1; }
+  &:hover { border-color: $card-border-hover; }
 }
 
 // Title
