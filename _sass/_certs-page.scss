@@ -39,6 +39,7 @@
   margin-bottom: $spacing-xl;
   text-decoration: none;
   color: inherit;
+  cursor: pointer;
 
   &:last-child { margin-bottom: 0; }
 
@@ -100,9 +101,13 @@
 
   .cert-node:hover & {
     background: $card-bg-hover;
-    border-color: $card-border-hover;
-    box-shadow: $card-shadow-hover;
-    transform: translateX(6px);
+    border-color: $accent-blue;
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.12), 0 4px 12px rgba(15, 23, 42, 0.06);
+    transform: translateX(8px);
+  }
+  .cert-node.earned:hover & {
+    border-color: $success-green;
+    box-shadow: 0 8px 24px rgba(22, 163, 74, 0.12), 0 4px 12px rgba(15, 23, 42, 0.06);
   }
   .cert-node.earned:hover & {
     border-left-color: $success-green;
@@ -119,53 +124,95 @@
     margin-bottom: $spacing-sm;
   }
 
+  // Title styled as a clear link
   .card-title {
     font-size: 1.15rem;
-    color: $text-heading;
+    color: $accent-blue;
     margin: 0;
     font-weight: 600;
-    transition: color 200ms ease;
+    text-decoration: underline;
+    text-decoration-color: rgba($accent-blue, 0.3);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 4px;
+    transition: color 200ms ease, text-decoration-color 200ms ease;
   }
-
-  // Hover affordance — title shifts to accent colour like a link
   .cert-node:hover & .card-title {
-    color: $accent-blue;
+    color: $accent-blue-dim;
+    text-decoration-color: $accent-blue;
   }
 
-  // CTA bottom of card — makes clickability explicit
+  // CTA footer — always visible, animates on hover
   .card-cta {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     gap: 0.4rem;
     margin-top: $spacing-md;
     padding-top: $spacing-md;
     border-top: 1px dashed $border;
     font-family: $font-mono;
     font-size: 0.78rem;
-    font-weight: 600;
+    font-weight: 700;
     color: $accent-blue;
-    transition: gap 200ms ease, color 200ms ease;
-    letter-spacing: 0.02em;
+    transition: all 200ms ease;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
 
     .cta-arrow {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       transition: transform 200ms ease;
       line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: rgba($accent-blue, 0.1);
+      border: 1px solid rgba($accent-blue, 0.2);
+      border-radius: 50%;
     }
   }
   .cert-node:hover & .card-cta {
     color: $accent-blue-dim;
-    gap: 0.7rem;
     .cta-arrow {
+      background: $accent-blue;
+      color: #ffffff;
+      border-color: $accent-blue;
       transform: translateX(4px);
     }
   }
-  .cert-node.earned:hover & .card-cta {
-    color: $success-green;
-  }
   .cert-node.earned & .card-cta {
-    color: lighten($success-green, 5%);
+    color: $success-green;
+    .cta-arrow {
+      background: rgba($success-green, 0.1);
+      border-color: rgba($success-green, 0.25);
+    }
+  }
+  .cert-node.earned:hover & .card-cta .cta-arrow {
+    background: $success-green;
+    color: #ffffff;
+    border-color: $success-green;
+  }
+
+  // Permanent corner indicator — top-right arrow shows clickability without hover
+  &::after {
+    content: "↗";
+    position: absolute;
+    top: 0.85rem;
+    right: 1.1rem;
+    font-size: 1rem;
+    color: $slate-300;
+    transition: color 200ms ease, transform 200ms ease;
+    pointer-events: none;
+    z-index: 1;
+    font-weight: 700;
+  }
+  .cert-node:hover &::after {
+    color: $accent-blue;
+    transform: translate(2px, -2px);
+  }
+  .cert-node.earned:hover &::after {
+    color: $success-green;
   }
 
   .status-pill {
