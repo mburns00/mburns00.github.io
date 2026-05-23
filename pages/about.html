@@ -5,30 +5,69 @@ permalink: /about/
 ---
 
 <style>
-  /* ━━ Intro ━━ */
+  /* ━━ Intro — editorial ━━ */
   .about-intro {
-    margin-bottom: 3.5rem;
+    margin: 1.5rem 0 4rem 0;
     max-width: 640px;
+    position: relative;
+  }
+  .about-intro::before {
+    content: "01 / About";
+    position: absolute;
+    top: -1.75rem;
+    left: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: #2563eb;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    text-transform: uppercase;
   }
   .about-intro .lead {
-    font-size: 1.1rem;
+    font-family: 'Source Serif Pro', Georgia, serif;
+    font-size: 1.4rem;
     color: #0f172a;
-    line-height: 1.75;
-    margin-bottom: 1rem;
-    font-weight: 500;
+    line-height: 1.45;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+  .about-intro .lead::first-letter {
+    font-family: 'Source Serif Pro', Georgia, serif;
+    font-size: 3.2rem;
+    font-weight: 700;
+    float: left;
+    line-height: 1;
+    margin: 0.05rem 0.5rem 0 0;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   .about-intro p {
-    color: #374151;
+    color: #1f2937;
     line-height: 1.75;
     font-size: 1rem;
     margin-bottom: 1rem;
   }
+  .about-intro p a {
+    color: #2563eb;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(37, 99, 235, 0.35);
+    transition: background 200ms ease;
+    padding: 0 2px;
+  }
+  .about-intro p a:hover {
+    background: rgba(37, 99, 235, 0.08);
+  }
+  .about-intro p strong {
+    background: linear-gradient(180deg, transparent 60%, rgba(124, 58, 237, 0.12) 60%);
+    padding: 0 0.1em;
+    font-weight: 700;
+    color: #0f172a;
+  }
   .about-intro .accent-line {
-    width: 48px;
-    height: 3px;
-    background: linear-gradient(90deg, #2563eb, #7c3aed);
-    border-radius: 3px;
-    margin-bottom: 1.5rem;
+    display: none;
   }
 
   /* ━━ Credential timeline ━━ */
@@ -274,7 +313,7 @@ permalink: /about/
 
 <!-- Credentials -->
 <div class="reveal">
-  <p class="section-label">Background</p>
+  <p class="section-label" style="font-family:'JetBrains Mono',monospace; color:#2563eb; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; font-size:0.72rem;">02 / Background</p>
   <p style="color: #94a3b8; line-height: 1.8; margin-bottom: 2rem;">Came up through a few desk jobs before committing to cybersecurity full-time. The goal is to contribute to Australia's cybersecurity space in a meaningful way — always looking for opportunities where I can keep learning and actually make an impact.</p>
   <div class="timeline reveal-stagger">
     <div class="timeline-node earned">
@@ -302,7 +341,7 @@ permalink: /about/
 
 <!-- Focus areas -->
 <div class="reveal">
-  <p class="section-label">Focus Areas</p>
+  <p class="section-label" style="font-family:'JetBrains Mono',monospace; color:#2563eb; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; font-size:0.72rem;">03 / Focus areas</p>
   <div class="bento-grid reveal-stagger">
     <div class="bento-card" data-tilt>
       <span class="card-num">01</span>
@@ -348,7 +387,7 @@ permalink: /about/
 
 <!-- Contact -->
 <div class="contact-section reveal">
-  <p class="section-label">Contact</p>
+  <p class="section-label" style="font-family:'JetBrains Mono',monospace; color:#2563eb; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; font-size:0.72rem;">04 / Contact</p>
   <div class="contact-row reveal-stagger">
     <a href="https://github.com/mburns00" class="contact-link" data-magnetic target="_blank">
       <div class="c-icon">GH</div>
