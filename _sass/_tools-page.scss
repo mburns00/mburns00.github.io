@@ -318,34 +318,12 @@
   transition: all $transition-card;
   box-shadow: $card-shadow;
 
-  // Subtle category-coloured background tint (top-right radial wash)
-  &.cat-tool {
-    background:
-      radial-gradient(circle at 100% 0%, rgba(37, 99, 235, 0.025), transparent 60%),
-      $card-bg;
-  }
-  &.cat-script {
-    background:
-      radial-gradient(circle at 100% 0%, rgba(217, 119, 6, 0.025), transparent 60%),
-      $card-bg;
-  }
-
   &:hover {
     background: $card-bg-hover;
     border-color: $card-border-hover;
     box-shadow: $card-shadow-hover;
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     color: inherit;
-  }
-  &.cat-tool:hover {
-    background:
-      radial-gradient(circle at 100% 0%, rgba(37, 99, 235, 0.06), transparent 60%),
-      $card-bg-hover;
-  }
-  &.cat-script:hover {
-    background:
-      radial-gradient(circle at 100% 0%, rgba(217, 119, 6, 0.06), transparent 60%),
-      $card-bg-hover;
   }
 
   // Cursor spotlight
@@ -530,49 +508,35 @@
   }
 }
 
-// Play Now button
+// Featured project CTA buttons — solid, restrained
 .fp-play-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   font-family: $font-mono;
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #fff;
-  background: linear-gradient(135deg, $accent-blue-dim, $neon-purple);
-  padding: 0.75rem 1.75rem;
-  border-radius: 10px;
-  border: 1px solid rgba($accent-blue, 0.3);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  background: #0f172a;
+  padding: 0.65rem 1.25rem;
+  border-radius: 6px;
+  border: 1px solid #0f172a;
   text-decoration: none;
-  transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(#fff, 0.1), transparent);
-    opacity: 0;
-    transition: opacity 300ms ease;
-  }
+  transition: background 150ms ease, transform 150ms ease;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 30px rgba($accent-blue-dim, 0.3), 0 0 60px rgba($neon-purple, 0.15);
-    color: #fff;
+    background: #1f2937;
+    color: #ffffff;
     text-decoration: none;
-
-    &::before { opacity: 1; }
+    transform: translateY(-1px);
   }
 
   .play-arrow {
-    font-size: 1.1rem;
-    transition: transform 300ms ease;
+    font-size: 1rem;
+    transition: transform 150ms ease;
   }
-  &:hover .play-arrow { transform: translateX(3px); }
+  &:hover .play-arrow { transform: translateX(2px); }
 }
 
 @media (max-width: $bp-md) {
