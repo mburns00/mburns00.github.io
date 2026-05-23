@@ -318,12 +318,34 @@
   transition: all $transition-card;
   box-shadow: $card-shadow;
 
+  // Subtle category-coloured background tint (top-right radial wash)
+  &.cat-tool {
+    background:
+      radial-gradient(circle at 100% 0%, rgba(37, 99, 235, 0.025), transparent 60%),
+      $card-bg;
+  }
+  &.cat-script {
+    background:
+      radial-gradient(circle at 100% 0%, rgba(217, 119, 6, 0.025), transparent 60%),
+      $card-bg;
+  }
+
   &:hover {
     background: $card-bg-hover;
     border-color: $card-border-hover;
     box-shadow: $card-shadow-hover;
     transform: translateY(-3px);
     color: inherit;
+  }
+  &.cat-tool:hover {
+    background:
+      radial-gradient(circle at 100% 0%, rgba(37, 99, 235, 0.06), transparent 60%),
+      $card-bg-hover;
+  }
+  &.cat-script:hover {
+    background:
+      radial-gradient(circle at 100% 0%, rgba(217, 119, 6, 0.06), transparent 60%),
+      $card-bg-hover;
   }
 
   // Cursor spotlight

@@ -297,7 +297,9 @@ permalink: /certs/
   <h2>Credentials timeline</h2>
   <div class="cert-timeline" data-scroll-fill>
     {% for cert in certs_sorted %}
-    <a href="{{ cert.url | relative_url }}" class="cert-node {% if cert.earned %}earned{% elsif cert.status %}in-progress{% endif %}" data-tilt-card>
+    {% assign cert_type = "cert" %}
+    {% if cert.tags contains "degree" %}{% assign cert_type = "degree" %}{% endif %}
+    <a href="{{ cert.url | relative_url }}" class="cert-node {% if cert.earned %}earned{% elsif cert.status %}in-progress{% endif %}" data-type="{{ cert_type }}" data-tilt-card>
       <div class="cert-card">
         <div class="card-top">
           <h3 class="card-title">{{ cert.title }}</h3>
