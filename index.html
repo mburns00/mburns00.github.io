@@ -13,621 +13,397 @@ title: "Home"
 {% assign box_count = site.writeups | size %}
 
 <style>
-  /* ╔════════════════════════════════════════════════════════════╗
-     ║  Editorial researcher home — typographic, asymmetric        ║
-     ╚════════════════════════════════════════════════════════════╝ */
+  /* Single-typeface, single-accent, content-first portfolio.
+     Sidebar/content split on desktop; stacked on mobile.
+     One bespoke interaction: scroll-tied sidebar nav highlighting. */
 
-  /* ─── Hero ─── */
-  .ed-hero {
+  .home-shell {
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 5rem;
-    align-items: end;
-    margin: 4rem 0 6rem 0;
-    position: relative;
-  }
-  .ed-hero::before {
-    content: "01";
-    position: absolute;
-    top: -1rem;
-    left: 0;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    color: #cbd5e1;
-    letter-spacing: 0.15em;
-    font-weight: 600;
-  }
-
-  /* ─── Name treatment — mixed sans + serif ─── */
-  .ed-name {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(3rem, 7vw, 5.5rem);
-    font-weight: 800;
-    color: #0f172a;
-    letter-spacing: -0.045em;
-    line-height: 0.95;
-    margin: 0 0 1.5rem 0;
-  }
-  .ed-name .surname {
-    font-family: 'Source Serif Pro', Georgia, serif;
-    font-style: italic;
-    font-weight: 700;
-    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: -0.025em;
-    position: relative;
-  }
-  .ed-name .surname::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0.05em;
-    height: 0.08em;
-    background: linear-gradient(90deg, transparent 0%, rgba(37, 99, 235, 0.45) 30%, rgba(124, 58, 237, 0.45) 70%, transparent 100%);
-    border-radius: 2px;
-  }
-
-  /* ─── Tagline — small caps mono ─── */
-  .ed-tagline {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.78rem;
-    color: #6b7280;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-    margin: 0 0 2rem 0;
-    line-height: 1.6;
-  }
-  .ed-tagline .sep {
-    color: #cbd5e1;
-    margin: 0 0.5rem;
-  }
-
-  /* ─── Bio — serif first para with drop cap ─── */
-  .ed-bio {
-    font-family: 'Source Serif Pro', Georgia, serif;
-    font-size: 1.15rem;
-    line-height: 1.7;
-    color: #1f2937;
-    margin: 0 0 1.25rem 0;
-    max-width: 38rem;
-  }
-  .ed-bio:first-of-type::first-letter {
-    font-family: 'Source Serif Pro', Georgia, serif;
-    font-size: 3.4rem;
-    font-weight: 700;
-    float: left;
-    line-height: 1;
-    margin: 0.1rem 0.55rem 0 0;
-    color: #2563eb;
-    background: linear-gradient(135deg, #2563eb, #7c3aed);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .ed-bio em {
-    font-style: italic;
-    color: #0f172a;
-  }
-  .ed-bio strong {
-    font-weight: 700;
-    color: #0f172a;
-    background: linear-gradient(180deg, transparent 60%, rgba(124, 58, 237, 0.12) 60%);
-    padding: 0 0.1em;
-  }
-  .ed-bio a {
-    color: #2563eb;
-    text-decoration: none;
-    border-bottom: 1px solid currentColor;
-    transition: background 200ms ease;
-    padding: 0 2px;
-  }
-  .ed-bio a:hover {
-    background: rgba(37, 99, 235, 0.08);
-  }
-
-  /* ─── Quick-link rail ─── */
-  .ed-rail {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0;
-    margin-top: 2rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.84rem;
-    border-top: 1px solid #e5e7eb;
-    border-bottom: 1px solid #e5e7eb;
-  }
-  .ed-rail a {
-    color: #1f2937;
-    padding: 0.85rem 1.4rem;
-    border-right: 1px solid #e5e7eb;
-    transition: all 150ms ease;
-    position: relative;
-    text-decoration: none;
-  }
-  .ed-rail a:first-child { padding-left: 0; }
-  .ed-rail a:last-child { border-right: none; }
-  .ed-rail a:hover {
-    color: #2563eb;
-    background: rgba(37, 99, 235, 0.03);
-  }
-  .ed-rail a::before {
-    content: "→";
-    color: #cbd5e1;
-    margin-right: 0.5rem;
-    transition: all 150ms ease;
-  }
-  .ed-rail a:hover::before {
-    color: #2563eb;
-    transform: translateX(2px);
-    display: inline-block;
-  }
-
-  /* ─── Photo block — asymmetric, framed ─── */
-  .ed-photo-frame {
-    position: relative;
-    width: 100%;
-    max-width: 280px;
-    justify-self: end;
-    align-self: end;
-    margin-bottom: 0.5rem;
-  }
-  .ed-photo-frame::before {
-    content: "";
-    position: absolute;
-    top: 14px;
-    left: 14px;
-    right: -14px;
-    bottom: -14px;
-    background: linear-gradient(135deg, rgba(37, 99, 235, 0.12) 0%, rgba(124, 58, 237, 0.12) 100%);
-    border-radius: 4px;
-    z-index: 0;
-  }
-  .ed-photo-frame::after {
-    content: "";
-    position: absolute;
-    top: 7px;
-    left: 7px;
-    right: -7px;
-    bottom: -7px;
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
-    z-index: 0;
-  }
-  .ed-photo {
-    position: relative;
-    z-index: 1;
-    display: block;
-    width: 100%;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    object-position: center 22%;
-    border-radius: 4px;
-    border: 1px solid #cbd5e1;
-    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
-    filter: grayscale(0.05) contrast(1.02);
-    transition: filter 400ms ease, transform 400ms ease;
-  }
-  .ed-photo:hover {
-    filter: grayscale(0) contrast(1.05);
-    transform: translate(-3px, -3px);
-  }
-  .ed-photo-caption {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: #9ca3af;
-    margin-top: 1.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    text-align: right;
-    position: relative;
-    z-index: 1;
-  }
-  .ed-photo-caption .blink {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    background: #16a34a;
-    border-radius: 50%;
-    margin-right: 0.5rem;
-    box-shadow: 0 0 8px rgba(22, 163, 74, 0.5);
-    animation: ed-blink 2s ease-in-out infinite;
-    vertical-align: middle;
-  }
-  @keyframes ed-blink {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 1; }
-  }
-
-  /* ─── Pull quote (editorial moment) ─── */
-  .ed-pullquote {
-    margin: 5rem 0 6rem 0;
-    padding: 2.5rem 0;
-    border-top: 1px solid #e5e7eb;
-    border-bottom: 1px solid #e5e7eb;
-    position: relative;
-    text-align: center;
-  }
-  .ed-pullquote::before {
-    content: "“";
-    font-family: 'Source Serif Pro', Georgia, serif;
-    font-size: 6rem;
-    color: #2563eb;
-    opacity: 0.15;
-    position: absolute;
-    top: -2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    line-height: 1;
-    font-weight: 700;
-  }
-  .ed-pullquote blockquote {
-    font-family: 'Source Serif Pro', Georgia, serif;
-    font-size: clamp(1.4rem, 3.5vw, 2.1rem);
-    font-style: italic;
-    font-weight: 400;
-    color: #0f172a;
-    line-height: 1.35;
+    grid-template-columns: minmax(280px, 360px) 1fr;
+    gap: 6rem;
+    max-width: 1180px;
     margin: 0 auto;
-    max-width: 38rem;
-    letter-spacing: -0.015em;
-    padding: 0;
-    border: none;
-  }
-  .ed-pullquote blockquote strong {
-    font-style: normal;
-    background: linear-gradient(180deg, transparent 60%, rgba(124, 58, 237, 0.15) 60%);
-    padding: 0 0.1em;
-    font-weight: 700;
-  }
-
-  /* ─── Section header with chapter numbers ─── */
-  .ed-section {
-    margin: 4rem 0 3rem 0;
-  }
-  .ed-section-head {
-    display: grid;
-    grid-template-columns: 80px 1fr;
-    gap: 1.5rem;
-    align-items: baseline;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #e5e7eb;
-  }
-  .ed-section-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    color: #2563eb;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-  }
-  .ed-section-head h2 {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.7rem;
-    font-weight: 700;
-    color: #0f172a;
-    letter-spacing: -0.03em;
-    margin: 0;
-    line-height: 1;
-  }
-  .ed-section-head .h2-meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    color: #9ca3af;
-    margin-left: 0.75rem;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  /* ─── Stats line (now with strong typography) ─── */
-  .ed-stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    padding: 2rem 0;
-    margin: 4rem 0;
-    border-top: 1px solid #e5e7eb;
-    border-bottom: 1px solid #e5e7eb;
-  }
-  .ed-stat .v {
-    font-family: 'Source Serif Pro', Georgia, serif;
-    font-size: clamp(2.2rem, 4.5vw, 3.4rem);
-    font-weight: 700;
-    color: #0f172a;
-    line-height: 1;
-    letter-spacing: -0.03em;
-    display: block;
-    margin-bottom: 0.4rem;
-  }
-  .ed-stat .v em {
-    font-style: italic;
-    color: #2563eb;
-  }
-  .ed-stat .k {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: #6b7280;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-weight: 500;
-  }
-
-  /* ─── Paper-style entries (Featured + Selected) ─── */
-  .ed-entry {
-    padding: 2rem 0;
-    border-top: 1px solid #f3f4f6;
-    display: grid;
-    grid-template-columns: 1fr 7rem;
-    gap: 2rem;
+    padding: 0 2rem;
     align-items: start;
-    transition: background 200ms ease;
   }
-  .ed-entry:first-child { border-top: none; padding-top: 1rem; }
-  .ed-entry:hover {
-    background: linear-gradient(90deg, rgba(37, 99, 235, 0.015), transparent 70%);
+
+  /* ─── Sidebar ─── */
+  .home-side {
+    position: sticky;
+    top: 6rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    align-self: start;
+    max-height: calc(100vh - 4rem);
+    display: flex;
+    flex-direction: column;
   }
-  .ed-entry-content h3 {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.15rem;
+  .home-name {
+    font-size: clamp(2rem, 3.5vw, 2.6rem);
     font-weight: 700;
     color: #0f172a;
     margin: 0 0 0.4rem 0;
-    line-height: 1.35;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
   }
-  .ed-entry-content h3 a {
-    color: inherit;
-    text-decoration: none;
-    background-image: linear-gradient(currentColor, currentColor);
-    background-position: 0 100%;
-    background-repeat: no-repeat;
-    background-size: 0% 1px;
-    transition: background-size 250ms ease;
+  .home-role {
+    font-size: 1.05rem;
+    color: #0f172a;
+    margin: 0 0 1rem 0;
+    font-weight: 500;
+    line-height: 1.4;
   }
-  .ed-entry-content h3 a:hover {
-    background-size: 100% 1px;
-  }
-  .ed-entry-content .ed-byline {
-    font-family: 'Source Serif Pro', Georgia, serif;
-    font-style: italic;
-    font-size: 0.92rem;
-    color: #6b7280;
-    margin: 0 0 0.85rem 0;
-  }
-  .ed-entry-content .ed-desc {
-    font-family: 'Inter', sans-serif;
-    color: #374151;
-    font-size: 0.95rem;
-    line-height: 1.7;
-    margin: 0 0 0.9rem 0;
-  }
-  .ed-entry-content .ed-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.3rem;
-    margin: 0.5rem 0 0.8rem 0;
-  }
-  .ed-entry-content .ed-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
+  .home-blurb {
     color: #4b5563;
-    background: transparent;
-    border: 1px solid #e5e7eb;
-    padding: 0.18em 0.55em;
-    border-radius: 3px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0 0 2.5rem 0;
+    max-width: 30ch;
   }
-  .ed-entry-content .ed-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.82rem;
-    margin-top: 0.5rem;
+
+  /* ─── Scroll-tied sidebar nav ─── */
+  .side-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2.5rem 0;
   }
-  .ed-entry-content .ed-links a {
-    color: #2563eb;
+  .side-nav li {
+    margin-bottom: 0.15rem;
+  }
+  .side-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
     text-decoration: none;
-    border-bottom: 1px solid rgba(37, 99, 235, 0.3);
-    transition: border-color 150ms ease;
+    color: #6b7280;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.35rem 0;
+    transition: color 200ms ease, gap 200ms ease;
   }
-  .ed-entry-content .ed-links a:hover {
-    border-bottom-color: #2563eb;
+  .side-nav .nav-line {
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: #cbd5e1;
+    transition: width 250ms ease, background 250ms ease;
   }
-  .ed-entry-side {
-    text-align: right;
-    font-family: 'JetBrains Mono', monospace;
+  .side-nav a:hover {
+    color: #0f172a;
+    gap: 1.1rem;
+  }
+  .side-nav a:hover .nav-line,
+  .side-nav a.is-active .nav-line {
+    width: 56px;
+    background: #0f172a;
+  }
+  .side-nav a.is-active {
+    color: #0f172a;
+  }
+
+  /* ─── Sidebar socials ─── */
+  .home-socials {
+    display: flex;
+    gap: 1.1rem;
+    margin-top: auto;
+    padding-top: 1rem;
+  }
+  .home-socials a {
+    color: #6b7280;
+    line-height: 1;
+    transition: color 200ms ease, transform 200ms ease;
+  }
+  .home-socials a:hover {
+    color: #0f172a;
+    transform: translateY(-2px);
+  }
+  .home-socials svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* ─── Right content column ─── */
+  .home-main {
+    padding: 3rem 0 6rem 0;
+    max-width: 600px;
+  }
+  .home-section {
+    margin-bottom: 4.5rem;
+    scroll-margin-top: 6rem;
+  }
+  .home-section:last-child { margin-bottom: 0; }
+
+  .home-section p {
+    color: #1f2937;
+    font-size: 0.98rem;
+    line-height: 1.75;
+    margin: 0 0 1rem 0;
+  }
+  .home-section p a {
+    color: #0f172a;
+    text-decoration: none;
+    border-bottom: 1px solid #cbd5e1;
+    transition: border-color 200ms ease;
+    padding-bottom: 1px;
+  }
+  .home-section p a:hover {
+    border-bottom-color: #0f172a;
+  }
+  .home-section p strong { color: #0f172a; font-weight: 600; }
+
+  /* ─── Section heading (mobile only — hidden on desktop where sidebar serves as nav heading) ─── */
+  .home-section h2 {
+    display: none;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #0f172a;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin: 0 0 1.25rem 0;
+  }
+
+  /* ─── Entry (used in Featured, Projects) ─── */
+  .home-entry {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid #f3f4f6;
+    transition: background 150ms ease;
+  }
+  .home-entry:first-child { border-top: none; padding-top: 0.5rem; }
+  .home-entry:hover { background: rgba(15, 23, 42, 0.015); }
+  .home-entry .entry-meta {
     font-size: 0.72rem;
     color: #9ca3af;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
+    font-weight: 500;
     padding-top: 0.3rem;
-    line-height: 1.5;
   }
-  .ed-entry-side .ed-year {
-    display: block;
+  .home-entry h3 {
     font-size: 1rem;
+    font-weight: 600;
+    color: #0f172a;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.45;
+  }
+  .home-entry h3 a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+  .home-entry h3 a:hover {
+    color: #2563eb;
+  }
+  .home-entry h3 a .ext {
+    display: inline-block;
+    margin-left: 0.3rem;
+    color: #cbd5e1;
+    font-size: 0.85em;
+    transition: transform 200ms ease, color 200ms ease;
+  }
+  .home-entry h3 a:hover .ext {
+    color: #2563eb;
+    transform: translate(2px, -2px);
+  }
+  .home-entry p {
+    margin: 0 0 0.85rem 0;
+    font-size: 0.93rem;
+    color: #4b5563;
+    line-height: 1.65;
+  }
+  .home-entry .entry-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin: 0.5rem 0;
+  }
+  .home-entry .entry-tags span {
+    font-size: 0.7rem;
+    color: #4b5563;
+    background: #f3f4f6;
+    padding: 0.18em 0.55em;
+    border-radius: 3px;
+  }
+
+  /* ─── Stats — quiet, inline ─── */
+  .stats-line {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+    margin: 0 0 0.5rem 0;
+  }
+  .stats-line .num {
+    font-size: 1.6rem;
     font-weight: 700;
     color: #0f172a;
-    letter-spacing: 0.02em;
-    margin-bottom: 0.2rem;
-    font-family: 'Source Serif Pro', Georgia, serif;
-    font-style: italic;
+    line-height: 1;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.3rem;
+  }
+  .stats-line .lbl {
+    font-size: 0.7rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
   }
 
-  /* ─── More section ─── */
-  .ed-more {
-    margin: 5rem 0 2rem 0;
-    padding-top: 3rem;
-    border-top: 1px solid #e5e7eb;
-    text-align: center;
-  }
-  .ed-more p {
-    font-family: 'Source Serif Pro', Georgia, serif;
-    font-size: 1.05rem;
-    color: #4b5563;
-    line-height: 1.7;
-    margin: 0;
-  }
-  .ed-more p a {
-    color: #2563eb;
-    text-decoration: none;
-    font-weight: 600;
-    border-bottom: 1px solid rgba(37, 99, 235, 0.3);
-    transition: border-color 150ms ease;
-  }
-  .ed-more p a:hover { border-bottom-color: #2563eb; }
-
-  /* ─── Responsive ─── */
-  @media (max-width: 900px) {
-    .ed-hero {
+  /* ─── Mobile ─── */
+  @media (max-width: 880px) {
+    .home-shell {
       grid-template-columns: 1fr;
       gap: 2.5rem;
+      padding: 0 1.25rem;
     }
-    .ed-photo-frame {
-      max-width: 220px;
-      justify-self: start;
+    .home-side {
+      position: relative;
+      top: 0;
+      max-height: none;
+      padding: 2rem 0 0 0;
     }
-    .ed-name { font-size: clamp(2.5rem, 11vw, 4rem); }
-    .ed-bio:first-of-type::first-letter { font-size: 2.8rem; }
-    .ed-stats { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-    .ed-entry { grid-template-columns: 1fr; gap: 0.5rem; }
-    .ed-entry-side { text-align: left; padding-top: 0; }
-    .ed-section-head { grid-template-columns: 1fr; gap: 0.3rem; }
+    .home-blurb { margin-bottom: 1.5rem; }
+    .side-nav { display: none; }
+    .home-main {
+      padding: 0 0 4rem 0;
+      max-width: none;
+    }
+    .home-section h2 { display: block; }
+    .home-section { margin-bottom: 3rem; }
+    .home-entry { grid-template-columns: 1fr; gap: 0.4rem; }
+    .home-entry .entry-meta { order: -1; }
+    .stats-line { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
   }
 </style>
 
-<div class="container">
+<div class="home-shell">
 
-  <!-- ═══ HERO ═══ -->
-  <section class="ed-hero">
-    <div class="ed-hero-content">
-      <h1 class="ed-name">Matthew <span class="surname">Burns</span></h1>
-      <p class="ed-tagline">AI Security Researcher <span class="sep">·</span> Adversarial LLM Evaluation <span class="sep">·</span> Sydney AU</p>
+  <!-- ─── Sidebar ─── -->
+  <aside class="home-side">
+    <h1 class="home-name">Matthew Burns</h1>
+    <p class="home-role">AI security researcher.<br>Adversarial evaluation of autonomous agents.</p>
+    <p class="home-blurb">Master of Cybersecurity at The University of Sydney. Australian citizen, clearance eligible, based in Gold Coast.</p>
 
-      <p class="ed-bio">I build adversarial evaluation infrastructure for autonomous AI agents &mdash; sitting at an intersection that rarely meets in one person: <strong>offensive security</strong>, <strong>LLM fine-tuning</strong>, and <strong>AI governance</strong>. My Master&rsquo;s capstone at the University of Sydney is the open-source <a href="https://github.com/mburns00/beyond-ctfs"><em>Beyond CTFs</em></a> framework &mdash; a real-world evaluation rubric for autonomous pentesting LLMs comparing SFT, DPO, and GRPO post-training strategies.</p>
+    <nav>
+      <ul class="side-nav">
+        <li><a href="#about" data-nav><span class="nav-line"></span>About</a></li>
+        <li><a href="#research" data-nav><span class="nav-line"></span>Research</a></li>
+        <li><a href="#projects" data-nav><span class="nav-line"></span>Projects</a></li>
+        <li><a href="#elsewhere" data-nav><span class="nav-line"></span>Elsewhere</a></li>
+      </ul>
+    </nav>
 
-      <p class="ed-bio">Australian citizen, security-clearance eligible (NV1 / NV2 / PV). Based in Gold Coast; open to roles across Sydney, Canberra, or remote within Australia.</p>
-
-      <nav class="ed-rail" aria-label="Quick links">
-        <a href="{{ '/assets/resume/Matthew_Burns_Resume_2026.pdf' | relative_url }}" target="_blank">CV</a>
-        <a href="https://github.com/mburns00" target="_blank">GitHub</a>
-        <a href="https://www.linkedin.com/in/mburns00/" target="_blank">LinkedIn</a>
-        <a href="mailto:MatthewKBurns00@gmail.com">Email</a>
-        <a href="{{ '/about/' | relative_url }}">About</a>
-      </nav>
+    <div class="home-socials">
+      <a href="https://github.com/mburns00" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.66.5 12.02c0 5.08 3.29 9.39 7.86 10.9.58.11.79-.25.79-.55 0-.27-.01-1.18-.02-2.14-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.04 11.04 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.7 5.4-5.26 5.68.41.35.78 1.05.78 2.12 0 1.53-.01 2.76-.01 3.13 0 .3.21.66.8.55 4.57-1.51 7.85-5.82 7.85-10.9C23.5 5.66 18.35.5 12 .5Z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/mburns00/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .78 0 1.74v20.51C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.75V1.74C24 .78 23.2 0 22.22 0Z"/></svg>
+      </a>
+      <a href="mailto:MatthewKBurns00@gmail.com" aria-label="Email" title="Email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg>
+      </a>
+      <a href="{{ '/assets/resume/Matthew_Burns_Resume_2026.pdf' | relative_url }}" target="_blank" aria-label="Resume" title="Resume (PDF)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      </a>
     </div>
+  </aside>
 
-    <figure class="ed-photo-frame">
-      <img class="ed-photo" src="{{ '/assets/images/matthew-burns.jpg' | relative_url }}" alt="Matthew Burns portrait" loading="lazy" />
-      <figcaption class="ed-photo-caption"><span class="blink"></span>Open to work &middot; 2026</figcaption>
-    </figure>
-  </section>
+  <!-- ─── Main content ─── -->
+  <main class="home-main">
 
-  <!-- ═══ PULL QUOTE ═══ -->
-  <section class="ed-pullquote">
-    <blockquote>
-      Methodological integrity is the point. <strong>Not benchmark theatre.</strong>
-    </blockquote>
-  </section>
+    <section class="home-section" id="about">
+      <h2>About</h2>
+      <p>I work at an intersection that rarely meets in one person: <strong>offensive security</strong>, <strong>LLM post-training</strong>, and <strong>AI governance</strong>. The work is building evaluation infrastructure that surfaces how autonomous AI agents fail under adversarial pressure — and translating those findings into language a governance framework can act on.</p>
+      <p>My Master's capstone at The University of Sydney is the open-source <a href="https://github.com/mburns00/beyond-ctfs">Beyond CTFs</a> framework. It compares four fine-tuned Qwen3-14B variants (Baseline, SFT, DPO, GRPO) across 32 controlled cells on Hack The Box machines using a 12-dimensional rubric grounded in PTES and MITRE ATT&amp;CK. Inter-rater reliability is reported honestly below the pre-registered target — null-tolerant, not inflated.</p>
+      <p>Currently looking for AI security engineering, AI red team, or ML security roles — at <strong>AISI</strong>, <strong>CyberCX</strong>, <strong>ASD</strong>, or an AU frontier-adjacent team. Sydney, Canberra, or remote within Australia.</p>
 
-  <!-- ═══ STATS ═══ -->
-  <section class="ed-stats">
-    <div class="ed-stat">
-      <span class="v">{{ done_count }}<em>/</em>{{ total_units }}</span>
-      <span class="k">Master&rsquo;s units</span>
-    </div>
-    <div class="ed-stat">
-      <span class="v">{{ aws_done }}<em>/</em>{{ aws_total }}</span>
-      <span class="k">AWS&nbsp;SAA-C03</span>
-    </div>
-    <div class="ed-stat">
-      <span class="v">{{ box_count }}</span>
-      <span class="k">HTB write-ups</span>
-    </div>
-    <div class="ed-stat">
-      <span class="v">{{ site.tools | size }}</span>
-      <span class="k">Projects shipped</span>
-    </div>
-  </section>
-
-  <!-- ═══ FEATURED RESEARCH ═══ -->
-  <section class="ed-section">
-    <div class="ed-section-head">
-      <div class="ed-section-num">02 / Featured</div>
-      <h2>Research<span class="h2-meta">— published openly</span></h2>
-    </div>
-
-    <article class="ed-entry">
-      <div class="ed-entry-content">
-        <h3><a href="https://github.com/mburns00/beyond-ctfs" target="_blank">Beyond CTFs &mdash; Evaluating Autonomous Pentesting Agents Through a Safety-Governance Framework with Empirical Fine-Tuning Strategy Analysis</a></h3>
-        <p class="ed-byline">Matthew K. Burns &middot; The University of Sydney</p>
-        <p class="ed-desc">A real-world evaluation framework for autonomous pentesting LLMs. 12-dimensional rubric (8 performance + 4 safety) grounded in PTES and MITRE ATT&amp;CK. Quasi-experimental, Latin-square comparison of four Qwen3-14B variants (Baseline, SFT, DPO, GRPO) across 32 controlled cells on Hack The Box machines. Triple-blind LLM-as-judge scoring; statistical pipeline runs Friedman &rarr; Wilcoxon (Bonferroni &alpha; = .00833) &rarr; Cliff&rsquo;s &delta; &rarr; Holm&ndash;Bonferroni. Behaviour mapped to OWASP Agentic Top 10, NIST AI 600-1, MITRE ATLAS, and the Singapore Agentic AI Framework. Apache-2.0 open source.</p>
-        <div class="ed-tags">
-          <span class="ed-tag">SFT</span><span class="ed-tag">DPO</span><span class="ed-tag">GRPO</span><span class="ed-tag">MITRE ATT&amp;CK</span><span class="ed-tag">MITRE ATLAS</span><span class="ed-tag">OWASP Agentic Top 10</span><span class="ed-tag">NIST AI 600-1</span><span class="ed-tag">Qwen3-14B</span>
-        </div>
-        <div class="ed-links">
-          <a href="https://github.com/mburns00/beyond-ctfs" target="_blank">→ Code</a>
-          <a href="https://github.com/mburns00/beyond-ctfs/blob/main/docs/Beyond_CTFs_Final_Report.pdf" target="_blank">→ Final Report&nbsp;(PDF)</a>
-          <a href="{{ '/tools/beyond-ctfs/' | relative_url }}">→ Project page</a>
-        </div>
+      <div class="stats-line">
+        <div><div class="num">{{ done_count }}/{{ total_units }}</div><div class="lbl">Master's units</div></div>
+        <div><div class="num">{{ box_count }}</div><div class="lbl">HTB write-ups</div></div>
+        <div><div class="num">{{ site.tools | size }}</div><div class="lbl">Projects</div></div>
+        <div><div class="num">~76</div><div class="lbl">WAM</div></div>
       </div>
-      <aside class="ed-entry-side">
-        <span class="ed-year">2026</span>
-        Master&rsquo;s<br>Capstone
-      </aside>
-    </article>
-  </section>
+    </section>
 
-  <!-- ═══ SELECTED PROJECTS ═══ -->
-  <section class="ed-section">
-    <div class="ed-section-head">
-      <div class="ed-section-num">03 / Selected</div>
-      <h2>Projects<span class="h2-meta">— see all at /tools</span></h2>
-    </div>
-
-    <article class="ed-entry">
-      <div class="ed-entry-content">
-        <h3><a href="{{ '/tools/cybersec-qwen3/' | relative_url }}">CyberSec Qwen3 &mdash; first-generation offensive-security LLM fine-tune</a></h3>
-        <p class="ed-byline">Independent research &middot; 2026</p>
-        <p class="ed-desc">Week-long research sprint fine-tuning Qwen3-14B for offensive security using a three-phase pipeline (SFT &rarr; DPO &rarr; GRPO). Benchmarked against live HackTheBox machines via a custom MCP tool bridge. The data-composition, reward-design, and evaluation lessons from this sprint directly shaped the Beyond CTFs thesis methodology.</p>
-        <div class="ed-links">
-          <a href="{{ '/tools/cybersec-qwen3/' | relative_url }}">→ Project page</a>
+    <section class="home-section" id="research">
+      <h2>Research</h2>
+      <article class="home-entry">
+        <div class="entry-meta">2026<br>Capstone</div>
+        <div>
+          <h3>
+            <a href="https://github.com/mburns00/beyond-ctfs" target="_blank">
+              Beyond CTFs &mdash; Evaluating Autonomous Pentesting Agents Through a Safety-Governance Framework with Empirical Fine-Tuning Strategy Analysis<span class="ext">↗</span>
+            </a>
+          </h3>
+          <p>Quasi-experimental, Latin-square comparison of four Qwen3-14B variants across 32 controlled cells on Hack The Box machines. Triple-blind LLM-as-judge scoring; statistical pipeline runs Friedman &rarr; Wilcoxon (Bonferroni) &rarr; Cliff's &delta; &rarr; Holm&ndash;Bonferroni. Behaviour mapped to OWASP Agentic Top 10, NIST AI 600-1, MITRE ATLAS, and the Singapore Agentic AI Framework.</p>
+          <div class="entry-tags">
+            <span>SFT</span><span>DPO</span><span>GRPO</span><span>MITRE ATT&amp;CK</span><span>MITRE ATLAS</span><span>OWASP Agentic Top 10</span>
+          </div>
+          <p style="font-size:0.85rem;">
+            <a href="https://github.com/mburns00/beyond-ctfs" target="_blank">Code</a> &nbsp;·&nbsp;
+            <a href="https://github.com/mburns00/beyond-ctfs/blob/main/docs/Beyond_CTFs_Final_Report.pdf" target="_blank">Final Report (PDF)</a> &nbsp;·&nbsp;
+            <a href="{{ '/tools/beyond-ctfs/' | relative_url }}">Project page</a>
+          </p>
         </div>
-      </div>
-      <aside class="ed-entry-side">
-        <span class="ed-year">2026</span>
-        Research<br>Sprint
-      </aside>
-    </article>
+      </article>
+    </section>
 
-    <article class="ed-entry">
-      <div class="ed-entry-content">
-        <h3><a href="{{ '/tools/cryptoos-arcade/' | relative_url }}">CryptoOS Arcade &mdash; interactive cryptography teaching tool</a></h3>
-        <p class="ed-byline">Side project &middot; 2026</p>
-        <p class="ed-desc">Six-room gamified cryptography learning experience built as a single-page web app &mdash; from XOR fundamentals through to TLS and digital signatures. 30 interactive levels, KaTeX math rendering, Web Audio API sound effects, zero dependencies.</p>
-        <div class="ed-links">
-          <a href="{{ '/assets/crypto-arcade/index.html' | relative_url }}" target="_blank">→ Play</a>
-          <a href="{{ '/tools/cryptoos-arcade/' | relative_url }}">→ Project page</a>
+    <section class="home-section" id="projects">
+      <h2>Projects</h2>
+      <article class="home-entry">
+        <div class="entry-meta">2026<br>Research</div>
+        <div>
+          <h3><a href="{{ '/tools/cybersec-qwen3/' | relative_url }}">CyberSec Qwen3</a></h3>
+          <p>First-generation Qwen3-14B offensive-security fine-tune. A week-long SFT &rarr; DPO &rarr; GRPO sprint benchmarked against live HackTheBox machines via a custom MCP tool bridge. The data-composition, reward-design, and evaluation lessons from this sprint directly shaped the Beyond CTFs methodology.</p>
         </div>
-      </div>
-      <aside class="ed-entry-side">
-        <span class="ed-year">2026</span>
-        Side<br>Project
-      </aside>
-    </article>
-  </section>
+      </article>
+      <article class="home-entry">
+        <div class="entry-meta">2026<br>Side project</div>
+        <div>
+          <h3><a href="{{ '/tools/cryptoos-arcade/' | relative_url }}">CryptoOS Arcade</a></h3>
+          <p>Interactive cryptography learning experience. Six rooms, 30 levels, from XOR fundamentals to TLS and digital signatures. Single-page web app, zero dependencies.</p>
+          <p style="font-size:0.85rem;"><a href="{{ '/assets/crypto-arcade/index.html' | relative_url }}" target="_blank">Play it →</a></p>
+        </div>
+      </article>
+      <p style="font-size:0.88rem; color:#6b7280; margin-top:1.5rem;">See <a href="{{ '/tools/' | relative_url }}" style="border-bottom-color:#9ca3af;">all projects →</a></p>
+    </section>
 
-  <!-- ═══ MORE ═══ -->
-  <section class="ed-more">
-    <p>
-      HackTheBox write-ups at <a href="{{ '/ctfs/' | relative_url }}">/ctfs</a> &middot;
-      all projects at <a href="{{ '/tools/' | relative_url }}">/tools</a> &middot;
-      education and certifications at <a href="{{ '/certs/' | relative_url }}">/certs</a> &middot;
-      longer bio at <a href="{{ '/about/' | relative_url }}">/about</a>.
-    </p>
-  </section>
+    <section class="home-section" id="elsewhere">
+      <h2>Elsewhere</h2>
+      <p>HackTheBox write-ups live at <a href="{{ '/ctfs/' | relative_url }}">/ctfs</a>. Education and certifications at <a href="{{ '/certs/' | relative_url }}">/certs</a>. Longer bio at <a href="{{ '/about/' | relative_url }}">/about</a>.</p>
+    </section>
 
+  </main>
 </div>
+
+<script>
+  // Scroll-tied sidebar nav highlighting — the one bespoke interaction.
+  (function () {
+    var navLinks = document.querySelectorAll('.side-nav a[data-nav]');
+    if (!navLinks.length) return;
+    var sections = Array.from(navLinks).map(function (a) {
+      return document.querySelector(a.getAttribute('href'));
+    }).filter(Boolean);
+
+    function update() {
+      var y = window.scrollY + 120;
+      var activeIdx = 0;
+      sections.forEach(function (sec, i) {
+        if (sec.offsetTop <= y) activeIdx = i;
+      });
+      navLinks.forEach(function (a, i) {
+        a.classList.toggle('is-active', i === activeIdx);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+</script>
