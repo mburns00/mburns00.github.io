@@ -32,15 +32,17 @@
 
 // TOC-style tools list
 .tools-used {
-  background: rgba(15, 23, 42, 0.35);
-  border: 1px solid rgba(96, 165, 250, 0.04);
+  background: $card-bg;
+  border: 1px solid $card-border;
   border-radius: 12px;
   padding: $spacing-lg;
   margin-bottom: $spacing-xl;
-  transition: all 400ms ease;
+  transition: all $transition-card;
+  box-shadow: $card-shadow;
 
   &:hover {
-    border-color: rgba(96, 165, 250, 0.1);
+    border-color: $card-border-hover;
+    box-shadow: $card-shadow-hover;
   }
 
   h3 {
@@ -96,14 +98,39 @@
     display: block;
     margin: $spacing-lg auto;
     border-radius: 12px;
-    border: 1px solid rgba(96, 165, 250, 0.08);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-    transition: all 400ms ease;
+    border: 1px solid $border;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+    transition: all 250ms ease;
 
     &:hover {
-      border-color: rgba(96, 165, 250, 0.15);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+      border-color: $card-border-hover;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
       transform: scale(1.02);
     }
   }
+}
+
+// ─── Scroll progress bar (top of viewport) ───
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, #2563eb 0%, #7c3aed 100%);
+  z-index: 999;
+  transition: width 50ms linear;
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.4);
+}
+
+// ─── Faint backdrop wash (gives the white some life) ───
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 10% 0%, rgba(37, 99, 235, 0.035), transparent 50%),
+    radial-gradient(ellipse at 95% 100%, rgba(124, 58, 237, 0.025), transparent 50%);
 }

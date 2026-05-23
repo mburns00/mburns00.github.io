@@ -194,14 +194,17 @@
 }
 
 .fp-metric {
-  background: rgba($border, 0.2);
+  background: $surface;
+  border: 1px solid $border;
   border-radius: 10px;
-  padding: 0.75rem;
+  padding: 0.85rem 0.75rem;
   text-align: center;
-  transition: all 300ms ease;
+  transition: all 250ms ease;
 
   &:hover {
-    background: rgba($border, 0.35);
+    background: #ffffff;
+    border-color: $card-border-hover;
+    box-shadow: $card-shadow;
     transform: translateY(-2px);
   }
 
@@ -451,15 +454,17 @@
 }
 
 .room-node {
-  background: rgba($border, 0.2);
-  border: 1px solid rgba($border, 0.3);
+  background: $surface;
+  border: 1px solid $border;
   border-radius: 10px;
-  padding: 0.6rem 0.9rem;
+  padding: 0.65rem 0.95rem;
   text-align: center;
-  transition: all 400ms ease;
+  transition: all 250ms ease;
 
   &:hover {
-    background: rgba($border, 0.35);
+    background: #ffffff;
+    border-color: $card-border-hover;
+    box-shadow: $card-shadow;
     transform: translateY(-2px);
   }
 

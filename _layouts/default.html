@@ -5,11 +5,28 @@
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to content</a>
+  <div class="scroll-progress" id="scrollProgress"></div>
   {% include header.html %}
   <main id="main-content" class="site-content">
     {{ content }}
   </main>
   {% include footer.html %}
   <script src="{{ '/assets/js/effects.js' | relative_url }}"></script>
+  <script>
+    // Scroll progress bar
+    (function() {
+      var bar = document.getElementById('scrollProgress');
+      if (!bar) return;
+      function update() {
+        var scrolled = window.scrollY;
+        var height = document.documentElement.scrollHeight - window.innerHeight;
+        var pct = height > 0 ? (scrolled / height) * 100 : 0;
+        bar.style.width = pct + '%';
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    })();
+  </script>
 </body>
 </html>
