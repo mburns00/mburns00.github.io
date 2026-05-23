@@ -115,12 +115,58 @@
   position: fixed;
   top: 0;
   left: 0;
-  height: 2px;
+  height: 3px;
   width: 0;
-  background: linear-gradient(90deg, #2563eb 0%, #7c3aed 100%);
+  background: linear-gradient(90deg, #2563eb 0%, #6366f1 50%, #7c3aed 100%);
   z-index: 999;
-  transition: width 50ms linear;
-  box-shadow: 0 0 8px rgba(37, 99, 235, 0.4);
+  transition: width 80ms linear;
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.45);
+  border-radius: 0 99px 99px 0;
+}
+
+// ─── Card hover micro-interaction: gradient accent line on top ───
+.card,
+.cert-card,
+.proj-card {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, #2563eb 50%, transparent 100%);
+    opacity: 0;
+    transition: opacity 250ms ease;
+    border-radius: $radius-lg $radius-lg 0 0;
+    pointer-events: none;
+  }
+  &:hover::before { opacity: 1; }
+}
+
+// ─── Pop-in micro animation for newly-loaded content ───
+@keyframes popIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+// ─── Refined link underline on body content ───
+.rh-bio a,
+.writeup-content a,
+.about-intro a {
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.3;
+    transition: opacity 150ms ease;
+  }
+  &:hover::after { opacity: 1; }
 }
 
 // ─── Faint backdrop wash (gives the white some life) ───
