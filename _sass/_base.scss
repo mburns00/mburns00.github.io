@@ -180,12 +180,13 @@ button:focus-visible {
   to { opacity: 1; transform: none; }
 }
 
-// ── Section label ──
+// ── Section label (editorial / mono) ──
 .section-label {
+  font-family: $font-mono;
   font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.15em;
   color: $accent-blue;
   margin-bottom: $spacing-lg;
   display: flex;
@@ -195,12 +196,21 @@ button:focus-visible {
   &::before {
     content: '';
     width: 24px;
-    height: 2px;
+    height: 1px;
     background: linear-gradient(90deg, $accent-blue, $neon-purple);
-    border-radius: 2px;
     flex-shrink: 0;
-    box-shadow: 0 0 8px rgba($accent-blue, 0.25);
   }
+}
+
+// ── Heading typography refinement (designer-feel) ──
+h1, h2, h3, h4, h5, h6 {
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+}
+
+// ── Refined selection colour ──
+::selection {
+  background: rgba($accent-blue, 0.15);
+  color: $text-heading;
 }
 
 // ── Cursor spotlight for tiltable elements ──
