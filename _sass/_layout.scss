@@ -69,21 +69,20 @@
     transition: color 300ms ease, background 300ms ease;
     position: relative;
 
-    // Animated underline
+    // Single-color underline (no gradient)
     &::after {
       content: '';
       position: absolute;
       bottom: -4px;
       left: 50%;
       width: 0;
-      height: 2px;
-      background: linear-gradient(90deg, $accent-blue, $neon-purple);
-      border-radius: 2px;
-      transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1), left 300ms cubic-bezier(0.4, 0, 0.2, 1);
+      height: 1px;
+      background: $text-heading;
+      transition: width 200ms ease, left 200ms ease;
     }
 
     &:hover {
-      color: $accent-blue;
+      color: $text-heading;
 
       &::after {
         width: 100%;
@@ -92,7 +91,7 @@
     }
 
     &.active {
-      color: $accent-blue;
+      color: $text-heading;
 
       &::after {
         width: 60%;

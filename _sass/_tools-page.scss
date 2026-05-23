@@ -308,31 +308,15 @@
     color: inherit;
   }
 
-  // Cursor spotlight
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: $radius-lg;
-    background: radial-gradient(
-      350px circle at var(--mx, 50%) var(--my, 50%),
-      rgba($accent-blue, 0.06) 0%, transparent 100%
-    );
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 400ms ease;
-  }
-  &:hover::after { opacity: 1; }
-
-  // Top accent line
+  // Top accent line on hover — single solid color per category
   &::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    background: var(--accent);
     opacity: 0;
-    transition: opacity 400ms ease;
+    transition: opacity 200ms ease;
   }
   &:hover::before { opacity: 1; }
   &.cat-tool   { --accent: #{$accent-blue}; }

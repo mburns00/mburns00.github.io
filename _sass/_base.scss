@@ -213,29 +213,7 @@ h1, h2, h3, h4, h5, h6 {
   color: $text-heading;
 }
 
-// ── Cursor spotlight for tiltable elements ──
-[data-tilt] {
-  position: relative;
-  overflow: hidden;
-  will-change: transform;
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: radial-gradient(
-      500px circle at var(--mx, 50%) var(--my, 50%),
-      rgba($accent-blue, 0.06) 0%,
-      transparent 100%
-    );
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 400ms ease;
-    z-index: 1;
-  }
-  &:hover::after { opacity: 1; }
-}
+// Cursor spotlight removed — restraint over decoration.
 
 // ── Skip to content (a11y) ──
 .skip-link {
