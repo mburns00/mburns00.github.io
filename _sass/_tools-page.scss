@@ -24,15 +24,12 @@
   }
 
   .ps-num {
-    font-family: $font-mono;
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 700;
     line-height: 1;
+    color: $text-heading;
+    letter-spacing: -0.025em;
     margin-bottom: $spacing-sm;
-
-    &.blue   { color: $accent-blue; }
-    &.cyan   { color: $neon-blue; }
-    &.orange { color: $neon-orange; }
   }
 
   .ps-label {
@@ -43,7 +40,7 @@
   }
 }
 
-// Featured Project — clean, no spotlight
+// Featured Project — clean
 .featured-project {
   background: $card-bg;
   border: 1px solid $card-border;
@@ -51,11 +48,6 @@
   padding: $spacing-xl;
   margin-bottom: $spacing-xl;
   position: relative;
-  transition: border-color 200ms ease;
-
-  &:hover {
-    border-color: $card-border-hover;
-  }
 }
 
 .fp-header {
@@ -103,18 +95,11 @@
 }
 
 .pipe-node {
-  background: rgba($accent-blue, 0.06);
-  border: 1px solid rgba($accent-blue, 0.1);
-  border-radius: 10px;
-  padding: 0.7rem 1.1rem;
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: 6px;
+  padding: 0.65rem 1rem;
   text-align: center;
-  transition: all 400ms ease;
-
-  &:hover {
-    background: rgba($accent-blue, 0.12);
-    border-color: rgba($accent-blue, 0.25);
-    transform: translateY(-2px);
-  }
 
   .pn-label {
     font-family: $font-mono;
@@ -126,24 +111,9 @@
 
   .pn-sub {
     font-size: 0.62rem;
-    color: $slate-600;
+    color: $text-muted;
     margin-top: 0.15rem;
     display: block;
-  }
-
-  &.sft {
-    border-color: rgba($accent-blue, 0.2);
-    .pn-label { color: $accent-blue; }
-  }
-
-  &.dpo {
-    border-color: rgba($success-green, 0.2);
-    .pn-label { color: $success-green; }
-  }
-
-  &.grpo {
-    border-color: rgba($neon-purple, 0.2);
-    .pn-label { color: $neon-purple; }
   }
 }
 
@@ -423,38 +393,24 @@
 .room-node {
   background: $surface;
   border: 1px solid $border;
-  border-radius: 10px;
-  padding: 0.65rem 0.95rem;
+  border-radius: 6px;
+  padding: 0.6rem 0.9rem;
   text-align: center;
-  transition: all 250ms ease;
-
-  &:hover {
-    background: #ffffff;
-    border-color: $card-border-hover;
-    box-shadow: $card-shadow;
-    transform: translateY(-2px);
-  }
 
   .rn-label {
     font-family: $font-mono;
     font-size: 0.72rem;
     font-weight: 600;
+    color: $text-heading;
     display: block;
   }
 
   .rn-sub {
     font-size: 0.58rem;
-    color: $slate-600;
+    color: $text-muted;
     margin-top: 0.15rem;
     display: block;
   }
-
-  &.r-xor   { border-color: rgba($accent-blue, 0.2);   .rn-label { color: $accent-blue; } }
-  &.r-prg   { border-color: rgba($neon-orange, 0.2);    .rn-label { color: $neon-orange; } }
-  &.r-block { border-color: rgba($neon-red, 0.2);       .rn-label { color: $neon-red; } }
-  &.r-mac   { border-color: rgba($success-green, 0.2);  .rn-label { color: $success-green; } }
-  &.r-dh    { border-color: rgba(#f97316, 0.2);         .rn-label { color: #f97316; } }
-  &.r-sig   { border-color: rgba($neon-purple, 0.2);    .rn-label { color: $neon-purple; } }
 }
 
 .room-arrow {
