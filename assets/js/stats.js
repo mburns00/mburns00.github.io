@@ -2,46 +2,101 @@ document.addEventListener('DOMContentLoaded', function () {
   var stats = window.siteStats;
   if (!stats) return;
 
-  Chart.defaults.color = '#a4b1cd';
-  Chart.defaults.borderColor = '#2a3a4e';
+  // ─── Light-theme palette (matches site SCSS variables) ───
+  var COLOR = {
+    text: '#374151',
+    textMuted: '#6b7280',
+    grid: '#f3f4f6',
+    gridDark: '#e5e7eb',
+    blue: '#2563eb',
+    blueLight: '#3b82f6',
+    blueFill: 'rgba(37, 99, 235, 0.08)',
+    green: '#16a34a',
+    orange: '#d97706',
+    red: '#dc2626',
+    purple: '#7c3aed',
+    cyan: '#0891b2',
+    track: '#f3f4f6'
+  };
 
-  // Difficulty doughnut
+  Chart.defaults.color = COLOR.text;
+  Chart.defaults.borderColor = COLOR.gridDark;
+  Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, sans-serif";
+  Chart.defaults.font.size = 12;
+
+  var sharedDoughnutOpts = {
+    responsive: true,
+    cutout: '60%',
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          padding: 14,
+          usePointStyle: true,
+          pointStyle: 'circle',
+          font: { size: 11 },
+          color: COLOR.text
+        }
+      },
+      tooltip: {
+        backgroundColor: '#ffffff',
+        titleColor: '#0f172a',
+        bodyColor: '#374151',
+        borderColor: COLOR.gridDark,
+        borderWidth: 1,
+        padding: 10,
+        cornerRadius: 6,
+        titleFont: { weight: 600, size: 12 },
+        bodyFont: { size: 12 },
+        displayColors: true,
+        boxPadding: 4
+      }
+    }
+  };
+
+  // ─── Difficulty doughnut ───
   var diffLabels = [];
   var diffData = [];
   var diffColors = [];
-  if (stats.difficulty.veryEasy) { diffLabels.push('Very Easy'); diffData.push(stats.difficulty.veryEasy); diffColors.push('#4fc3f7'); }
-  if (stats.difficulty.easy)     { diffLabels.push('Easy');      diffData.push(stats.difficulty.easy);     diffColors.push('#9fef00'); }
-  if (stats.difficulty.medium)   { diffLabels.push('Medium');    diffData.push(stats.difficulty.medium);   diffColors.push('#ffab40'); }
-  if (stats.difficulty.hard)     { diffLabels.push('Hard');      diffData.push(stats.difficulty.hard);     diffColors.push('#ff4444'); }
-  if (stats.difficulty.insane)   { diffLabels.push('Insane');    diffData.push(stats.difficulty.insane);   diffColors.push('#b388ff'); }
+  if (stats.difficulty.veryEasy) { diffLabels.push('Very Easy'); diffData.push(stats.difficulty.veryEasy); diffColors.push(COLOR.cyan); }
+  if (stats.difficulty.easy)     { diffLabels.push('Easy');      diffData.push(stats.difficulty.easy);     diffColors.push(COLOR.green); }
+  if (stats.difficulty.medium)   { diffLabels.push('Medium');    diffData.push(stats.difficulty.medium);   diffColors.push(COLOR.orange); }
+  if (stats.difficulty.hard)     { diffLabels.push('Hard');      diffData.push(stats.difficulty.hard);     diffColors.push(COLOR.red); }
+  if (stats.difficulty.insane)   { diffLabels.push('Insane');    diffData.push(stats.difficulty.insane);   diffColors.push(COLOR.purple); }
 
   new Chart(document.getElementById('difficultyChart'), {
     type: 'doughnut',
     data: {
       labels: diffLabels,
-      datasets: [{ data: diffData, backgroundColor: diffColors, borderWidth: 0 }]
+      datasets: [{
+        data: diffData,
+        backgroundColor: diffColors,
+        borderColor: '#ffffff',
+        borderWidth: 2,
+        hoverOffset: 6
+      }]
     },
-    options: {
-      responsive: true,
-      plugins: { legend: { position: 'bottom', labels: { padding: 16 } } }
-    }
+    options: sharedDoughnutOpts
   });
 
-  // OS doughnut
+  // ─── OS doughnut ───
   new Chart(document.getElementById('osChart'), {
     type: 'doughnut',
     data: {
       labels: ['Linux', 'Windows'],
-      datasets: [{ data: [stats.os.linux, stats.os.windows], backgroundColor: ['#4fc3f7', '#ffab40'], borderWidth: 0 }]
+      datasets: [{
+        data: [stats.os.linux, stats.os.windows],
+        backgroundColor: [COLOR.blue, COLOR.orange],
+        borderColor: '#ffffff',
+        borderWidth: 2,
+        hoverOffset: 6
+      }]
     },
-    options: {
-      responsive: true,
-      plugins: { legend: { position: 'bottom', labels: { padding: 16 } } }
-    }
+    options: sharedDoughnutOpts
   });
 
-  // 100-box goal gauge
-  var goal = stats.boxGoal || 100;
+  // ─── 30-box goal ring (large central count) ───
+  var goal = stats.boxGoal || 30;
   var done = stats.total;
   var remaining = Math.max(0, goal - done);
   var goalEl = document.getElementById('goalChart');
@@ -53,19 +108,25 @@ document.addEventListener('DOMContentLoaded', function () {
         labels: ['Completed', 'Remaining'],
         datasets: [{
           data: [done, remaining],
-          backgroundColor: ['#60a5fa', 'rgba(107, 123, 149, 0.2)'],
-          borderWidth: 0
+          backgroundColor: [COLOR.blue, COLOR.track],
+          borderColor: '#ffffff',
+          borderWidth: 2
         }]
       },
       options: {
         responsive: true,
-        cutout: '70%',
+        cutout: '72%',
         plugins: {
           legend: { display: false },
           tooltip: {
-            callbacks: {
-              label: function(ctx) { return ctx.label + ': ' + ctx.raw + ' boxes'; }
-            }
+            backgroundColor: '#ffffff',
+            titleColor: '#0f172a',
+            bodyColor: '#374151',
+            borderColor: COLOR.gridDark,
+            borderWidth: 1,
+            padding: 10,
+            cornerRadius: 6,
+            callbacks: { label: function(ctx) { return ctx.label + ': ' + ctx.raw + ' boxes'; } }
           }
         }
       },
@@ -80,19 +141,19 @@ document.addEventListener('DOMContentLoaded', function () {
           ctx.save();
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
-          ctx.fillStyle = '#60a5fa';
-          ctx.font = 'bold 28px "JetBrains Mono", monospace';
-          ctx.fillText(done, cx, cy - 8);
-          ctx.fillStyle = '#6b7b95';
-          ctx.font = '12px "JetBrains Mono", monospace';
-          ctx.fillText('/ ' + goal, cx, cy + 16);
+          ctx.fillStyle = '#0f172a';
+          ctx.font = '700 30px "JetBrains Mono", monospace';
+          ctx.fillText(done, cx, cy - 10);
+          ctx.fillStyle = COLOR.textMuted;
+          ctx.font = '500 13px "JetBrains Mono", monospace';
+          ctx.fillText('/ ' + goal, cx, cy + 18);
           ctx.restore();
         }
       }]
     });
   }
 
-  // Progress timeline
+  // ─── Progress timeline (line) ───
   var sorted = stats.timeline.slice().sort(function (a, b) {
     return new Date(a.date) - new Date(b.date);
   });
@@ -109,27 +170,46 @@ document.addEventListener('DOMContentLoaded', function () {
         datasets: [{
           label: 'Boxes Completed',
           data: cumulative,
-          borderColor: '#60a5fa',
-          backgroundColor: 'rgba(96,165,250,0.1)',
+          borderColor: COLOR.blue,
+          backgroundColor: COLOR.blueFill,
           fill: true,
-          tension: 0.3,
-          pointBackgroundColor: '#60a5fa',
-          pointRadius: 4
+          tension: 0.35,
+          pointBackgroundColor: COLOR.blue,
+          pointBorderColor: '#ffffff',
+          pointBorderWidth: 2,
+          pointRadius: 4,
+          pointHoverRadius: 6,
+          borderWidth: 2
         }]
       },
       options: {
         responsive: true,
-        plugins: { legend: { display: false } },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#ffffff',
+            titleColor: '#0f172a',
+            bodyColor: '#374151',
+            borderColor: COLOR.gridDark,
+            borderWidth: 1,
+            padding: 10,
+            cornerRadius: 6,
+            displayColors: false
+          }
+        },
         scales: {
           x: {
             type: 'time',
-            time: { unit: 'week', displayFormats: { week: 'MMM dd' } },
-            grid: { color: '#2a3a4e' }
+            time: { unit: 'week', displayFormats: { week: 'MMM d' } },
+            grid: { color: COLOR.grid, drawTicks: false },
+            border: { color: COLOR.gridDark },
+            ticks: { color: COLOR.textMuted, font: { size: 11 } }
           },
           y: {
             beginAtZero: true,
-            ticks: { stepSize: 1 },
-            grid: { color: '#2a3a4e' }
+            ticks: { stepSize: 1, color: COLOR.textMuted, font: { size: 11 } },
+            grid: { color: COLOR.grid, drawTicks: false },
+            border: { display: false }
           }
         }
       }

@@ -25,7 +25,7 @@
     failed: {{ failed_count }},
     difficulty: { veryEasy: {{ very_easy }}, easy: {{ easy }}, medium: {{ medium }}, hard: {{ hard }}, insane: {{ insane }} },
     os: { linux: {{ linux }}, windows: {{ windows }} },
-    boxGoal: 100,
+    boxGoal: 30,
     timeline: [
       {% for writeup in site.writeups %}
       { date: "{{ writeup.date | date: '%Y-%m-%d' }}", title: {{ writeup.title | jsonify }}, status: "{{ writeup.status }}" }{% unless forloop.last %},{% endunless %}
@@ -46,7 +46,7 @@
       <canvas id="osChart"></canvas>
     </div>
     <div class="chart-card">
-      <h3>2026 Goal: 100 Boxes</h3>
+      <h3>2026 Goal: 30 Boxes</h3>
       <canvas id="goalChart"></canvas>
     </div>
     <div class="chart-card">
