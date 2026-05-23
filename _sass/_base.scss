@@ -183,9 +183,9 @@ button:focus-visible {
 // ── Section label ──
 .section-label {
   font-size: 0.72rem;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   color: $accent-blue;
   margin-bottom: $spacing-lg;
   display: flex;
@@ -194,11 +194,12 @@ button:focus-visible {
 
   &::before {
     content: '';
-    width: 18px;
+    width: 24px;
     height: 2px;
-    background: linear-gradient(90deg, $accent-blue, transparent);
+    background: linear-gradient(90deg, $accent-blue, $neon-purple);
     border-radius: 2px;
     flex-shrink: 0;
+    box-shadow: 0 0 8px rgba($accent-blue, 0.25);
   }
 }
 

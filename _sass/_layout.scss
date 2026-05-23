@@ -12,7 +12,9 @@
   top: 0;
   z-index: 100;
   backdrop-filter: blur(16px) saturate(1.4);
-  background: rgba($bg-secondary, 0.85);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  background: rgba(255, 255, 255, 0.85);
+  transition: box-shadow 200ms ease, background 200ms ease;
 
   &::after {
     content: '';
@@ -21,7 +23,13 @@
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba($accent-blue, 0.15), transparent);
+    background: linear-gradient(90deg, transparent, rgba($accent-blue, 0.3), rgba($neon-purple, 0.3), transparent);
+  }
+
+  // Subtle elevation when scrolled
+  &.scrolled {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
   }
 }
 
@@ -191,12 +199,12 @@
   gap: $spacing-lg;
 }
 
-// Site footer
+// ─── Site footer (multi-column with social icons) ───
 .site-footer {
   background: $bg-secondary;
   border-top: 1px solid $border;
-  padding: $spacing-xl 0;
-  margin-top: auto;
+  padding: $spacing-2xl 0 $spacing-lg 0;
+  margin-top: $spacing-2xl;
   position: relative;
 
   &::before {
@@ -206,48 +214,102 @@
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba($accent-blue, 0.12), transparent);
+    background: linear-gradient(90deg, transparent, rgba($accent-blue, 0.4), transparent);
   }
+}
 
-  .footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1.4fr;
+  gap: $spacing-xl;
+  margin-bottom: $spacing-xl;
+}
+
+.footer-brand {
+  .footer-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: $text-heading;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
   }
-
-  .footer-text {
+  .footer-blurb {
+    color: $text-primary;
+    font-size: 0.85rem;
+    line-height: 1.65;
+    margin: 0 0 0.6rem 0;
+  }
+  .footer-loc {
     color: $text-muted;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-family: $font-mono;
+    margin: 0;
   }
+}
 
-  .footer-links {
-    display: flex;
-    gap: $spacing-lg;
+.footer-col {
+  h5 {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: $text-heading;
+    margin: 0 0 0.85rem 0;
+  }
+  ul {
     list-style: none;
     padding: 0;
     margin: 0;
-
+    li { margin-bottom: 0.45rem; }
     a {
-      color: $text-muted;
-      font-size: 0.8rem;
-      font-family: $font-mono;
-      transition: all $transition;
-      padding: $spacing-xs;
-      border-radius: $radius-sm;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      color: $text-primary;
+      font-size: 0.85rem;
+      transition: color 150ms ease;
+      padding: 2px 0;
 
       &:hover {
         color: $accent-blue;
-        background: rgba($accent-blue, 0.05);
+        svg { color: $accent-blue; }
+      }
+
+      svg {
+        flex-shrink: 0;
+        color: $slate-400;
+        transition: color 150ms ease;
       }
     }
   }
 }
 
+.footer-socials a {
+  font-family: $font-mono;
+  font-size: 0.78rem;
+}
+
+.footer-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: $spacing-md;
+  border-top: 1px solid $border;
+  font-size: 0.72rem;
+  color: $text-muted;
+  font-family: $font-mono;
+
+  .footer-meta-right { color: $slate-400; }
+}
+
 @media (max-width: $bp-md) {
-  .site-footer .footer-content {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: $spacing-lg;
+  }
+  .footer-meta {
     flex-direction: column;
-    gap: $spacing-md;
+    gap: 0.5rem;
     text-align: center;
   }
 }
