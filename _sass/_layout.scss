@@ -159,21 +159,28 @@
 // Main content
 .site-content {
   flex: 1;
-  padding: $spacing-2xl 0;
+  padding: $spacing-2xl 0 $spacing-2xl 0;
 }
 
-// Page header
+// Page header — extra top breathing room from sticky nav
 .page-header {
+  margin-top: $spacing-lg;
   margin-bottom: $spacing-2xl;
+  padding-bottom: $spacing-md;
+  border-bottom: 1px solid $border;
 
   h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin-bottom: $spacing-sm;
+    color: $text-heading;
+    font-weight: 700;
+    letter-spacing: -0.02em;
   }
 
   .page-subtitle {
     color: $text-muted;
-    font-size: 1.1rem;
+    font-size: 1rem;
+    margin: 0;
   }
 }
 
