@@ -1,13 +1,12 @@
 ---
 title: "CyberSec Qwen3"
-tagline: "Fine-tuned Qwen3 14B for offensive security — on hold."
+tagline: "First-generation Qwen3-14B offensive-security fine-tune — the research foundation that evolved into Beyond CTFs (Master's thesis)."
 category: tool
-tags: [llm, fine-tuning, qlora, on-hold]
-status: on-hold
+tags: [llm, fine-tuning, qlora, sft, dpo, grpo, predecessor]
 ---
 
-<div style="background: rgba(255, 171, 64, 0.1); border: 1px solid rgba(255, 171, 64, 0.3); border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
-  <strong style="color: #ffab40;">Status: On Hold</strong> — Paused while completing Masters degree. See <a href="#next-steps">next steps</a> below.
+<div style="background: rgba(96, 165, 250, 0.08); border: 1px solid rgba(96, 165, 250, 0.25); border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
+  <strong style="color: #60a5fa;">Evolved into <a href="{{ '/tools/beyond-ctfs/' | relative_url }}" style="color: #818cf8;">Beyond CTFs — Master's Thesis</a></strong> &mdash; the lessons from this week-long sprint (data composition, reward design, evaluation gaps) directly shaped the formal capstone research published in 2026.
 </div>
 
 ## Overview

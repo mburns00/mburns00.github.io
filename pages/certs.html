@@ -5,7 +5,8 @@ permalink: /certs/
 ---
 
 <div class="cert-timeline reveal" data-scroll-fill>
-  {% for cert in site.certs %}
+  {% assign certs_sorted = site.certs | sort: "earned" | reverse %}
+  {% for cert in certs_sorted %}
   <a href="{{ cert.url | relative_url }}" class="cert-node {% if cert.earned %}earned{% elsif cert.status %}in-progress{% endif %}" data-tilt-card>
     <div class="cert-card">
       <div class="card-top">

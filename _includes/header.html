@@ -5,7 +5,13 @@
     <nav>
       <ul class="nav-links">
         {% for link in site.data.navigation %}
-        <li><a href="{{ link.url | relative_url }}" {% if page.url == link.url or page.url contains link.url %}class="active"{% endif %}>{{ link.title }}</a></li>
+        {% assign is_active = false %}
+        {% if link.url == "/" %}
+          {% if page.url == "/" %}{% assign is_active = true %}{% endif %}
+        {% else %}
+          {% if page.url == link.url or page.url contains link.url %}{% assign is_active = true %}{% endif %}
+        {% endif %}
+        <li><a href="{{ link.url | relative_url }}" {% if is_active %}class="active"{% endif %}>{{ link.title }}</a></li>
         {% endfor %}
       </ul>
     </nav>
