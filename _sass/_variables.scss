@@ -5,16 +5,16 @@ $surface:       #f6f7f9;
 $surface-hover: #eef0f3;
 $border:        #e5e7eb;
 
-// Accent — restrained blue, not neon
-$accent-blue:       #2563eb;
-$accent-blue-dim:   #1d4ed8;
-$accent-blue-light: #3b82f6;
-$neon-blue:         #2563eb;   // kept name for class compat; value is now neutral
-$neon-purple:       #7c3aed;
-$neon-red:          #dc2626;
-$neon-orange:       #d97706;
-$neon-yellow:       #ca8a04;
-$success-green:     #16a34a;
+// Muted accent palette — distinguishable but relaxed, not vivid
+$accent-blue:       #4f6e9e;    // soft slate blue
+$accent-blue-dim:   #3f587e;
+$accent-blue-light: #6e8db8;
+$neon-blue:         #4f6e9e;    // kept var name; value muted
+$neon-purple:       #8a7da0;    // muted mauve
+$neon-red:          #b85a55;    // muted brick
+$neon-orange:       #b08358;    // muted tan
+$neon-yellow:       #a8946a;    // muted ochre
+$success-green:     #6a9078;    // muted sage
 
 // Slate scale — inverted (darker is darker text on light bg)
 $slate-800:     #0f172a;
@@ -30,11 +30,11 @@ $text-primary:  #374151;
 $text-heading:  #0f172a;
 $text-muted:    #6b7280;
 
-// Difficulty (HTB)
-$easy:          #16a34a;
-$medium:        #d97706;
-$hard:          #dc2626;
-$insane:        #7c3aed;
+// Difficulty (HTB) — muted
+$easy:          #6a9078;    // sage
+$medium:        #b08358;    // tan
+$hard:          #b85a55;    // brick
+$insane:        #8a7da0;    // mauve
 
 // Fonts
 $font-body:     'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
