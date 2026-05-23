@@ -30,24 +30,40 @@ title: "Home"
   /* ─── Sidebar ─── */
   .home-side {
     position: sticky;
-    top: 6rem;
-    padding-top: 3rem;
+    top: 5rem;
+    padding-top: 3.5rem;
     padding-bottom: 3rem;
     align-self: start;
-    max-height: calc(100vh - 4rem);
+    max-height: calc(100vh - 5rem);
     display: flex;
     flex-direction: column;
   }
+  /* Profile photo at top of sidebar */
+  .home-photo {
+    width: 140px;
+    height: 140px;
+    border-radius: 4px;
+    object-fit: cover;
+    object-position: center 32%;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+    margin: 0 0 1.75rem 0;
+    display: block;
+    filter: grayscale(0.04);
+    transition: filter 200ms ease;
+  }
+  .home-photo:hover { filter: grayscale(0); }
+
   .home-name {
-    font-size: clamp(2rem, 3.5vw, 2.6rem);
+    font-size: clamp(1.85rem, 3.2vw, 2.4rem);
     font-weight: 700;
     color: #0f172a;
-    margin: 0 0 0.4rem 0;
+    margin: 0 0 0.5rem 0;
     letter-spacing: -0.03em;
     line-height: 1.05;
   }
   .home-role {
-    font-size: 1.05rem;
+    font-size: 1rem;
     color: #0f172a;
     margin: 0 0 1rem 0;
     font-weight: 500;
@@ -55,10 +71,10 @@ title: "Home"
   }
   .home-blurb {
     color: #4b5563;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     line-height: 1.6;
-    margin: 0 0 2.5rem 0;
-    max-width: 30ch;
+    margin: 0 0 2rem 0;
+    max-width: 32ch;
   }
 
   /* ─── Scroll-tied sidebar nav ─── */
@@ -126,11 +142,11 @@ title: "Home"
 
   /* ─── Right content column ─── */
   .home-main {
-    padding: 3rem 0 6rem 0;
-    max-width: 600px;
+    padding: 3.5rem 0 6rem 0;
+    max-width: 620px;
   }
   .home-section {
-    margin-bottom: 4.5rem;
+    margin-bottom: 5rem;
     scroll-margin-top: 6rem;
   }
   .home-section:last-child { margin-bottom: 0; }
@@ -163,12 +179,13 @@ title: "Home"
   /* ─── Section heading (mobile only — hidden on desktop where sidebar serves as nav heading) ─── */
   .home-section h2 {
     display: none;
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: #0f172a;
+    font-size: 0.72rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    color: #6b7280;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    margin: 0 0 1.25rem 0;
+    margin: 0 0 1.5rem 0;
   }
 
   /* ─── Entry (used in Featured, Projects) ─── */
@@ -244,7 +261,7 @@ title: "Home"
     padding: 1.5rem 0;
     border-top: 1px solid #e5e7eb;
     border-bottom: 1px solid #e5e7eb;
-    margin: 0 0 0.5rem 0;
+    margin: 2rem 0 0 0;
   }
   .stats-line .num {
     font-size: 1.6rem;
@@ -266,7 +283,7 @@ title: "Home"
   @media (max-width: 880px) {
     .home-shell {
       grid-template-columns: 1fr;
-      gap: 2.5rem;
+      gap: 2rem;
       padding: 0 1.25rem;
     }
     .home-side {
@@ -275,6 +292,7 @@ title: "Home"
       max-height: none;
       padding: 2rem 0 0 0;
     }
+    .home-photo { width: 110px; height: 110px; }
     .home-blurb { margin-bottom: 1.5rem; }
     .side-nav { display: none; }
     .home-main {
@@ -293,6 +311,7 @@ title: "Home"
 
   <!-- ─── Sidebar ─── -->
   <aside class="home-side">
+    <img class="home-photo" src="{{ '/assets/images/matthew-burns.jpg' | relative_url }}" alt="Matthew Burns" loading="eager" />
     <h1 class="home-name">Matthew Burns</h1>
     <p class="home-role">AI security researcher.<br>Adversarial evaluation of autonomous agents.</p>
     <p class="home-blurb">Master of Cybersecurity at The University of Sydney. Australian citizen, clearance eligible, based in Gold Coast.</p>
