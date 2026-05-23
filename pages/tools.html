@@ -210,12 +210,131 @@ permalink: /tools/
   </div>
 </div>
 
-<!-- ─── TAG CLOUD ─── -->
-<div class="tag-cloud reveal">
-  <span class="tag-cloud-label">Tech stack across projects:</span>
-  {% for tag in all_tags %}
-    <span class="tag-cloud-tag">{{ tag }}</span>
+<!-- ─── TECH FREQUENCY ─── -->
+{% comment %} Compute tag frequencies inline {% endcomment %}
+{% assign tag_freq_pairs = "" | split: "," %}
+{% for tag in all_tags %}
+  {% assign count = 0 %}
+  {% for tool in tools_list %}
+    {% if tool.tags contains tag %}{% assign count = count | plus: 1 %}{% endif %}
   {% endfor %}
+  {% assign pair = count | append: "|" | append: tag %}
+  {% assign tag_freq_pairs = tag_freq_pairs | push: pair %}
+{% endfor %}
+{% assign tag_freq_sorted = tag_freq_pairs | sort | reverse %}
+
+<style>
+  .tech-freq {
+    margin: 1rem 0 2.5rem 0;
+  }
+  .tech-freq-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.75rem 1.85rem;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  .tech-freq h4 {
+    font-size: 0.78rem;
+    color: #0f172a;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0 0 1rem 0;
+    font-weight: 700;
+  }
+  .tech-row {
+    display: grid;
+    grid-template-columns: 130px 1fr 24px;
+    gap: 0.7rem;
+    align-items: center;
+    margin-bottom: 0.55rem;
+    font-size: 0.82rem;
+  }
+  .tech-row .tlbl {
+    font-family: 'JetBrains Mono', monospace;
+    color: #1f2937;
+    font-size: 0.78rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .tech-row .tbar {
+    height: 6px;
+    background: #f3f4f6;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .tech-row .tfill {
+    height: 100%;
+    background: linear-gradient(90deg, #2563eb, #7c3aed);
+    border-radius: 99px;
+    box-shadow: 0 0 6px rgba(37, 99, 235, 0.25);
+  }
+  .tech-row .tcnt {
+    font-family: 'JetBrains Mono', monospace;
+    color: #0f172a;
+    font-weight: 700;
+    text-align: right;
+    font-size: 0.82rem;
+  }
+  .tech-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    align-content: flex-start;
+  }
+  .tech-cloud .tag-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: #2563eb;
+    background: #eff6ff;
+    border: 1px solid #dbeafe;
+    padding: 0.2em 0.55em;
+    border-radius: 4px;
+    transition: all 150ms ease;
+  }
+  .tech-cloud .tag-pill:hover {
+    background: #2563eb;
+    color: #ffffff;
+    border-color: #2563eb;
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 768px) {
+    .tech-freq-card { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="tech-freq reveal">
+  <p class="section-label">Tech Stack</p>
+  <div class="tech-freq-card">
+    <div>
+      <h4>Most-used tech</h4>
+      {% for pair in tag_freq_sorted limit: 8 %}
+        {% assign parts = pair | split: "|" %}
+        {% assign count = parts[0] | plus: 0 %}
+        {% assign tag = parts[1] %}
+        {% if count >= 2 %}
+        <div class="tech-row">
+          <span class="tlbl">{{ tag }}</span>
+          <div class="tbar"><div class="tfill" style="width: {{ count | times: 100 | divided_by: total_projects }}%"></div></div>
+          <span class="tcnt">{{ count }}</span>
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div>
+      <h4>Full tag set ({{ tag_count }} unique)</h4>
+      <div class="tech-cloud">
+        {% for tag in all_tags %}
+          <span class="tag-pill">{{ tag }}</span>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ─── ALL PROJECTS ─── -->
