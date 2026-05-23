@@ -20,19 +20,293 @@ title: "Home"
 {% assign box_count = site.writeups | size %}
 {% assign box_goal = 100 %}
 
+<style>
+  /* Hero CTAs */
+  .hero-ctas {
+    margin-top: 2rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .hero-cta {
+    padding: 0.75rem 1.4rem;
+    border-radius: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: all 250ms ease;
+    will-change: transform;
+  }
+  .hero-cta.primary {
+    background: linear-gradient(135deg, #60a5fa, #818cf8);
+    color: #0a0e1a !important;
+    font-weight: 600;
+  }
+  .hero-cta.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(96, 165, 250, 0.3);
+  }
+  .hero-cta.secondary {
+    background: rgba(15, 23, 42, 0.5);
+    color: #e2e8f0;
+    border: 1px solid rgba(96, 165, 250, 0.2);
+  }
+  .hero-cta.secondary:hover {
+    background: rgba(15, 23, 42, 0.8);
+    border-color: rgba(96, 165, 250, 0.4);
+    transform: translateY(-2px);
+  }
+
+  /* Featured project card */
+  .featured-project {
+    background: rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(96, 165, 250, 0.1);
+    border-radius: 18px;
+    padding: 2.5rem;
+    margin-bottom: 4rem;
+    transition: all 400ms ease;
+  }
+  .featured-project:hover {
+    background: rgba(15, 23, 42, 0.65);
+    border-color: rgba(96, 165, 250, 0.2);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 80px rgba(96, 165, 250, 0.05);
+  }
+  .featured-project h3 {
+    font-size: 1.45rem;
+    color: #f1f5f9;
+    margin: 0 0 0.4rem 0;
+    line-height: 1.3;
+  }
+  .featured-project .project-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: #60a5fa;
+    background: rgba(96, 165, 250, 0.1);
+    padding: 0.3em 0.7em;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .featured-project .lead {
+    color: #cbd5e1;
+    font-size: 1.02rem;
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+  }
+  .featured-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0 2rem 0;
+  }
+  .stat-cell {
+    background: rgba(96, 165, 250, 0.04);
+    border: 1px solid rgba(96, 165, 250, 0.08);
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .stat-cell .stat-num {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.55rem;
+    color: #60a5fa;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  .stat-cell .stat-label {
+    font-size: 0.68rem;
+    color: #64748b;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .featured-tags {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .featured-tags li {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: #94a3b8;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(96, 165, 250, 0.1);
+    padding: 0.25em 0.65em;
+    border-radius: 5px;
+  }
+  .project-ctas {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  /* "Looking for" section */
+  .looking-for {
+    background: rgba(15, 23, 42, 0.3);
+    border: 1px solid rgba(74, 222, 128, 0.1);
+    border-radius: 16px;
+    padding: 2rem 2.25rem;
+    margin-bottom: 4rem;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 2.5rem;
+  }
+  .looking-for-content h3 {
+    font-size: 1.1rem;
+    color: #f1f5f9;
+    margin: 0 0 0.85rem 0;
+  }
+  .looking-for-content p {
+    color: #94a3b8;
+    line-height: 1.7;
+    margin: 0 0 1.1rem 0;
+    font-size: 0.95rem;
+  }
+  .looking-for-tags {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .looking-for-tags li {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: #4ade80;
+    background: rgba(74, 222, 128, 0.08);
+    border: 1px solid rgba(74, 222, 128, 0.16);
+    padding: 0.3em 0.7em;
+    border-radius: 5px;
+  }
+  .looking-for-meta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+  }
+  .looking-for-meta .meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: #64748b;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(96, 165, 250, 0.05);
+  }
+  .looking-for-meta .meta-row:last-child { border-bottom: none; }
+  .looking-for-meta .meta-row strong {
+    color: #e2e8f0;
+    font-weight: 500;
+    text-align: right;
+    max-width: 65%;
+  }
+
+  @media (max-width: 768px) {
+    .featured-stats { grid-template-columns: repeat(2, 1fr); }
+    .looking-for { grid-template-columns: 1fr; gap: 1.5rem; }
+    .hero-ctas { flex-direction: column; }
+    .hero-cta { width: 100%; text-align: center; }
+    .featured-project { padding: 1.5rem; }
+  }
+</style>
+
 <div class="container">
+
+  <!-- HERO -->
   <section class="hero">
     <h1 class="hero-fade">Matthew <span class="accent">Burns</span></h1>
     <p class="hero-subtitle hero-fade">AI security researcher &middot; adversarial evaluation of autonomous AI agents &middot; LLM post-training research</p>
+    <div class="hero-ctas hero-fade">
+      <a href="{{ '/assets/resume/Matthew_Burns_Resume_2026.pdf' | relative_url }}" class="hero-cta primary" target="_blank">Resume (PDF)</a>
+      <a href="https://github.com/mburns00/beyond-ctfs" class="hero-cta secondary" target="_blank">Beyond CTFs Repo</a>
+      <a href="mailto:MatthewKBurns00@gmail.com" class="hero-cta secondary">Get in touch</a>
+    </div>
   </section>
 
-  <!-- Dashboard Ring Summary -->
+  <!-- FEATURED RESEARCH -->
   <div class="reveal">
-    <p class="section-label">Progress Dashboard</p>
+    <p class="section-label">Featured Research</p>
+  </div>
+  <div class="featured-project reveal">
+    <span class="project-tag">Master's Capstone &middot; Open-Source</span>
+    <h3>Beyond CTFs &mdash; Evaluation Framework for Autonomous Pentesting Agents</h3>
+    <p class="lead">A real-world evaluation framework for autonomous pentesting LLMs. Across 32 controlled cells on Hack The Box machines, I compared four fine-tuned Qwen3-14B variants using a 12-dimensional rubric grounded in PTES and MITRE ATT&amp;CK &mdash; with behaviour mapped to OWASP Agentic Top 10, NIST AI 600-1, MITRE ATLAS, and the Singapore Agentic AI Framework. Null-tolerant reporting, blind scoring, pre-registered hypotheses.</p>
+
+    <div class="featured-stats">
+      <div class="stat-cell">
+        <span class="stat-num">32</span>
+        <span class="stat-label">Controlled Cells</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num">4</span>
+        <span class="stat-label">Qwen3-14B Variants</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num">12</span>
+        <span class="stat-label">Eval Dimensions</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num">8</span>
+        <span class="stat-label">HTB Machines</span>
+      </div>
+    </div>
+
+    <ul class="featured-tags">
+      <li>SFT</li>
+      <li>DPO</li>
+      <li>GRPO</li>
+      <li>MITRE ATT&amp;CK</li>
+      <li>MITRE ATLAS</li>
+      <li>OWASP Agentic Top 10</li>
+      <li>NIST AI 600-1</li>
+      <li>PyTorch / Ollama</li>
+      <li>574-tool MCP harness</li>
+      <li>Krippendorff α IRR</li>
+    </ul>
+
+    <div class="project-ctas">
+      <a href="https://github.com/mburns00/beyond-ctfs" class="hero-cta primary" target="_blank">GitHub Repo</a>
+      <a href="https://github.com/mburns00/beyond-ctfs/blob/main/docs/Beyond_CTFs_Final_Report.pdf" class="hero-cta secondary" target="_blank">Final Report (PDF)</a>
+    </div>
+  </div>
+
+  <!-- LOOKING FOR -->
+  <div class="reveal">
+    <p class="section-label">Currently looking for</p>
+  </div>
+  <div class="looking-for reveal">
+    <div class="looking-for-content">
+      <h3>AI Security &middot; AI Red Team &middot; ML Security roles in Australia</h3>
+      <p>Targeting AI safety engineering, AI red team, and ML security engineering at the Australian AI Safety Institute, major Australian cyber consultancies (CyberCX and similar), national-security cyber operations (ASD), or AU frontier-adjacent teams.</p>
+      <ul class="looking-for-tags">
+        <li>AI Security Engineer</li>
+        <li>AI Red Team</li>
+        <li>ML Security</li>
+        <li>Application Security</li>
+        <li>Penetration Tester</li>
+      </ul>
+    </div>
+    <div class="looking-for-meta">
+      <div class="meta-row"><span>Citizenship</span><strong>Australian</strong></div>
+      <div class="meta-row"><span>Clearance</span><strong>NV1 / NV2 / PV eligible</strong></div>
+      <div class="meta-row"><span>Location</span><strong>Sydney / Canberra / Remote AU</strong></div>
+      <div class="meta-row"><span>Availability</span><strong>Full-time late 2026 &middot; Contract now</strong></div>
+    </div>
+  </div>
+
+  <!-- PROGRESS & CREDENTIALS (demoted from lead) -->
+  <div class="reveal">
+    <p class="section-label">Progress &amp; Credentials</p>
   </div>
 
   <div class="ring-row reveal reveal-stagger">
-    <!-- Masters Ring -->
     <div class="ring-card">
       <div class="ring-wrap">
         <svg viewBox="0 0 140 140">
@@ -46,10 +320,9 @@ title: "Home"
         </div>
       </div>
       <div class="ring-label">{{ masters.program }}</div>
-      <div class="ring-sub">{{ masters.university }}</div>
+      <div class="ring-sub">{{ masters.university }} &middot; {{ masters.specialisation }}</div>
     </div>
 
-    <!-- AWS Ring -->
     <div class="ring-card">
       <div class="ring-wrap">
         <svg viewBox="0 0 140 140">
@@ -66,7 +339,6 @@ title: "Home"
       <div class="ring-sub">{{ aws_wip }} module{% if aws_wip != 1 %}s{% endif %} in progress</div>
     </div>
 
-    <!-- HTB Ring -->
     <div class="ring-card">
       <div class="ring-wrap">
         <svg viewBox="0 0 140 140">
@@ -84,45 +356,7 @@ title: "Home"
     </div>
   </div>
 
-  <!-- Masters Detail -->
-  <div class="tracker-detail reveal">
-    <h3>{{ masters.program }}</h3>
-    <p class="meta">{{ masters.university }} &middot; {{ masters.faculty }} &middot; <span class="specialisation-badge">{{ masters.specialisation }}</span> &middot; GPA <strong class="hl">{{ masters.gpa }}</strong></p>
-
-    <div class="prog-bar">
-      {% for unit in masters.units %}
-      <div class="prog-seg {% if unit.status == 'completed' %}done{% elsif unit.status == 'current' %}now{% else %}later{% endif %}"></div>
-      {% endfor %}
-    </div>
-    <div class="prog-label">
-      <span><span class="hl" data-counter="{{ done_count }}">0</span> / {{ total_units }} units</span>
-      <span>{{ now_count }} current &middot; {{ left_count }} remaining</span>
-    </div>
-
-    <ul class="unit-list">
-      {% for unit in completed_units %}
-      <li class="unit-item"><span class="unit-dot done"></span><span class="unit-code">{{ unit.code }}</span><span class="unit-name">{{ unit.name }}</span></li>
-      {% endfor %}
-    </ul>
-    {% if now_count > 0 %}
-    <p class="unit-divider">Currently Studying</p>
-    <ul class="unit-list">
-      {% for unit in current_units %}
-      <li class="unit-item"><span class="unit-dot now"></span><span class="unit-code">{{ unit.code }}</span><span class="unit-name">{{ unit.name }}</span></li>
-      {% endfor %}
-    </ul>
-    {% endif %}
-    {% if left_count > 0 %}
-    <p class="unit-divider">Remaining</p>
-    <ul class="unit-list">
-      {% for unit in remaining_units %}
-      <li class="unit-item"><span class="unit-dot later"></span><span class="unit-code">{{ unit.code }}</span><span class="unit-name dim">{{ unit.name }}</span></li>
-      {% endfor %}
-    </ul>
-    {% endif %}
-  </div>
-
-  <!-- Latest Write-ups -->
+  <!-- LATEST WRITE-UPS -->
   <div class="reveal latest-section">
     <p class="section-label">Latest Write-ups</p>
   </div>
