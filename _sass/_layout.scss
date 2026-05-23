@@ -107,6 +107,17 @@
 .has-dropdown {
   position: relative;
 
+  // Keep the hover area extending downward (bridge to the dropdown)
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 14px;
+    background: transparent;
+  }
+
   > a .caret {
     font-size: 0.7em;
     color: $slate-400;
@@ -123,8 +134,8 @@
 
 .dropdown {
   position: absolute;
-  top: 100%;
-  left: 0;
+  top: calc(100% + 2px);
+  left: -0.5rem;
   min-width: 280px;
   background: #ffffff;
   border: 1px solid $border;
@@ -132,12 +143,23 @@
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
   padding: 0.4rem 0;
   list-style: none;
-  margin: 0.5rem 0 0 0;
+  margin: 0;
   opacity: 0;
   visibility: hidden;
   transform: translateY(-4px);
   transition: opacity 150ms ease, transform 150ms ease, visibility 150ms;
   z-index: 200;
+
+  // Invisible bridge — prevents the cursor losing :hover when crossing the small gap above
+  &::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 0;
+    right: 0;
+    height: 12px;
+    background: transparent;
+  }
 
   li { margin: 0; }
   a {
