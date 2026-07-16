@@ -11,6 +11,9 @@
         {% else %}
           {% if page.url == link.url or page.url contains link.url %}{% assign is_active = true %}{% endif %}
         {% endif %}
+        {% comment %} Combined Red & Blue Team item stays active on its sub-pages {% endcomment %}
+        {% if link.url == "/ctfs/" and page.url contains "/writeups/" %}{% assign is_active = true %}{% endif %}
+        {% if link.url == "/ctfs/" and page.url contains "/blue-team/" %}{% assign is_active = true %}{% endif %}
 
         {% if link.title == "Education" %}
         <li class="has-dropdown">
