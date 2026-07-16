@@ -1,0 +1,65 @@
+---
+layout: default
+---
+
+<article class="container">
+  <div class="wu-detail reveal">
+    <div class="wu-hero" data-spotlight>
+      <div class="wu-breadcrumb">
+        <a href="{{ '/ctfs/' | relative_url }}">Red &amp; Blue Team</a>
+        <span class="sep">/</span>
+        <span>{{ page.title }}</span>
+      </div>
+
+      <h1 class="wu-title">{{ page.title }}</h1>
+
+      <div class="wu-meta">
+        <span class="platform-badge letsdefend">{{ page.platform | default: "LetsDefend" }}</span>
+        <span class="sev-badge sev-{{ page.severity | downcase }}">{{ page.severity }}</span>
+        <span class="soc-cat">{{ page.category }}</span>
+        <span class="verdict-pill {% if page.verdict contains 'True' %}tp{% else %}fp{% endif %}">{{ page.verdict }}</span>
+        <span class="wu-date">{{ page.date | date: "%B %d, %Y" }}</span>
+        {% if page.event_id %}<span class="wu-date">EventID {{ page.event_id }}</span>{% endif %}
+      </div>
+
+      {% if page.tags.size > 0 %}
+      <div class="wu-tags">
+        {% for tag in page.tags %}<span class="wu-tag">{{ tag }}</span>{% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    {% if page.iocs.size > 0 %}
+    <div class="wu-tools reveal soc-ioc-box">
+      <h3>Indicators of Compromise</h3>
+      <div class="soc-ioc-scroll">
+        <table class="soc-ioc-table">
+          <thead><tr><th>Type</th><th>Value</th><th>Note</th></tr></thead>
+          <tbody>
+          {% for ioc in page.iocs %}
+            <tr>
+              <td class="ioc-type">{{ ioc.type }}</td>
+              <td><code>{{ ioc.value }}</code></td>
+              <td class="ioc-note">{{ ioc.note }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if page.tools.size > 0 %}
+    <div class="wu-tools reveal">
+      <h3>Tools &amp; Data Sources</h3>
+      <ul class="wu-tools-list">
+        {% for tool in page.tools %}<li>{{ tool }}</li>{% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <div class="wu-body writeup-content reveal">
+      {{ content }}
+    </div>
+  </div>
+</article>

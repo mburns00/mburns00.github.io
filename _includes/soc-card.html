@@ -1,0 +1,28 @@
+{% assign report = include.report %}
+<a href="{{ report.url | relative_url }}" class="card" data-tilt>
+  <div class="card-header">
+    <div>
+      <h3 class="card-title">{{ report.title }}</h3>
+      <div class="card-meta">
+        <span class="platform-badge letsdefend">{{ report.platform | default: "LetsDefend" }}</span>
+        &middot;
+        <span class="sev-badge sev-{{ report.severity | downcase }}">{{ report.severity }}</span>
+        &middot;
+        <span class="soc-cat">{{ report.category }}</span>
+      </div>
+    </div>
+    <span class="verdict-pill {% if report.verdict contains 'True' %}tp{% else %}fp{% endif %}">{{ report.verdict }}</span>
+  </div>
+  {% if report.summary %}
+  <p class="card-description">{{ report.summary }}</p>
+  {% elsif report.excerpt %}
+  <p class="card-description">{{ report.excerpt | strip_html | truncatewords: 30 }}</p>
+  {% endif %}
+  <div class="card-tags">
+    {% for tag in report.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+  </div>
+  <div class="card-footer">
+    <span>{{ report.date | date: "%b %d, %Y" }}</span>
+    {% if report.event_id %}<span class="soc-eventid">EventID {{ report.event_id }}</span>{% endif %}
+  </div>
+</a>

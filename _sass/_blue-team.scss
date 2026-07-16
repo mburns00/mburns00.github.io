@@ -1,0 +1,115 @@
+// ── Blue Team (SOC reports) ──
+// Reuses .card / .stat-card / .badge / .tag / .wu-* patterns.
+// Adds SOC-specific badges (platform, severity, verdict) and an IOC table.
+
+$ld-teal: #3f7d76; // muted teal for the LetsDefend platform badge
+
+// LetsDefend platform badge (matches .platform-badge shape from _components)
+.platform-badge.letsdefend {
+  background: rgba($ld-teal, 0.1);
+  color: $ld-teal;
+}
+
+// Severity badge — same pill treatment as .badge
+.sev-badge {
+  display: inline-block;
+  padding: 0.15em 0.6em;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: $font-mono;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  &.sev-critical { background: rgba($neon-red, 0.14);    color: $neon-red; }
+  &.sev-high     { background: rgba($neon-red, 0.1);     color: $neon-red; }
+  &.sev-medium   { background: rgba($neon-orange, 0.1);  color: $neon-orange; }
+  &.sev-low      { background: rgba($success-green, 0.1); color: $success-green; }
+  &.sev-info     { background: rgba($accent-blue, 0.1);  color: $accent-blue; }
+}
+
+// Verdict pill — True Positive reads as a confirmed threat; False Positive as benign
+.verdict-pill {
+  display: inline-block;
+  padding: 0.15em 0.65em;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: $font-mono;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+
+  &.tp { background: rgba($neon-red, 0.12);     color: $neon-red;      border: 1px solid rgba($neon-red, 0.18); }
+  &.fp { background: rgba($success-green, 0.12); color: $success-green; border: 1px solid rgba($success-green, 0.18); }
+}
+
+// Category label in card / detail meta
+.soc-cat {
+  font-family: $font-mono;
+  font-size: 0.75rem;
+  color: $text-muted;
+}
+
+// EventID chip in card footer
+.soc-eventid {
+  font-family: $font-mono;
+  font-size: 0.72rem;
+  color: $slate-400;
+}
+
+// Extra separation before the Blue Team subsection on the combined page
+.latest-section.soc-section {
+  margin-top: 3.5rem;
+}
+
+// IOC table
+.soc-ioc-box {
+  h3 { margin-top: 0; }
+}
+.soc-ioc-scroll {
+  overflow-x: auto;
+}
+.soc-ioc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+
+  thead th {
+    text-align: left;
+    font-family: $font-mono;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: $slate-500;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid $card-border;
+  }
+
+  tbody td {
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid $surface;
+    vertical-align: top;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+
+  td.ioc-type {
+    font-family: $font-mono;
+    font-size: 0.72rem;
+    color: $text-muted;
+    white-space: nowrap;
+  }
+
+  td code {
+    font-family: $font-mono;
+    font-size: 0.82rem;
+    color: $text-heading;
+    word-break: break-all;
+  }
+
+  td.ioc-note {
+    color: $slate-500;
+    font-size: 0.82rem;
+  }
+}

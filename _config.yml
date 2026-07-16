@@ -27,6 +27,9 @@ collections:
   certs:
     output: true
     permalink: /certs/:title/
+  soc:
+    output: true
+    permalink: /blue-team/:title/
 
 # Default front matter
 defaults:
@@ -40,6 +43,11 @@ defaults:
       type: "ctfs"
     values:
       layout: "ctf"
+  - scope:
+      path: ""
+      type: "soc"
+    values:
+      layout: "soc"
   - scope:
       path: ""
       type: "tools"

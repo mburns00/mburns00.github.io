@@ -1,46 +1,53 @@
 ---
-title: "CTF Write-ups"
-subtitle: "HTB, THM, and competition challenge write-ups — reconnaissance through root."
+title: "Red &amp; Blue Team"
+subtitle: "Offensive and defensive security — CTF write-ups (recon to root) and SOC incident reports (alert triage to containment)."
 permalink: /ctfs/
 ---
 
-{% assign total = site.writeups | size %}
+{% assign ctf_total = site.writeups | size %}
 {% assign rooted = site.writeups | where: "status", "rooted" | size %}
-{% assign in_progress = site.writeups | where: "status", "in-progress" | size %}
+{% assign soc_total = site.soc | size %}
 
-<!-- Stat Counters -->
+<!-- Combined stats -->
 <div class="stat-row reveal reveal-stagger">
   <div class="stat-card">
-    <div class="big-num blue" data-counter="{{ total }}">0</div>
-    <div class="stat-desc">Boxes Attempted</div>
+    <div class="big-num blue" data-counter="{{ ctf_total }}">0</div>
+    <div class="stat-desc">CTF Write-ups</div>
   </div>
   <div class="stat-card">
     <div class="big-num green" data-counter="{{ rooted }}">0</div>
     <div class="stat-desc">Rooted</div>
   </div>
   <div class="stat-card">
-    <div class="big-num orange" data-counter="{{ in_progress }}">0</div>
-    <div class="stat-desc">In Progress</div>
+    <div class="big-num orange" data-counter="{{ soc_total }}">0</div>
+    <div class="stat-desc">SOC Reports</div>
   </div>
 </div>
 
-<!-- Stats Dashboard -->
-{% if total > 0 %}
-{% include stats-dashboard.html %}
-{% endif %}
-
-<!-- Write-up Cards -->
+<!-- Red Team — CTF Write-ups -->
 <div class="reveal latest-section">
-  <p class="section-label">All Write-ups</p>
+  <p class="section-label">Red Team — CTF Write-ups</p>
 </div>
 <div class="card-grid reveal reveal-stagger">
-  {% assign sorted = site.writeups | sort: "date" | reverse %}
-  {% for writeup in sorted %}
+  {% assign ctf_sorted = site.writeups | sort: "date" | reverse %}
+  {% for writeup in ctf_sorted %}
     {% include writeup-card.html writeup=writeup %}
   {% endfor %}
 </div>
-
 {% if site.writeups.size == 0 %}
-<p class="empty-state">No write-ups yet. Boxes are being pwned — check back soon.</p>
+<p class="empty-state">No write-ups yet — boxes are being pwned.</p>
 {% endif %}
 
+<!-- Blue Team — SOC Reports -->
+<div class="reveal latest-section soc-section">
+  <p class="section-label">Blue Team — SOC Reports</p>
+</div>
+<div class="card-grid reveal reveal-stagger">
+  {% assign soc_sorted = site.soc | sort: "date" | reverse %}
+  {% for report in soc_sorted %}
+    {% include soc-card.html report=report %}
+  {% endfor %}
+</div>
+{% if site.soc.size == 0 %}
+<p class="empty-state">SOC reports coming soon — triage in progress.</p>
+{% endif %}
